@@ -13,8 +13,10 @@
     <string name="login_button">Log in</string>
 
     <string name="register_title">Welcome</string>
+    <string name="register_have_account">Already have account?</string>
+    <string name="register_button_sign_in">Sign up</string>
 
-    <string name="reset_password_title">Reset your password</string>
+    <string name="reset_password_title">Reset password</string>
     <string name="reset_password_button">Send email</string>
     <string name="reset_button_remember_password">Remember your password?</string>
 

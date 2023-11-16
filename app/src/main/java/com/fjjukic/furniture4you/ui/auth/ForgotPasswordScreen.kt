@@ -24,9 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -75,7 +76,6 @@ fun ForgotPasswordForm(
     onLoginClicked: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
 
     Card(
         colors = CardDefaults.cardColors(
@@ -97,30 +97,15 @@ fun ForgotPasswordForm(
             shouldShowError = email.isNotEmpty() && !isValidEmail(email),
             errorMessage = stringResource(R.string.error_invalid_email)
         )
-
-        ClickableText(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 24.dp),
-            text = AnnotatedString(stringResource(R.string.reset_button_remember_password)),
-            style = TextStyle(
-                fontSize = 16.sp,
-                fontFamily = gelatioFamily,
-                fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF303030),
-            ), onClick = {
-                onLoginClicked.invoke()
-            })
-
         Button(
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(Color(0xFF242424)),
             modifier = modifier
-                .padding(vertical = 40.dp)
+                .padding(top = 40.dp)
                 .width(260.dp)
                 .align(Alignment.CenterHorizontally),
             onClick = {
-                onLoginClicked.invoke()
+                // Send email action
             }) {
             Text(
                 text = stringResource(R.string.reset_password_button),
@@ -131,5 +116,35 @@ fun ForgotPasswordForm(
                 modifier = Modifier.padding(6.dp)
             )
         }
+        ClickableText(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 30.dp, bottom = 30.dp),
+            text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 14.sp,
+                        fontFamily = gelatioFamily,
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFF808080),
+                    )
+                ) {
+                    append(stringResource(R.string.reset_button_remember_password))
+                }
+                append(" ")
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 14.sp,
+                        fontFamily = gelatioFamily,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color(0xFF303030),
+                    )
+                ) {
+                    append(stringResource(R.string.login_button).uppercase())
+                }
+            }, onClick = {
+                onLoginClicked.invoke()
+            })
+
     }
 }

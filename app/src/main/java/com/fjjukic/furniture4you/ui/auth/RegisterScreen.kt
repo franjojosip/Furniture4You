@@ -149,7 +149,7 @@ fun RegisterForm(
                         color = Color(0xFF808080),
                     )
                 ) {
-                    append("Already have account?")
+                    append(stringResource(R.string.register_have_account))
                 }
                 append(" ")
                 withStyle(
@@ -160,7 +160,7 @@ fun RegisterForm(
                         color = Color(0xFF303030),
                     )
                 ) {
-                    append("Sign in".uppercase())
+                    append(stringResource(R.string.register_button_sign_in).uppercase())
                 }
             }, onClick = {
                 onLoginClicked.invoke()
