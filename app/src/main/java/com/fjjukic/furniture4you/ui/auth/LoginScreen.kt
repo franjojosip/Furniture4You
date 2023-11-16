@@ -63,27 +63,9 @@ fun LoginScreen(
             .background(Color.White)
             .verticalScroll(rememberScrollState())
     ) {
-        Header()
-        Text(
-            text = stringResource(R.string.login_title),
-            fontSize = 30.sp,
-            fontFamily = gelatioFamily,
-            fontWeight = FontWeight.SemiBold,
-            letterSpacing = 1.2.sp,
-            color = Color(0xFF606060),
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(start = 24.dp, end = 24.dp, top = 30.dp)
-        )
-        Text(
-            text = stringResource(R.string.login_subtitle).uppercase(),
-            fontSize = 24.sp,
-            fontFamily = gelatioFamily,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF303030),
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(top = 12.dp, start = 24.dp, end = 24.dp)
+        Header(
+            title = stringResource(R.string.login_title),
+            subtitle = stringResource(R.string.login_subtitle)
         )
         LoginForm(modifier, onForgotPasswordClicked, onRegisterClicked)
     }

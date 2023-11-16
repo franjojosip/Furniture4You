@@ -31,4 +31,7 @@
     <string name="content_desc_prelogin_background">Prelogin background</string>
     <string name="content_desc_launcher_icon">Launcher icon</string>
     <string name="content_desc_visibility_icon">Visibility Icon</string>
+    <string name="content_desc_icon">Icon</string>
+    <string name="content_desc_search">Search Icon</string>
+    <string name="content_desc_cart">Cart Icon</string>
 </resources>

@@ -54,17 +54,7 @@ fun RegisterScreen(
             .background(Color.White)
             .verticalScroll(rememberScrollState())
     ) {
-        Header()
-        Text(
-            text = stringResource(R.string.register_title).uppercase(),
-            fontSize = 24.sp,
-            fontFamily = gelatioFamily,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF303030),
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(start = 24.dp, end = 24.dp, top = 30.dp)
-        )
+        Header(subtitle = stringResource(R.string.register_title))
         RegisterForm(onLoginClicked = onLoginClicked)
     }
 }
@@ -98,10 +88,7 @@ fun RegisterForm(
             placeholder = stringResource(R.string.field_name)
         )
 
-        EmailInputField(
-            Modifier.padding(top = 12.dp),
-            email
-        ) {
+        EmailInputField(Modifier.padding(top = 12.dp), email) {
             email = it
         }
 

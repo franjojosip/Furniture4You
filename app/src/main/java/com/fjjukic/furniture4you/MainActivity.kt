@@ -15,6 +15,7 @@ import com.fjjukic.furniture4you.ui.auth.ForgotPasswordScreen
 import com.fjjukic.furniture4you.ui.auth.LoginScreen
 import com.fjjukic.furniture4you.ui.auth.RegisterScreen
 import com.fjjukic.furniture4you.ui.common.PreloginScreen
+import com.fjjukic.furniture4you.ui.home.HomeScreen
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavHost(navController = navController, startDestination = "prelogin") {
+                    NavHost(navController = navController, startDestination = "home") {
                         composable("prelogin") {
                             PreloginScreen {
                                 navController.navigate("login")
@@ -50,6 +51,9 @@ class MainActivity : ComponentActivity() {
                             ForgotPasswordScreen {
                                 navController.popBackStack("login", false)
                             }
+                        }
+                        composable("home") {
+                            HomeScreen()
                         }
                     }
                 }
