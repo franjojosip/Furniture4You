@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Furniture4You</string>
+
+    <string name="prelogin_title">Make your</string>
+    <string name="prelogin_subtitle">Home beautiful</string>
+    <string name="prelogin_description">The best simple place where you discover most wonderful furnitures and make your home beautiful</string>
+    <string name="prelogin_button_get_started">Get Started</string>
+
+    <string name="login_title">Hello!</string>
+    <string name="login_subtitle">Welcome back</string>
+    <string name="login_button_forgot_password">Forgot Password</string>
+    <string name="login_button_sign_up">Sign up</string>
+    <string name="login_button">Log in</string>
+
+    <string name="register_title">Welcome</string>
+
+    <string name="field_name">Name</string>
+    <string name="field_password">Password</string>
+    <string name="field_confirm_password">Confirm Password</string>
+    <string name="field_email">Email</string>
+
+    <string name="error_invalid_email">Invalid email (ex. luka@mail.com)</string>
+    <string name="error_invalid_password">Invalid password length [6–12]</string>
+
+    <string name="content_desc_prelogin_background">Prelogin background</string>
+    <string name="content_desc_launcher_icon">Launcher icon</string>
+    <string name="content_desc_visibility_icon">Visibility Icon</string>
 </resources>
