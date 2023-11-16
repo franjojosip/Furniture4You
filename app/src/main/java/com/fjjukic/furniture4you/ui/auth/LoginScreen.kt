@@ -48,12 +48,13 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen {}
+    LoginScreen(onForgotPasswordClicked = {}, onRegisterClicked = {})
 }
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
+    onForgotPasswordClicked: () -> Unit,
     onRegisterClicked: () -> Unit
 ) {
     Column(
@@ -84,13 +85,14 @@ fun LoginScreen(
                 .align(Alignment.Start)
                 .padding(top = 12.dp, start = 24.dp, end = 24.dp)
         )
-        LoginForm(modifier, onRegisterClicked = onRegisterClicked)
+        LoginForm(modifier, onForgotPasswordClicked, onRegisterClicked)
     }
 }
 
 @Composable
 fun LoginForm(
     modifier: Modifier = Modifier,
+    onForgotPasswordClicked: () -> Unit,
     onRegisterClicked: () -> Unit
 ) {
     var password by remember { mutableStateOf("") }
@@ -131,7 +133,7 @@ fun LoginForm(
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xFF303030),
             ), onClick = {
-                // Forgot password routing
+                onForgotPasswordClicked.invoke()
             })
 
         Button(
@@ -210,7 +212,7 @@ fun EmailInputField(
     }
 }
 
-private fun isValidEmail(email: String): Boolean {
+fun isValidEmail(email: String): Boolean {
     val emailRegex = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
     return email.matches(emailRegex)
 }

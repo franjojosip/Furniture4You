@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.fjjukic.furniture4you.ui.auth.ForgotPasswordScreen
 import com.fjjukic.furniture4you.ui.auth.LoginScreen
 import com.fjjukic.furniture4you.ui.auth.RegisterScreen
 import com.fjjukic.furniture4you.ui.common.PreloginScreen
@@ -34,13 +35,20 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable("login") {
-                            LoginScreen {
+                            LoginScreen(onForgotPasswordClicked = {
+                                navController.navigate("forgot_password")
+                            }, onRegisterClicked = {
                                 navController.navigate("register")
-                            }
+                            })
                         }
                         composable("register") {
                             RegisterScreen {
-                                navController.popBackStack()
+                                navController.popBackStack("login", false)
+                            }
+                        }
+                        composable("forgot_password") {
+                            ForgotPasswordScreen {
+                                navController.popBackStack("login", false)
                             }
                         }
                     }
