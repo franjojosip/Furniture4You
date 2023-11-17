@@ -4,24 +4,41 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicText
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -31,25 +48,73 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.fjjukic.furniture4you.ui.components.CategoryItem
+import com.fjjukic.furniture4you.ui.components.ProductItem
+import com.fjjukic.furniture4you.ui.mock.MockRepository
+import com.fjjukic.furniture4you.ui.model.Product
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    Home()
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Home() {
+    val screens = listOf("home", "favorites", "notifications", "profile")
+    var selectedScreen by remember { mutableStateOf(screens.first()) }
+
+    val navController = rememberNavController()
+
+    Scaffold(
+        bottomBar = {
+            BottomAppBar {
+                screens.forEach { screen ->
+                    IconButton(onClick = { /* do something */ }) {
+                        Icon(Icons.Filled.Check, contentDescription = "Localized description")
+                    }
+                }
+            }
+        }
+    ) { innerPadding ->
+
+        Column(
+            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Selected Screen: $selectedScreen")
+        }
+    }
 }
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    val categories: List<CategoryItemModel> = getCategories()
+fun getIconForScreen(screen: String): ImageVector {
+    return when (screen) {
+        "Home" -> Icons.Default.Home
+        "Feed" -> Icons.Default.AccountBox
+        "Post" -> Icons.Default.Add
+        "Alert" -> Icons.Default.Notifications
+        "Jobs" -> Icons.Default.Done
+        else -> Icons.Default.Home
+    }
+}
+
+@Composable
+fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
+    val categories: List<CategoryItemModel> = MockRepository.getCategories()
+    val products: List<Product> = MockRepository.getProducts()
     var selectedIndex by remember { mutableIntStateOf(0) }
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color.White)
-            .verticalScroll(rememberScrollState())
     ) {
         Row(
             modifier = Modifier
@@ -113,6 +178,22 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 )
             }
         }
+        LazyVerticalGrid(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentPadding = PaddingValues(top = 20.dp, start = 12.dp, end = 12.dp),
+            columns = GridCells.Fixed(2)
+        ) {
+            items(products) { item ->
+                ProductItem(
+                    id = item.id,
+                    title = item.title,
+                    price = item.price,
+                    imageResId = item.imageResId,
+                    onProductClicked = {}
+                )
+            }
+        }
     }
 }
 
@@ -120,32 +201,3 @@ class CategoryItemModel(
     val title: String,
     val imageResId: Int
 )
-
-fun getCategories(): List<CategoryItemModel> {
-    return listOf(
-        CategoryItemModel(
-            title = "Popular",
-            imageResId = R.drawable.ic_star
-        ),
-        CategoryItemModel(
-            title = "Chair",
-            imageResId = R.drawable.ic_chair
-        ),
-        CategoryItemModel(
-            title = "Table",
-            imageResId = R.drawable.ic_table
-        ),
-        CategoryItemModel(
-            title = "Armchair",
-            imageResId = R.drawable.ic_sofa
-        ),
-        CategoryItemModel(
-            title = "Bed",
-            imageResId = R.drawable.ic_bed
-        ),
-        CategoryItemModel(
-            title = "Lamp",
-            imageResId = R.drawable.ic_lamp
-        )
-    )
-}
