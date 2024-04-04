@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.fjjukic.furniture4you.ui.navigation.BottomNavigationItem
+import com.fjjukic.furniture4you.ui.components.BottomNavigationItem
 import com.fjjukic.furniture4you.ui.navigation.MainGraph
 
 @OptIn(ExperimentalMaterial3Api::class)

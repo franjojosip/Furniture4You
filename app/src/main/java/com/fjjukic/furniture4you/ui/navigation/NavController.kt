@@ -14,7 +14,8 @@ sealed class Screens(val route: String) {
         object Register : AuthScreen("register_route")
         object ForgotPassword : AuthScreen("forgot_password_route")
     }
-    sealed class MainScreen(route: String): Screens(route) {
+
+    sealed class MainScreen(route: String) : Screens(route) {
         object Home : MainScreen("home_route")
         object Favorites : MainScreen("favorites_route")
         object Notifications : MainScreen("notifications_route")

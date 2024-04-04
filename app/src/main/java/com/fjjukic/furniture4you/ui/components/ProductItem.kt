@@ -65,7 +65,9 @@ fun ProductItem(
                 ) { onProductClicked.invoke(id) }
         ) {
             Image(
-                modifier = Modifier.fillMaxSize().align(Alignment.Center),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(Alignment.Center),
                 painter = painterResource(id = imageResId),
                 contentDescription = stringResource(R.string.content_desc_product),
                 contentScale = ContentScale.Crop,

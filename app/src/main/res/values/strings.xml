@@ -36,4 +36,9 @@
     <string name="content_desc_product">Product image</string>
     <string name="content_desc_search">Search Icon</string>
     <string name="content_desc_cart">Cart Icon</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_profile">Profile</string>
 </resources>
