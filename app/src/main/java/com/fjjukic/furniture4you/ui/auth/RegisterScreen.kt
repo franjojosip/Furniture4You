@@ -47,7 +47,6 @@ fun RegisterScreen(
     modifier: Modifier = Modifier,
     onLoginClicked: () -> Unit
 ) {
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -79,7 +78,7 @@ fun RegisterForm(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .wrapContentSize()
-            .padding(top = 26.dp, bottom = 24.dp, start = 24.dp, end = 24.dp)
+            .padding(24.dp)
     ) {
         OutlinedInputField(
             modifier = Modifier.padding(top = 24.dp),
@@ -92,13 +91,14 @@ fun RegisterForm(
             email = it
         }
 
-        PasswordInputField(Modifier.padding(top = 12.dp), password) {
+        PasswordInputField(Modifier.padding(top = 12.dp), password, isLastField = false) {
             password = it
         }
         PasswordInputField(
             Modifier.padding(top = 12.dp),
             confirmPassword,
-            stringResource(R.string.field_confirm_password)
+            stringResource(R.string.field_confirm_password),
+            true
         ) {
             confirmPassword = it
         }

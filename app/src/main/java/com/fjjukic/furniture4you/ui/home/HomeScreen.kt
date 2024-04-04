@@ -48,7 +48,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.fjjukic.furniture4you.ui.components.CategoryItem
 import com.fjjukic.furniture4you.ui.components.ProductItem
@@ -60,7 +59,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    Home()
+    HomeScreen()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,7 +83,9 @@ fun Home() {
     ) { innerPadding ->
 
         Column(
-            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -106,7 +107,7 @@ fun getIconForScreen(screen: String): ImageVector {
 }
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun HomeScreen(modifier: Modifier = Modifier) {
     val categories: List<CategoryItemModel> = MockRepository.getCategories()
     val products: List<Product> = MockRepository.getProducts()
     var selectedIndex by remember { mutableIntStateOf(0) }
@@ -160,7 +161,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
             )
         }
         LazyRow(
-            modifier = Modifier.padding(top = 20.dp),
+            modifier = Modifier.padding(top = 20.dp, bottom = 12.dp),
             state = rememberLazyListState(),
             userScrollEnabled = true
         ) {
@@ -179,9 +180,9 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
             }
         }
         LazyVerticalGrid(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentPadding = PaddingValues(top = 20.dp, start = 12.dp, end = 12.dp),
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 24.dp),
             columns = GridCells.Fixed(2)
         ) {
             items(products) { item ->

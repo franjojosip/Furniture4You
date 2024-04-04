@@ -117,7 +117,14 @@ object MockRepository {
                 "",
                 R.drawable.wide_rolling_kitchen_island
             ),
-
+            Product(
+                UUID.randomUUID().toString(),
+                "Minimal Desk",
+                "50.00",
+                "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
+                "",
+                R.drawable.simple_desk
+            )
         )
     }
 }

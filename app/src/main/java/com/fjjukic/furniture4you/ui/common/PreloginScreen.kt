@@ -47,7 +47,8 @@ fun PreloginScreen(
             modifier = modifier.matchParentSize()
         )
         Column(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
                 text = stringResource(R.string.prelogin_title).uppercase(),
@@ -58,7 +59,7 @@ fun PreloginScreen(
                 color = Color(0xFF606060),
                 modifier = modifier
                     .align(Alignment.Start)
-                    .padding(start = 24.dp, end = 24.dp, top = 250.dp)
+                    .padding(start = 24.dp, end = 24.dp, top = 30.dp)
             )
             Text(
                 text = stringResource(R.string.prelogin_subtitle).uppercase(),
@@ -77,13 +78,14 @@ fun PreloginScreen(
                 color = Color(0xFF808080),
                 modifier = modifier
                     .align(Alignment.Start)
-                    .padding(top = 32.dp, start = 60.dp, end = 24.dp)
+                    .padding(top = 32.dp, start = 60.dp, end = 24.dp),
+                lineHeight = 32.sp
             )
             Button(
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFF242424)),
                 modifier = modifier
-                    .padding(top = 200.dp)
+                    .padding(top = 160.dp)
                     .align(Alignment.CenterHorizontally),
                 onClick = { onContinueClicked?.invoke() }) {
                 Text(

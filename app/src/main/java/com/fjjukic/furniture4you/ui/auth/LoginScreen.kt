@@ -34,28 +34,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fjjukic.furniture4you.ui.common.ErrorField
 import com.fjjukic.furniture4you.ui.common.Header
 import com.fjjukic.furniture4you.ui.common.OutlinedInputField
+import com.fjjukic.furniture4you.ui.theme.FieldTextColor
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(onForgotPasswordClicked = {}, onRegisterClicked = {})
+    LoginScreen(onForgotPasswordClicked = {}, onRegisterClicked = {}, onLoginClicked = {})
 }
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
     onForgotPasswordClicked: () -> Unit,
-    onRegisterClicked: () -> Unit
+    onRegisterClicked: () -> Unit,
+    onLoginClicked: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -67,7 +71,7 @@ fun LoginScreen(
             title = stringResource(R.string.login_title),
             subtitle = stringResource(R.string.login_subtitle)
         )
-        LoginForm(modifier, onForgotPasswordClicked, onRegisterClicked)
+        LoginForm(modifier, onForgotPasswordClicked, onRegisterClicked, onLoginClicked)
     }
 }
 
@@ -75,7 +79,8 @@ fun LoginScreen(
 fun LoginForm(
     modifier: Modifier = Modifier,
     onForgotPasswordClicked: () -> Unit,
-    onRegisterClicked: () -> Unit
+    onRegisterClicked: () -> Unit,
+    onLoginClicked: () -> Unit
 ) {
     var password by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -90,7 +95,7 @@ fun LoginForm(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .wrapContentSize()
-            .padding(top = 36.dp, bottom = 24.dp, start = 24.dp, end = 24.dp)
+            .padding(top = 24.dp, bottom = 24.dp, start = 24.dp, end = 24.dp)
     ) {
         OutlinedInputField(
             modifier = Modifier.padding(top = 24.dp),
@@ -100,7 +105,7 @@ fun LoginForm(
             shouldShowError = email.isNotEmpty() && !isValidEmail(email),
             errorMessage = stringResource(R.string.error_invalid_email)
         )
-        PasswordInputField(Modifier.padding(top = 12.dp), password) {
+        PasswordInputField(Modifier.padding(top = 12.dp), password, isLastField = true) {
             password = it
         }
 
@@ -126,7 +131,7 @@ fun LoginForm(
                 .width(260.dp)
                 .align(Alignment.CenterHorizontally),
             onClick = {
-                // Login logic
+                onLoginClicked.invoke()
             }) {
             Text(
                 text = stringResource(R.string.login_button),
@@ -171,7 +176,7 @@ fun EmailInputField(
             fontSize = 14.sp,
             fontFamily = gelatioFamily,
             fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF909090)
+            color = FieldTextColor
         )
         OutlinedTextField(
             modifier = Modifier
@@ -185,10 +190,8 @@ fun EmailInputField(
         )
 
         if (value.isNotEmpty() && !isValidEmail(value)) {
-            Text(
-                modifier = Modifier.padding(start = 6.dp, end = 6.dp, top = 6.dp),
-                text = stringResource(R.string.error_invalid_email),
-                color = Color(0xD0B92828)
+            ErrorField(
+                errorMessage = stringResource(R.string.error_invalid_email)
             )
         }
     }
@@ -205,14 +208,14 @@ fun PasswordInputField(
     modifier: Modifier = Modifier,
     password: String,
     label: String = stringResource(R.string.field_password),
+    isLastField: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
     var passwordVisibility by remember { mutableStateOf(false) }
 
-    val icon = if (passwordVisibility)
-        painterResource(id = R.drawable.ic_visibility_on)
-    else
-        painterResource(id = R.drawable.ic_visibility_off)
+    val icon = painterResource(
+        id = if (passwordVisibility) R.drawable.ic_visibility_off else R.drawable.ic_visibility_on
+    )
 
     Column(
         modifier = modifier
@@ -224,7 +227,7 @@ fun PasswordInputField(
             fontSize = 14.sp,
             fontFamily = gelatioFamily,
             fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF909090)
+            color = FieldTextColor
         )
         OutlinedTextField(
             modifier = Modifier
@@ -244,6 +247,7 @@ fun PasswordInputField(
                 }
             },
             keyboardOptions = KeyboardOptions(
+                imeAction = if (isLastField) ImeAction.Done else ImeAction.Next,
                 keyboardType = KeyboardType.Password
             ),
             visualTransformation = if (passwordVisibility) VisualTransformation.None
@@ -251,10 +255,8 @@ fun PasswordInputField(
         )
 
         if (password.isNotEmpty() && !isValidPassword(password)) {
-            Text(
-                modifier = Modifier.padding(start = 6.dp, end = 6.dp, top = 6.dp),
-                text = stringResource(R.string.error_invalid_password),
-                color = Color(0xD0B92828)
+            ErrorField(
+                errorMessage = stringResource(R.string.error_invalid_password)
             )
         }
     }

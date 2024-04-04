@@ -25,6 +25,7 @@
     <string name="field_confirm_password">Confirm Password</string>
     <string name="field_email">Email</string>
 
+    <string name="error_invalid_field">Invalid field</string>
     <string name="error_invalid_email">Invalid email (ex. luka@mail.com)</string>
     <string name="error_invalid_password">Invalid password length [6–12]</string>
 

@@ -25,7 +25,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun HeaderPreview() {
-    Header()
+    Header(title = "TITLE", subtitle = "SUBTITLE")
 }
 
 @Composable
@@ -38,7 +38,7 @@ fun Header(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp)
+                .padding(top = 16.dp)
         ) {
             Divider(
                 color = Color.Gray,
@@ -75,7 +75,7 @@ fun Header(
                 color = Color(0xFF606060),
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(start = 24.dp, end = 24.dp, top = 30.dp)
+                    .padding(start = 24.dp, end = 24.dp, top = 16.dp)
             )
         }
         if (subtitle != null) {

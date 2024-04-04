@@ -9,13 +9,17 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fjjukic.furniture4you.ui.theme.ErrorColor
+import com.fjjukic.furniture4you.ui.theme.FieldTextColor
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
+import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
@@ -36,7 +40,8 @@ fun OutlinedInputField(
     placeholder: String,
     onValueChange: (String) -> Unit,
     shouldShowError: Boolean = false,
-    errorMessage: String? = null
+    errorMessage: String? = null,
+    isLastField: Boolean = false
 ) {
     Column(
         modifier = modifier
@@ -48,7 +53,7 @@ fun OutlinedInputField(
             fontSize = 14.sp,
             fontFamily = gelatioFamily,
             fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF909090),
+            color = FieldTextColor,
             modifier = Modifier
                 .padding(bottom = 8.dp)
         )
@@ -58,14 +63,18 @@ fun OutlinedInputField(
             onValueChange = onValueChange,
             placeholder = { Text(placeholder) },
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+            keyboardOptions = KeyboardOptions(
+                imeAction = if (isLastField) ImeAction.Done else ImeAction.Next,
+                keyboardType = KeyboardType.Email
+            )
         )
 
         if (shouldShowError) {
             Text(
                 modifier = Modifier.padding(start = 6.dp, end = 6.dp, top = 6.dp),
-                text = errorMessage ?: "Invalid field",
-                color = Color(0xD0B92828)
+                text = errorMessage ?: stringResource(R.string.error_invalid_field),
+                fontSize = 12.sp,
+                color = ErrorColor
             )
         }
     }

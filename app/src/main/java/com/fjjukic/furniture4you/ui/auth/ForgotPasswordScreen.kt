@@ -77,7 +77,7 @@ fun ForgotPasswordForm(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .wrapContentSize()
-            .padding(top = 36.dp, bottom = 24.dp, start = 24.dp, end = 24.dp)
+            .padding(top = 24.dp, bottom = 24.dp, start = 24.dp, end = 24.dp)
     ) {
         OutlinedInputField(
             modifier = Modifier.padding(top = 24.dp),
@@ -85,7 +85,8 @@ fun ForgotPasswordForm(
             onValueChange = { email = it },
             placeholder = stringResource(R.string.field_email),
             shouldShowError = email.isNotEmpty() && !isValidEmail(email),
-            errorMessage = stringResource(R.string.error_invalid_email)
+            errorMessage = stringResource(R.string.error_invalid_email),
+            isLastField = true
         )
         Button(
             shape = RoundedCornerShape(8.dp),

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,11 +34,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun CategoryItemSelectedPreview() {
-    CategoryItem(
-        modifier = Modifier.padding(start = 20.dp),
-        title = "Popular",
-        isSelected = true
-    ) {}
+    CategoryItem(title = "Popular", isSelected = true) {}
 }
 
 @Preview
@@ -64,8 +61,7 @@ fun CategoryItem(
         Box(
             modifier = Modifier
                 .background(backgroundColor, RoundedCornerShape(12.dp))
-                .width(44.dp)
-                .height(44.dp)
+                .size(44.dp)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null
