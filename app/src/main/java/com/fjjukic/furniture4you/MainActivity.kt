@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Graph.AUTH //CHANGE TO AUTH
+                        startDestination = Graph.MAIN //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen()

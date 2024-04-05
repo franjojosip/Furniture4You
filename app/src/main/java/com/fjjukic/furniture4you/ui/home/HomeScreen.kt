@@ -161,7 +161,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             )
         }
         LazyRow(
-            modifier = Modifier.padding(top = 20.dp, bottom = 12.dp),
+            modifier = Modifier.padding(top = 20.dp, bottom = 8.dp),
             state = rememberLazyListState(),
             userScrollEnabled = true
         ) {
@@ -182,7 +182,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 24.dp),
+            contentPadding = PaddingValues(start = 24.dp, end = 24.dp, bottom = 24.dp, top = 12.dp),
             columns = GridCells.Fixed(2)
         ) {
             items(products) { item ->
