@@ -1,7 +1,6 @@
 package com.fjjukic.furniture4you.ui.main
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -16,9 +15,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.fjjukic.furniture4you.ui.components.BottomNavigationItem
 import com.fjjukic.furniture4you.ui.navigation.MainGraph
@@ -37,7 +36,8 @@ fun MainScreen() {
             ) {
                 BottomNavigationItem().bottomNavigationItems()
                     .forEachIndexed { index, navigationItem ->
-                        val icon = if (index == navigationSelectedItem) navigationItem.selectedIcon else navigationItem.unselectedIcon
+                        val icon =
+                            if (index == navigationSelectedItem) navigationItem.selectedIcon else navigationItem.unselectedIcon
                         NavigationBarItem(
                             selected = index == navigationSelectedItem,
                             icon = {

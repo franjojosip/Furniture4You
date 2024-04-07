@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.fjjukic.furniture4you.ui.ProductDetail
 import com.fjjukic.furniture4you.ui.main.MainScreen
 import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
@@ -30,10 +31,13 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Graph.MAIN //CHANGE TO AUTH
+                        startDestination = "test" //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen()
+                        }
+                        composable("test") {
+                            ProductDetail()
                         }
                         authNavigationGraph(navHostController)
                     }
