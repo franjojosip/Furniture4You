@@ -1,5 +1,6 @@
 package com.fjjukic.furniture4you.ui.productdetail
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -112,9 +113,17 @@ private fun BackButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 
 @Composable
 fun ProductBottomButtons(modifier: Modifier = Modifier) {
+    val todoToast = Toast.makeText(
+        LocalContext.current,
+        stringResource(id = R.string.new_feature_message),
+        Toast.LENGTH_SHORT
+    )
+
     Row(modifier.padding(16.dp)) {
         IconButton(
-            onClick = { },
+            onClick = {
+                todoToast.show()
+            },
             modifier = Modifier
                 .size(60.dp)
                 .clip(RoundedCornerShape(8.dp))
@@ -133,7 +142,9 @@ fun ProductBottomButtons(modifier: Modifier = Modifier) {
                 .padding(start = 16.dp)
                 .height(60.dp)
                 .fillMaxWidth(),
-            onClick = {}
+            onClick = {
+                todoToast.show()
+            }
         ) {
             Text(
                 text = "Add to cart",

@@ -3,7 +3,6 @@ package com.fjjukic.furniture4you.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,18 +38,19 @@ fun ProductItemPreview(modifier: Modifier = Modifier) {
         id = "",
         title = "Black Simple Lamp",
         price = "12.00",
-        imageResId = R.drawable.black_simple_lamp
-    ) {}
+        imageResId = R.drawable.black_simple_lamp,
+        {}
+    )
 }
 
 @Composable
 fun ProductItem(
-    modifier: Modifier = Modifier,
     id: String,
     title: String,
     price: String,
     imageResId: Int,
-    onProductClicked: (String) -> Unit
+    onProductClicked: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.wrapContentSize(),

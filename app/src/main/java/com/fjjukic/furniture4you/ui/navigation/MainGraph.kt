@@ -10,7 +10,11 @@ import androidx.navigation.compose.composable
 import com.fjjukic.furniture4you.ui.home.HomeScreen
 
 @Composable
-fun MainGraph(navHostController: NavHostController, paddingValues: PaddingValues) {
+fun MainGraph(
+    onProductClick: (String) -> Unit,
+    navHostController: NavHostController,
+    paddingValues: PaddingValues
+) {
     NavHost(
         navController = navHostController,
         route = Graph.MAIN,
@@ -18,16 +22,16 @@ fun MainGraph(navHostController: NavHostController, paddingValues: PaddingValues
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
         composable(Screens.MainScreen.Home.route) {
-            HomeScreen()
+            HomeScreen(onProductClick)
         }
         composable(Screens.MainScreen.Favorites.route) {
-            HomeScreen()
+            HomeScreen(onProductClick)
         }
         composable(Screens.MainScreen.Notifications.route) {
-            HomeScreen()
+            HomeScreen(onProductClick)
         }
         composable(Screens.MainScreen.Profile.route) {
-            HomeScreen()
+            HomeScreen(onProductClick)
         }
     }
 }

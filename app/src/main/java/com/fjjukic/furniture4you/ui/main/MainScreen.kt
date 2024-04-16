@@ -1,7 +1,6 @@
 package com.fjjukic.furniture4you.ui.main
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -17,14 +16,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.fjjukic.furniture4you.ui.components.BottomNavigationItem
 import com.fjjukic.furniture4you.ui.navigation.MainGraph
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    onProductClick: (String) -> Unit
+) {
     val navHostController: NavHostController = rememberNavController()
     var navigationSelectedItem by remember { mutableIntStateOf(0) }
 
@@ -64,6 +63,6 @@ fun MainScreen() {
             }
         }
     ) { paddingValues ->
-        MainGraph(navHostController, paddingValues)
+        MainGraph(onProductClick, navHostController, paddingValues)
     }
 }

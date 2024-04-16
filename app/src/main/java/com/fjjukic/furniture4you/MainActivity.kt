@@ -11,10 +11,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.main.MainScreen
 import com.fjjukic.furniture4you.ui.navigation.Graph
+import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
+import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewModel
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
 
@@ -32,13 +33,20 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Graph.TEST //CHANGE TO AUTH
+                        startDestination = Graph.MAIN //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
-                            MainScreen()
+                            MainScreen { productId ->
+                                navHostController.navigate("${Screens.ProductDetail.route}/$productId")
+                            }
                         }
-                        composable(Graph.TEST) {
-                            ProductDetail(viewModel = ProductDetailViewModel(), {})
+                        composable(
+                            route = Screens.ProductDetail.routeWithArgs,
+                            arguments = Screens.ProductDetail.arguments
+                        ) {
+                            ProductDetail(viewModel = ProductDetailViewModel(), {
+                                navHostController.popBackStack()
+                            })
                         }
                         authNavigationGraph(navHostController)
                     }

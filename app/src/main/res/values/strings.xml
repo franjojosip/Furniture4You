@@ -46,6 +46,8 @@
     <string name="content_desc_search">Search Icon</string>
     <string name="content_desc_cart">Cart Icon</string>
 
+    <string name="new_feature_message">This feature will be available soon!</string>
+
     <string name="nav_home">Home</string>
     <string name="nav_favorites">Favorites</string>
     <string name="nav_notifications">Notifications</string>
