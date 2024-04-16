@@ -35,6 +35,13 @@ val gelatioFamily = FontFamily(
     Font(R.font.gelasio_bold, FontWeight.Bold)
 )
 
+val nunitoSansFamily = FontFamily(
+    Font(R.font.nunito_sans_medium, FontWeight.Medium),
+    Font(R.font.nunito_sans_regular, FontWeight.Normal),
+    Font(R.font.nunito_sans_semibold, FontWeight.SemiBold),
+    Font(R.font.nunito_sans_bold, FontWeight.Bold)
+)
+
 
 @Composable
 fun Furniture4YouTheme(

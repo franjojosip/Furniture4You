@@ -29,6 +29,15 @@
     <string name="error_invalid_email">Invalid email (ex. luka@mail.com)</string>
     <string name="error_invalid_password">Invalid password length [6–12]</string>
 
+    <string name="counter_label">%02d</string>
+    <string name="product_price_title">$ %1s</string>
+    <string name="review_count_title">(%1s)</string>
+
+    <plurals name="review_count">
+        <item quantity="one">%1d review</item>
+        <item quantity="other">%1d reviews</item>
+    </plurals>
+
     <string name="content_desc_prelogin_background">Prelogin background</string>
     <string name="content_desc_launcher_icon">Launcher icon</string>
     <string name="content_desc_visibility_icon">Visibility Icon</string>

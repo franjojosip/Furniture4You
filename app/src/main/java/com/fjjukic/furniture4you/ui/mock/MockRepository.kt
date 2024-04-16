@@ -2,10 +2,26 @@ package com.fjjukic.furniture4you.ui.mock
 
 import com.fjjukic.furniture4you.ui.home.CategoryItemModel
 import com.fjjukic.furniture4you.ui.model.Product
+import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
+import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewState
 import ht.ferit.fjjukic.foodlovers.R
 import java.util.UUID
 
 object MockRepository {
+    fun getProductDetailState(): ProductDetailViewState {
+        return ProductDetailViewState(
+            ProductDetail(
+                title = "Minimal Stand",
+                description = "Minimal Stand is made of by natural wood. The design that is very simple and minimal. " +
+                        "This is truly one of the best furnitures in any family for now. " +
+                        "With 3 different colors, you can easily select the best match for your home.",
+                imageUrl = "https://www.sylvie-adan.com/wp-content/uploads/2023/11/bedside-table-ilbro-1-drawer-natural-jysk-internal-bedside-tables_4.jpg",
+                price = 49.99,
+                reviews = 43
+            )
+        )
+    }
+
     fun getCategories(): List<CategoryItemModel> {
         return listOf(
             CategoryItemModel(
