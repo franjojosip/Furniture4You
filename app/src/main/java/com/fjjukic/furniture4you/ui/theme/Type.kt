@@ -12,6 +12,11 @@ val NunitoSansTypography = Typography(
         fontWeight = FontWeight.Medium,
         fontSize = 24.sp,
     ),
+    titleSmall = TextStyle(
+        fontFamily = gelatioFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+    ),
     bodyLarge = TextStyle(
         fontFamily = nunitoSansFamily,
         fontWeight = FontWeight.Bold,
