@@ -6,7 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -23,14 +23,14 @@ import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
-fun ShoppingItemPreview() {
-    ShoppingItem() {}
+fun CartItemPreview() {
+    CartItem({})
 }
 
 @Composable
-fun ShoppingItem(
-    modifier: Modifier = Modifier,
-    onItemSelected: () -> Unit
+fun CartItem(
+    onItemSelected: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     Column(
@@ -39,8 +39,8 @@ fun ShoppingItem(
     ) {
         Box(
             modifier = Modifier
-                .background(Color(0x66606060), RoundedCornerShape(12.dp))
-                .size(44.dp)
+                .background(Color(0x66606060), RoundedCornerShape(6.dp))
+                .padding(6.dp)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null

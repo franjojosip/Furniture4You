@@ -32,6 +32,8 @@
     <string name="counter_label">%02d</string>
     <string name="product_price_title">$ %1s</string>
     <string name="review_count_title">(%1s)</string>
+    <string name="btn_add_to_cart">Add to cart</string>
+    <string name="btn_add_all_to_my_cart">Add all to my cart</string>
 
     <plurals name="review_count">
         <item quantity="one">%1d review</item>
@@ -40,11 +42,14 @@
 
     <string name="content_desc_prelogin_background">Prelogin background</string>
     <string name="content_desc_launcher_icon">Launcher icon</string>
+    <string name="content_desc_product_image">Product image</string>
+    <string name="content_desc_favorite_icon">Favorite icon</string>
     <string name="content_desc_visibility_icon">Visibility Icon</string>
-    <string name="content_desc_icon">Icon</string>
+    <string name="content_desc_rating">Rating Icon</string>
     <string name="content_desc_product">Product image</string>
     <string name="content_desc_search">Search Icon</string>
     <string name="content_desc_cart">Cart Icon</string>
+    <string name="content_desc_back_btn">Back Button Icon</string>
 
     <string name="new_feature_message">This feature will be available soon!</string>
 

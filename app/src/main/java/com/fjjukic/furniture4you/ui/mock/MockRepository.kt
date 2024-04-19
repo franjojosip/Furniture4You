@@ -1,6 +1,7 @@
 package com.fjjukic.furniture4you.ui.mock
 
 import com.fjjukic.furniture4you.ui.home.CategoryItemModel
+import com.fjjukic.furniture4you.ui.home.HomeViewState
 import com.fjjukic.furniture4you.ui.model.Product
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewState
@@ -8,6 +9,13 @@ import ht.ferit.fjjukic.foodlovers.R
 import java.util.UUID
 
 object MockRepository {
+    fun getHomeState(): HomeViewState {
+        return HomeViewState(
+            getCategories(),
+            getProducts()
+        )
+    }
+
     fun getProductDetailState(): ProductDetailViewState {
         return ProductDetailViewState(
             ProductDetail(
@@ -37,7 +45,7 @@ object MockRepository {
                 imageResId = R.drawable.ic_table
             ),
             CategoryItemModel(
-                title = "Armchair",
+                title = "Sofa",
                 imageResId = R.drawable.ic_sofa
             ),
             CategoryItemModel(

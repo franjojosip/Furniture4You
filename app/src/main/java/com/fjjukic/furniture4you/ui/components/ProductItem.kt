@@ -2,7 +2,6 @@ package com.fjjukic.furniture4you.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fjjukic.furniture4you.ui.model.Product
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
 
@@ -35,56 +34,53 @@ import ht.ferit.fjjukic.foodlovers.R
 @Composable
 fun ProductItemPreview(modifier: Modifier = Modifier) {
     ProductItem(
-        id = "",
-        title = "Black Simple Lamp",
-        price = "12.00",
-        imageResId = R.drawable.black_simple_lamp,
+        Product("", "Black Simple Lamp", "12.00", "", "", R.drawable.black_simple_lamp),
         {}
     )
 }
 
 @Composable
 fun ProductItem(
-    id: String,
-    title: String,
-    price: String,
-    imageResId: Int,
+    product: Product,
     onProductClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.wrapContentSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier
+            .wrapContentSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
                 .width(150.dp)
                 .height(200.dp)
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null
-                ) { onProductClicked.invoke(id) }
+                .clickable { onProductClicked.invoke(product.id) }
         ) {
             Image(
                 modifier = Modifier
                     .fillMaxSize()
                     .align(Alignment.Center),
-                painter = painterResource(id = imageResId),
+                painter = painterResource(id = product.imageResId),
                 contentDescription = stringResource(R.string.content_desc_product),
                 contentScale = ContentScale.Crop,
             )
 
-            ShoppingItem(
+            CartItem(
+                {
+                    onProductClicked.invoke(product.id)
+                },
                 modifier = Modifier
                     .wrapContentSize()
                     .align(alignment = Alignment.BottomEnd)
                     .padding(end = 10.dp, bottom = 10.dp)
-            ) {}
+            )
         }
         Text(
-            modifier = Modifier.align(Alignment.Start),
-            text = title,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(top = 8.dp, start = 2.dp, end = 2.dp),
+            text = product.title,
             style = TextStyle(
                 fontSize = 14.sp,
                 fontFamily = gelatioFamily,
@@ -94,8 +90,9 @@ fun ProductItem(
         )
         Text(
             modifier = Modifier
-                .align(Alignment.Start),
-            text = "$ $price",
+                .align(Alignment.Start)
+                .padding(horizontal = 2.dp),
+            text = stringResource(id = R.string.product_price_title, product.price),
             style = TextStyle(
                 fontSize = 14.sp,
                 fontFamily = gelatioFamily,

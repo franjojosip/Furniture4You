@@ -30,5 +30,9 @@ sealed class Screens(val route: String) {
         val arguments = listOf(
             navArgument(productDetailArg) { type = NavType.StringType }
         )
+
+        fun getRouteWithArg(productId: String): String {
+            return "${route}/${productId}"
+        }
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,19 +33,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.fjjukic.furniture4you.ui.components.ColorPalette
 import com.fjjukic.furniture4you.ui.components.ShoppingCounter
-import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
+import com.fjjukic.furniture4you.ui.theme.GelatioTypography
+import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
@@ -83,14 +83,16 @@ fun ProductDetail(
                 productState.selectedProductDetail,
                 productState.counter,
                 viewModel::onIncrementClick,
-                viewModel::onDecrementClick
+                viewModel::onDecrementClick,
+                modifier = Modifier
+                    .padding(24.dp)
             )
         }
     }
 }
 
 @Composable
-private fun BackButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun BackButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Surface(
         modifier = modifier
             .padding(start = 24.dp, top = 16.dp),
@@ -105,7 +107,7 @@ private fun BackButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = ""
+                contentDescription = stringResource(id = R.string.content_desc_back_btn)
             )
         }
     }
@@ -127,12 +129,12 @@ fun ProductBottomButtons(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .size(60.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(Color(0xFFF0F0F0))
+                .background(colorResource(id = R.color.tinted_white))
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_favorite),
-                tint = Color.Black,
-                contentDescription = ""
+                contentDescription = stringResource(id = R.string.content_desc_favorite_icon),
+                tint = Color.Black
             )
         }
         Button(
@@ -147,11 +149,9 @@ fun ProductBottomButtons(modifier: Modifier = Modifier) {
             }
         ) {
             Text(
-                text = "Add to cart",
-                fontSize = 20.sp,
-                fontFamily = gelatioFamily,
-                fontWeight = FontWeight.Medium,
-                color = Color(0xFFFFFFFF)
+                text = stringResource(id = R.string.btn_add_to_cart),
+                style = GelatioTypography.bodyMedium,
+                color = Color.White
             )
         }
     }
@@ -163,19 +163,25 @@ private fun ImageSlider(imageUrl: String, modifier: Modifier = Modifier) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imageUrl)
-                .placeholder(R.drawable.minimal_stand)
+                .fallback(R.drawable.img_minimal_stand)
+                .placeholder(R.drawable.img_minimal_stand)
                 .build(),
-            contentDescription = stringResource(R.string.content_desc_launcher_icon),
+            contentDescription = stringResource(R.string.content_desc_product_image),
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .fillMaxWidth()
+                .aspectRatio(0.95f)
                 .padding(start = 52.dp)
                 .clip(RoundedCornerShape(bottomStart = 40.dp))
         )
         ColorPalette(
-            modifier = Modifier.padding(top = 105.dp, start = 20.dp),
-            colors = listOf(Color.White, Color(0xFFB4916C), Color(0xFFE4CBAD))
+            modifier = Modifier.padding(top = 104.dp, start = 20.dp),
+            colors = listOf(
+                colorResource(id = R.color.color_palette_first),
+                colorResource(id = R.color.color_palette_second),
+                colorResource(id = R.color.color_palette_third)
+            )
         )
     }
 }
@@ -190,26 +196,21 @@ private fun ProductContent(
 ) {
     Column(
         modifier = modifier
-            .padding(24.dp)
             .background(Color.White)
     ) {
         Text(
             text = product.title,
-            fontSize = 24.sp,
-            fontFamily = gelatioFamily,
-            fontWeight = FontWeight.Medium,
-            color = Color(0xFF303030),
+            style = GelatioTypography.titleMedium,
+            color = colorResource(id = R.color.medium_gray),
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                modifier = Modifier.weight(1f),
                 text = stringResource(id = R.string.product_price_title, product.price),
-                fontSize = 30.sp,
-                fontFamily = nunitoSansFamily,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF303030),
+                style = NunitoSansTypography.bodyLarge,
+                color = colorResource(id = R.color.medium_gray),
+                modifier = Modifier.weight(1f),
             )
             ShoppingCounter(
                 value = itemCount,
@@ -224,10 +225,8 @@ private fun ProductContent(
         )
         Text(
             text = product.description,
-            fontSize = 14.sp,
-            fontFamily = nunitoSansFamily,
-            fontWeight = FontWeight.Light,
-            color = Color(0xFF606060),
+            style = NunitoSansTypography.labelSmall,
+            color = colorResource(id = R.color.gray),
             modifier = Modifier.padding(top = 16.dp)
         )
     }
@@ -249,24 +248,20 @@ private fun ReviewItem(rating: Double, numOfReviews: Int, modifier: Modifier = M
     ) {
         Image(
             painter = painterResource(R.drawable.ic_star),
-            contentDescription = stringResource(R.string.content_desc_icon),
-            modifier = Modifier.size(20.dp),
-            colorFilter = ColorFilter.tint(Color(0xFFF2C94C))
+            contentDescription = stringResource(R.string.content_desc_rating),
+            colorFilter = ColorFilter.tint(colorResource(id = R.color.gold)),
+            modifier = Modifier.size(20.dp)
         )
         Text(
             text = rating.toString(),
-            fontSize = 18.sp,
-            fontFamily = nunitoSansFamily,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF303030),
-            modifier = Modifier.padding(start = 10.dp)
+            style = NunitoSansTypography.labelLarge,
+            color = colorResource(id = R.color.medium_gray),
+            modifier = Modifier.padding(start = 8.dp)
         )
         Text(
             text = stringResource(id = R.string.review_count_title, reviewCountFormattedString),
-            fontSize = 14.sp,
-            fontFamily = nunitoSansFamily,
-            fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF808080),
+            style = NunitoSansTypography.labelSmall,
+            color = colorResource(id = R.color.light_gray),
             modifier = Modifier.padding(start = 20.dp)
         )
     }

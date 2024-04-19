@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
@@ -86,10 +85,9 @@ fun ColorPickerItem(
             )
             .clickable(
                 interactionSource = interactionSource,
-                indication = null
-            ) {
-                onItemClicked.invoke()
-            }
+                indication = null,
+                onClick = onItemClicked
+            )
     ) {
         Box(
             modifier = Modifier

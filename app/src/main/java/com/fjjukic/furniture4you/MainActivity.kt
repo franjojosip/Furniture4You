@@ -18,7 +18,9 @@ import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewModel
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,9 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen { productId ->
-                                navHostController.navigate("${Screens.ProductDetail.route}/$productId")
+                                navHostController.navigate(
+                                    Screens.ProductDetail.getRouteWithArg(productId)
+                                )
                             }
                         }
                         composable(
