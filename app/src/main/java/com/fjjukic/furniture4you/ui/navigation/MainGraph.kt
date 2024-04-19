@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.fjjukic.furniture4you.ui.favorite.Favorite
 import com.fjjukic.furniture4you.ui.home.Home
 import com.fjjukic.furniture4you.ui.home.HomeViewModel
 
@@ -28,6 +29,7 @@ fun MainGraph(
             Home(viewModel, onProductClick)
         }
         composable(Screens.MainScreen.Favorites.route) {
+            Favorite({}, {})
         }
         composable(Screens.MainScreen.Notifications.route) {
         }

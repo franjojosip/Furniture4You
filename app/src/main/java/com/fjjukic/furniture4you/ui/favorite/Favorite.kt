@@ -19,7 +19,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fjjukic.furniture4you.ui.productdetail.BackButton
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import ht.ferit.fjjukic.foodlovers.R
 
@@ -44,16 +43,13 @@ fun Favorite(
     Scaffold(
         modifier,
         topBar = {
-            BackButton {
-                onBackClicked.invoke()
-            }
         },
         bottomBar = {
             Button(
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFF242424)),
                 modifier = Modifier
-                    .padding(start = 16.dp)
+                    .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
                     .height(60.dp)
                     .fillMaxWidth(),
                 onClick = {
