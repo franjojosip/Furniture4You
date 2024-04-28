@@ -1,6 +1,5 @@
 package com.fjjukic.furniture4you.ui.cart
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -152,14 +151,7 @@ fun Cart(
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
                         .height(60.dp)
                         .fillMaxWidth(),
-                    onClick = {
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.new_feature_message),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        onCheckoutClicked()
-                    }
+                    onClick = onCheckoutClicked
                 ) {
                     Text(
                         text = stringResource(id = R.string.btn_checkout),

@@ -36,6 +36,7 @@
     <string name="btn_add_to_cart">Add to cart</string>
     <string name="btn_add_all_to_my_cart">Add all to my cart</string>
     <string name="btn_checkout">Check out</string>
+    <string name="btn_submit_order">Submit order</string>
 
     <plurals name="review_count">
         <item quantity="one">%1d review</item>
@@ -64,6 +65,7 @@
     <string name="nav_notifications">Notifications</string>
     <string name="nav_profile">Profile</string>
     <string name="nav_my_cart">My cart</string>
+    <string name="nav_checkout">Check out</string>
 
     <string name="dialog_add_to_cart_title">Items added to cart</string>
     <string name="dialog_add_to_cart_subtitle">Do you want to continue with the shopping or go to checkout?</string>

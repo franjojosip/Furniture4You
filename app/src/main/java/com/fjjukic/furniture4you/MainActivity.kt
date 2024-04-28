@@ -14,6 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fjjukic.furniture4you.ui.cart.Cart
 import com.fjjukic.furniture4you.ui.cart.CartViewModel
+import com.fjjukic.furniture4you.ui.checkout.Checkout
+import com.fjjukic.furniture4you.ui.checkout.CheckoutViewModel
 import com.fjjukic.furniture4you.ui.main.MainScreen
 import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.Screens
@@ -38,7 +40,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Screens.Cart.route //CHANGE TO AUTH
+                        startDestination = Graph.MAIN //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen(
@@ -81,9 +83,21 @@ class MainActivity : ComponentActivity() {
                                     navHostController.popBackStack()
                                 },
                                 onCheckoutClicked = {
-//                                    navHostController.navigate(
-//                                        Screens.Checkout.route
-//                                    )
+                                    navHostController.navigate(
+                                        Screens.Checkout.route
+                                    )
+                                }
+                            )
+                        }
+                        composable(route = Screens.Checkout.route) {
+                            val viewModel = hiltViewModel<CheckoutViewModel>()
+                            Checkout(
+                                viewModel,
+                                onBackClicked = {
+                                    navHostController.popBackStack()
+                                },
+                                onSubmitClicked = {
+                                    /* TODO */
                                 }
                             )
                         }
