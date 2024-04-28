@@ -32,7 +32,7 @@ class CartViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onPromoCodeEntered(newPromoCode: String) {
-        val isNewPromoCode = promoCode == newPromoCode
+        val isNewPromoCode = promoCode != newPromoCode
         if (isNewPromoCode) {
             promoCode = newPromoCode
             discountPercentage = Random.nextDouble(0.00, 0.30)
