@@ -2,6 +2,8 @@ package com.fjjukic.furniture4you.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +20,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,13 +44,14 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun HomePreview() {
-    Home(HomeViewModel(), onProductClicked = {})
+    Home(HomeViewModel(), onProductClicked = {}, onCartClicked = {})
 }
 
 @Composable
 fun Home(
     viewModel: HomeViewModel,
     onProductClicked: (String) -> Unit,
+    onCartClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val homeState by viewModel.homeState.collectAsStateWithLifecycle()
@@ -58,7 +62,7 @@ fun Home(
             .fillMaxSize()
             .background(Color.White)
     ) {
-        HomeHeader(modifier = Modifier.padding(top = 6.dp))
+        HomeHeader(onCartClicked, modifier = Modifier.padding(top = 6.dp))
         CategoryFilter(homeState.categories, selectedCategory, { index ->
             viewModel.setSelectedCategory(index)
         })
@@ -67,7 +71,7 @@ fun Home(
 }
 
 @Composable
-fun HomeHeader(modifier: Modifier) {
+fun HomeHeader(onCartClick: () -> Unit, modifier: Modifier) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -104,7 +108,13 @@ fun HomeHeader(modifier: Modifier) {
             }
         )
         Image(
-            modifier = Modifier.padding(end = 20.dp),
+            modifier = Modifier
+                .padding(end = 20.dp)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = onCartClick
+                ),
             painter = painterResource(id = R.drawable.ic_cart),
             contentDescription = stringResource(id = R.string.content_desc_cart)
         )

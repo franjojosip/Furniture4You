@@ -9,12 +9,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fjjukic.furniture4you.ui.favorite.Favorite
+import com.fjjukic.furniture4you.ui.favorite.FavoriteViewModel
 import com.fjjukic.furniture4you.ui.home.Home
 import com.fjjukic.furniture4you.ui.home.HomeViewModel
 
 @Composable
 fun MainGraph(
     onProductClick: (String) -> Unit,
+    onCartClick: () -> Unit,
     navHostController: NavHostController,
     paddingValues: PaddingValues
 ) {
@@ -26,10 +28,11 @@ fun MainGraph(
     ) {
         composable(Screens.MainScreen.Home.route) {
             val viewModel = hiltViewModel<HomeViewModel>()
-            Home(viewModel, onProductClick)
+            Home(viewModel, onProductClick, onCartClick)
         }
         composable(Screens.MainScreen.Favorites.route) {
-            Favorite({}, {})
+            val viewModel = hiltViewModel<FavoriteViewModel>()
+            Favorite(viewModel, onProductClicked = onProductClick, onCartClicked = onCartClick)
         }
         composable(Screens.MainScreen.Notifications.route) {
         }

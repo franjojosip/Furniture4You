@@ -120,7 +120,7 @@ fun LoginForm(
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xFF303030),
             ), onClick = {
-                onForgotPasswordClicked.invoke()
+                onForgotPasswordClicked()
             })
 
         Button(
@@ -130,9 +130,8 @@ fun LoginForm(
                 .padding(top = 40.dp)
                 .width(260.dp)
                 .align(Alignment.CenterHorizontally),
-            onClick = {
-                onLoginClicked.invoke()
-            }) {
+            onClick = onLoginClicked
+        ) {
             Text(
                 text = stringResource(R.string.login_button),
                 fontSize = 18.sp,

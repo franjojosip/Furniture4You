@@ -31,9 +31,11 @@
 
     <string name="counter_label">%02d</string>
     <string name="product_price_title">$ %1s</string>
+    <string name="product_discount_price_title">-$ %1s</string>
     <string name="review_count_title">(%1s)</string>
     <string name="btn_add_to_cart">Add to cart</string>
     <string name="btn_add_all_to_my_cart">Add all to my cart</string>
+    <string name="btn_checkout">Check out</string>
 
     <plurals name="review_count">
         <item quantity="one">%1d review</item>
@@ -45,16 +47,30 @@
     <string name="content_desc_product_image">Product image</string>
     <string name="content_desc_favorite_icon">Favorite icon</string>
     <string name="content_desc_visibility_icon">Visibility Icon</string>
+    <string name="content_desc_action_start_icon">Action start icon</string>
+    <string name="content_desc_action_end_icon">Action end icon</string>
     <string name="content_desc_rating">Rating Icon</string>
     <string name="content_desc_product">Product image</string>
     <string name="content_desc_search">Search Icon</string>
     <string name="content_desc_cart">Cart Icon</string>
     <string name="content_desc_back_btn">Back Button Icon</string>
+    <string name="content_desc_enter_promo">Enter Promo Button Icon</string>
 
     <string name="new_feature_message">This feature will be available soon!</string>
+    <string name="added_to_cart_message">Successfully added to cart!</string>
 
     <string name="nav_home">Home</string>
     <string name="nav_favorites">Favorites</string>
     <string name="nav_notifications">Notifications</string>
     <string name="nav_profile">Profile</string>
+    <string name="nav_my_cart">My cart</string>
+
+    <string name="dialog_add_to_cart_title">Items added to cart</string>
+    <string name="dialog_add_to_cart_subtitle">Do you want to continue with the shopping or go to checkout?</string>
+    <string name="dialog_add_to_cart_cancel">Open cart</string>
+    <string name="dialog_add_to_cart_continue">Continue shopping</string>
+    <string name="enter_promo_code">Enter your promo code</string>
+    <string name="promo_code_activated">Promo code activated!</string>
+    <string name="promo_code_already_activated">Promo code already activated!</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

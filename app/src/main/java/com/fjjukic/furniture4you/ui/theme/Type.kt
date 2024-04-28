@@ -8,12 +8,12 @@ import androidx.compose.ui.unit.sp
 // Custom typography
 val NunitoSansTypography = Typography(
     titleMedium = TextStyle(
-        fontFamily = gelatioFamily,
+        fontFamily = nunitoSansFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 24.sp,
     ),
     titleSmall = TextStyle(
-        fontFamily = gelatioFamily,
+        fontFamily = nunitoSansFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
     ),
@@ -21,6 +21,11 @@ val NunitoSansTypography = Typography(
         fontFamily = nunitoSansFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 30.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = nunitoSansFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
     ),
     labelSmall = TextStyle(
         fontFamily = nunitoSansFamily,
@@ -41,7 +46,7 @@ val GelatioTypography = Typography(
         fontSize = 24.sp,
     ),
     bodyMedium = TextStyle(
-        fontFamily = nunitoSansFamily,
+        fontFamily = gelatioFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp
     ),

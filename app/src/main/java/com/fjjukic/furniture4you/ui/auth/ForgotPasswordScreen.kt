@@ -55,7 +55,7 @@ fun ForgotPasswordScreen(
     ) {
         Header(subtitle = stringResource(R.string.reset_password_title))
         ForgotPasswordForm {
-            onLoginClicked.invoke()
+            onLoginClicked()
         }
     }
 }
@@ -134,7 +134,7 @@ fun ForgotPasswordForm(
                     append(stringResource(R.string.login_button).uppercase())
                 }
             }, onClick = {
-                onLoginClicked.invoke()
+                onLoginClicked()
             })
 
     }

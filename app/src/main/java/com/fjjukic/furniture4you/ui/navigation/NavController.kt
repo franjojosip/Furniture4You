@@ -24,6 +24,9 @@ sealed class Screens(val route: String) {
         data object Profile : MainScreen("profile_route")
     }
 
+    data object Cart : Screens("cart_route")
+    data object Checkout : Screens("checkout_route")
+
     data object ProductDetail : Screens("product_detail_route") {
         val productDetailArg = "product_id"
         val routeWithArgs = "${route}/{${productDetailArg}}"

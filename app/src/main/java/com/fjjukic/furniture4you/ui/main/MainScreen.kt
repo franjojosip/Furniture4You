@@ -22,7 +22,8 @@ import com.fjjukic.furniture4you.ui.navigation.MainGraph
 
 @Composable
 fun MainScreen(
-    onProductClick: (String) -> Unit
+    onProductClick: (String) -> Unit,
+    onCartClick: () -> Unit
 ) {
     val navHostController: NavHostController = rememberNavController()
     var navigationSelectedItem by rememberSaveable { mutableIntStateOf(0) }
@@ -63,6 +64,6 @@ fun MainScreen(
             }
         }
     ) { paddingValues ->
-        MainGraph(onProductClick, navHostController, paddingValues)
+        MainGraph(onProductClick, onCartClick, navHostController, paddingValues)
     }
 }

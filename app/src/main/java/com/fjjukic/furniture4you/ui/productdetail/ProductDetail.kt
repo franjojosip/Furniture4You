@@ -1,6 +1,5 @@
 package com.fjjukic.furniture4you.ui.productdetail
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,7 +24,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.fjjukic.furniture4you.ui.components.ColorPalette
+import com.fjjukic.furniture4you.ui.components.CustomDialog
 import com.fjjukic.furniture4you.ui.components.ShoppingCounter
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
@@ -50,13 +52,14 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ProductPreviewScreenPreview() {
-    ProductDetail(viewModel = ProductDetailViewModel(), {})
+    ProductDetail(viewModel = ProductDetailViewModel(), {}, {})
 }
 
 @Composable
 fun ProductDetail(
     viewModel: ProductDetailViewModel,
     onBackClicked: () -> Unit,
+    onNavigateToCartClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val productState by viewModel.productState.collectAsStateWithLifecycle()
@@ -65,11 +68,11 @@ fun ProductDetail(
         modifier,
         topBar = {
             BackButton {
-                onBackClicked.invoke()
+                onBackClicked()
             }
         },
         bottomBar = {
-            ProductBottomButtons()
+            ProductBottomButtons(onNavigateToCartClicked)
         }
     ) { paddingValues ->
         Column(
@@ -114,17 +117,26 @@ fun BackButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 }
 
 @Composable
-fun ProductBottomButtons(modifier: Modifier = Modifier) {
-    val todoToast = Toast.makeText(
-        LocalContext.current,
-        stringResource(id = R.string.new_feature_message),
-        Toast.LENGTH_SHORT
-    )
+fun ProductBottomButtons(onNavigateToCartClicked: () -> Unit, modifier: Modifier = Modifier) {
+    var isFavoriteSelected by remember { mutableStateOf(false) }
+    var openDialog by remember { mutableStateOf(false) }
+
+    if (openDialog) {
+        CustomDialog(
+            onContinueClicked = {
+                openDialog = false
+            },
+            onDismissClicked = {
+                openDialog = false
+                onNavigateToCartClicked()
+            }
+        )
+    }
 
     Row(modifier.padding(16.dp)) {
         IconButton(
             onClick = {
-                todoToast.show()
+                isFavoriteSelected = !isFavoriteSelected
             },
             modifier = Modifier
                 .size(60.dp)
@@ -132,20 +144,20 @@ fun ProductBottomButtons(modifier: Modifier = Modifier) {
                 .background(colorResource(id = R.color.tinted_white))
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_favorite),
+                painter = painterResource(id = if (isFavoriteSelected) R.drawable.ic_favorite_black else R.drawable.ic_favorite),
                 contentDescription = stringResource(id = R.string.content_desc_favorite_icon),
                 tint = Color.Black
             )
         }
         Button(
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(Color(0xFF242424)),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
             modifier = Modifier
                 .padding(start = 16.dp)
                 .height(60.dp)
                 .fillMaxWidth(),
             onClick = {
-                todoToast.show()
+                openDialog = true
             }
         ) {
             Text(

@@ -9,9 +9,16 @@
     <color name="dark_gray">#242424</color>
     <color name="gold">#F2C94C</color>
 
+    <color name="color_discount_price">#393939</color>
+
+    <color name="transparent_gray">#66606060</color>
+    <color name="favorite_cart_item_background">#F3F3F3</color>
+
     <color name="color_palette_first">#FFFFFF</color>
     <color name="color_palette_second">#B4916C</color>
     <color name="color_palette_third">#E4CBAD</color>
+
+    <color name="color_placeholder">#999999</color>
 
     <color name="color_category_filter_bg_selected">#303030</color>
     <color name="color_category_filter_bg_unselected">#F5F5F5</color>
@@ -21,4 +28,8 @@
 
     <color name="color_category_filter_txt_selected">#303030</color>
     <color name="color_category_filter_txt_unselected">#909090</color>
+
+
+    <color name="color_dialog_icon">#6650A4</color>
+    <color name="color_dialog_bottom_background">#F1EDFA</color>
 </resources>

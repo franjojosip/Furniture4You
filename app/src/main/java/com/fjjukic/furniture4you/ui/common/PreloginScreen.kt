@@ -27,9 +27,7 @@ import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
-fun PreloginScreenPreview(
-    modifier: Modifier = Modifier
-) {
+fun PreloginScreenPreview() {
     PreloginScreen()
 }
 

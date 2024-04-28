@@ -14,9 +14,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ht.ferit.fjjukic.foodlovers.R
 
@@ -30,7 +33,10 @@ fun CartItemPreview() {
 @Composable
 fun CartItem(
     onItemSelected: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    itemColor: Color = Color.White,
+    itemBackground: Color = colorResource(id = R.color.transparent_gray),
+    itemRadius: Dp = 6.dp
 ) {
 
     Column(
@@ -39,7 +45,7 @@ fun CartItem(
     ) {
         Box(
             modifier = Modifier
-                .background(Color(0x66606060), RoundedCornerShape(6.dp))
+                .background(itemBackground, RoundedCornerShape(itemRadius))
                 .padding(6.dp)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
@@ -49,6 +55,7 @@ fun CartItem(
             Image(
                 modifier = Modifier.align(Alignment.Center),
                 painter = painterResource(id = R.drawable.ic_shopping_cart),
+                colorFilter = ColorFilter.tint(itemColor),
                 contentDescription = "",
                 contentScale = ContentScale.None
             )

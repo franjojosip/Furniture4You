@@ -1,5 +1,6 @@
 package com.fjjukic.furniture4you.ui.mock
 
+import com.fjjukic.furniture4you.ui.cart.CartProduct
 import com.fjjukic.furniture4you.ui.home.CategoryItemModel
 import com.fjjukic.furniture4you.ui.home.HomeViewState
 import com.fjjukic.furniture4you.ui.model.Product
@@ -57,6 +58,12 @@ object MockRepository {
                 imageResId = R.drawable.ic_lamp
             )
         )
+    }
+
+    fun getCartProducts(): List<CartProduct> {
+        return getProducts().take(4).map {
+            CartProduct(it)
+        }
     }
 
     fun getProducts(): List<Product> {
