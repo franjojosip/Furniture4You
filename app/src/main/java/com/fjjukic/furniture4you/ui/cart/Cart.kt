@@ -63,6 +63,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.fields.CustomTextField
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.components.ShoppingCounter
+import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
@@ -149,7 +150,8 @@ fun Cart(
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
                     modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
+                        .padding(bottom = 20.dp)
+                        .padding(horizontal = 20.dp)
                         .height(60.dp)
                         .fillMaxWidth(),
                     onClick = onCheckoutClicked
@@ -318,18 +320,19 @@ fun CartScreenContent(
         itemsIndexed(products) { index, item ->
             key(item.product.id) {
                 CartProductItem(
-                    item.product.id,
-                    item.count,
+                    item,
                     onProductClicked = {
                         onProductClicked(item.product.id)
                     },
                     onRemoveClicked = {
                         onRemoveClicked(item.product.id)
                     },
-                    onCounterIncrement = onCounterIncrement,
-                    onCounterDecrement = onCounterDecrement,
-                    item.product.imageResId,
-                    item.product.price
+                    onCounterIncrement = {
+                        onCounterIncrement(item.product.id)
+                    },
+                    onCounterDecrement = {
+                        onCounterDecrement(item.product.id)
+                    }
                 )
                 if (index != products.size - 1) {
                     HorizontalDivider(
@@ -348,11 +351,12 @@ fun CartScreenContent(
 @Composable
 fun HeaderPreview() {
     Header(
-        title = "My cart",
+        title = stringResource(id = R.string.nav_my_cart),
         startIconResId = R.drawable.ic_search,
         endIconResId = R.drawable.ic_favorite,
-        onStartActionClick = { /*TODO*/ },
-        onEndActionClick = { /*TODO*/ })
+        onStartActionClick = {},
+        onEndActionClick = {}
+    )
 }
 
 @Composable
@@ -401,26 +405,22 @@ fun Header(
 @Composable
 fun CartProductItemPreview() {
     CartProductItem(
-        "",
-        1,
+        MockRepository.getCartProduct(),
         onProductClicked = {},
         onRemoveClicked = {},
-        onCounterIncrement = { _ -> },
-        onCounterDecrement = { _ -> },
-        R.drawable.img_minimal_stand,
-        "24.99"
+        onCounterIncrement = {},
+        onCounterDecrement = {}
     )
 }
 
 @Composable
 fun CartProductItem(
-    productId: String,
-    counterValue: Int,
+    cartProduct: CartProduct,
     onProductClicked: () -> Unit,
     onRemoveClicked: () -> Unit,
-    onCounterIncrement: (String) -> Unit,
-    onCounterDecrement: (String) -> Unit,
-    imageResId: Int, price: String, modifier: Modifier = Modifier
+    onCounterIncrement: () -> Unit,
+    onCounterDecrement: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
@@ -436,7 +436,7 @@ fun CartProductItem(
             modifier = Modifier
                 .size(100.dp)
                 .clip(RoundedCornerShape(8.dp)),
-            painter = painterResource(id = imageResId),
+            painter = painterResource(id = cartProduct.product.imageResId),
             contentDescription = stringResource(R.string.content_desc_product),
             contentScale = ContentScale.Crop,
         )
@@ -452,7 +452,7 @@ fun CartProductItem(
                 maxLines = 2
             )
             Text(
-                text = stringResource(id = R.string.product_price_title, price),
+                text = stringResource(id = R.string.product_price_title, cartProduct.product.price),
                 color = colorResource(id = R.color.dark_gray),
                 style = NunitoSansTypography.titleSmall,
                 modifier = Modifier.padding(top = 6.dp)
@@ -463,9 +463,9 @@ fun CartProductItem(
                 verticalArrangement = Arrangement.Bottom
             ) {
                 ShoppingCounter(
-                    value = counterValue,
-                    onIncrementClick = { onCounterIncrement(productId) },
-                    onDecrementClick = { onCounterDecrement(productId) },
+                    value = cartProduct.count,
+                    onIncrementClick = onCounterIncrement,
+                    onDecrementClick = onCounterDecrement,
                     counterTextColor = colorResource(id = R.color.dark_gray),
                     counterIconTint = colorResource(id = R.color.light_gray),
                     counterIconBackground = colorResource(id = R.color.tinted_white)

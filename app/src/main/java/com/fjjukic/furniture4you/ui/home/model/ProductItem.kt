@@ -15,8 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -24,8 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fjjukic.furniture4you.ui.common.model.Product
 import com.fjjukic.furniture4you.ui.components.CartItem
-import com.fjjukic.furniture4you.ui.model.Product
+import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
 
@@ -34,10 +35,7 @@ import ht.ferit.fjjukic.foodlovers.R
 )
 @Composable
 fun ProductItemPreview(modifier: Modifier = Modifier) {
-    ProductItem(
-        Product("", "Black Simple Lamp", "12.00", "", "", R.drawable.black_simple_lamp),
-        {}
-    )
+    ProductItem(MockRepository.getProducts().first(), {})
 }
 
 @Composable
@@ -86,7 +84,7 @@ fun ProductItem(
                 fontSize = 14.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Normal,
-                color = Color(0xFF606060)
+                color = colorResource(id = R.color.gray)
             )
         )
         Text(
@@ -98,7 +96,7 @@ fun ProductItem(
                 fontSize = 14.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF303030)
+                color = colorResource(id = R.color.medium_gray)
             )
         )
     }

@@ -12,6 +12,9 @@
 
     <color name="color_discount_price">#393939</color>
 
+    <color name="color_palette_selected">#909090</color>
+    <color name="color_palette_unselected">#F0F0F0</color>
+
     <color name="transparent_gray">#66606060</color>
     <color name="favorite_cart_item_background">#F3F3F3</color>
 

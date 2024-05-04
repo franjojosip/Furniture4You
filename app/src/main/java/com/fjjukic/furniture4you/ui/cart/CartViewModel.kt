@@ -17,7 +17,7 @@ class CartViewModel @Inject constructor() : ViewModel() {
     private val _products = MutableStateFlow(MockRepository.getCartProducts())
     val products: StateFlow<List<CartProduct>> = _products
 
-    private val _price = MutableStateFlow(CartPrice(0.00, 0.00))
+    private val _price = MutableStateFlow(CartPrice())
     val price: StateFlow<CartPrice> = _price
 
     private val _showMessage = MutableStateFlow<Message?>(null)

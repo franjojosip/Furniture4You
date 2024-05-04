@@ -26,7 +26,10 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun HeaderPreview() {
-    Header(title = "Hello!", subtitle = "Welcome back")
+    Header(
+        title = stringResource(R.string.header_title_mock),
+        subtitle = stringResource(R.string.header_subtitle_mock)
+    )
 }
 
 @Composable

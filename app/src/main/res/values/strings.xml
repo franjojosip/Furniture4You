@@ -108,4 +108,8 @@
     <string name="choose_delivery_method">Choose delivery method</string>
     <string name="card_information">Card information</string>
     <string name="invalid_card_number">Invalid card number</string>
+    <string name="header_title_mock">Hello!</string>
+    <string name="header_subtitle_mock">Welcome back</string>
+    <string name="make_home">Make home</string>
+    <string name="beautiful">Beautiful</string>
 </resources>

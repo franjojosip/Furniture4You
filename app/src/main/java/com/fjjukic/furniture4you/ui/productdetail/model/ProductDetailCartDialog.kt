@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.components
+package com.fjjukic.furniture4you.ui.productdetail.model
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,7 +33,7 @@ import ht.ferit.fjjukic.foodlovers.R
 
 
 @Composable
-fun CustomDialog(
+fun ProductDetailCartDialog(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
     onContinueClicked: () -> Unit,
@@ -46,7 +46,7 @@ fun CustomDialog(
             dismissOnClickOutside = dismissOnClickOutside
         )
     ) {
-        DialogItem(
+        ProductDetailDialog(
             onDismissClicked = onDismissClicked,
             onContinueClicked = onContinueClicked
         )
@@ -54,7 +54,7 @@ fun CustomDialog(
 }
 
 @Composable
-fun DialogItem(
+fun ProductDetailDialog(
     onDismissClicked: () -> Unit,
     onContinueClicked: () -> Unit,
     modifier: Modifier = Modifier
@@ -77,7 +77,7 @@ fun DialogItem(
                     color = colorResource(id = R.color.color_dialog_icon)
                 ),
                 modifier = Modifier
-                    .padding(top = 35.dp)
+                    .padding(top = 30.dp)
                     .height(70.dp)
                     .fillMaxWidth(),
 
@@ -88,7 +88,7 @@ fun DialogItem(
                     text = stringResource(R.string.dialog_add_to_cart_title),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .padding(top = 5.dp)
+                        .padding(top = 4.dp)
                         .fillMaxWidth(),
                     style = MaterialTheme.typography.labelLarge,
                     maxLines = 2,
@@ -98,7 +98,8 @@ fun DialogItem(
                     text = stringResource(R.string.dialog_add_to_cart_subtitle),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .padding(top = 10.dp, start = 25.dp, end = 25.dp)
+                        .padding(top = 10.dp)
+                        .padding(horizontal = 24.dp)
                         .fillMaxWidth(),
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -117,7 +118,7 @@ fun DialogItem(
                         stringResource(id = R.string.dialog_add_to_cart_cancel),
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.gray),
-                        modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
+                        modifier = Modifier.padding(vertical = 6.dp)
                     )
                 }
                 TextButton(onClick = onContinueClicked) {
@@ -125,7 +126,7 @@ fun DialogItem(
                         stringResource(id = R.string.dialog_add_to_cart_continue),
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.Black,
-                        modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
+                        modifier = Modifier.padding(vertical = 6.dp)
                     )
                 }
             }
@@ -137,5 +138,5 @@ fun DialogItem(
 @Preview
 @Composable
 fun MyDialogUIPreview() {
-    DialogItem({}, {})
+    ProductDetailDialog({}, {})
 }

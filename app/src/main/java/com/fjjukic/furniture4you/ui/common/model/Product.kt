@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.model
+package com.fjjukic.furniture4you.ui.common.model
 
 import androidx.annotation.DrawableRes
 

@@ -44,8 +44,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.ui.common.model.Product
 import com.fjjukic.furniture4you.ui.components.CartItem
-import com.fjjukic.furniture4you.ui.model.Product
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import ht.ferit.fjjukic.foodlovers.R
@@ -63,12 +63,7 @@ fun Favorite(
     onCartClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val todoToast = Toast.makeText(
-        LocalContext.current,
-        stringResource(id = R.string.new_feature_message),
-        Toast.LENGTH_SHORT
-    )
-
+    val context = LocalContext.current
     val products by viewModel.products.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -97,7 +92,11 @@ fun Favorite(
                         .fillMaxWidth()
                         .background(Color.Transparent),
                     onClick = {
-                        todoToast.show()
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.new_feature_message),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 ) {
                     Text(

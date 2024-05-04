@@ -42,9 +42,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.fjjukic.furniture4you.ui.components.CustomDialog
 import com.fjjukic.furniture4you.ui.components.ShoppingCounter
 import com.fjjukic.furniture4you.ui.productdetail.model.ColorPalette
+import com.fjjukic.furniture4you.ui.productdetail.model.ProductDetailCartDialog
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import ht.ferit.fjjukic.foodlovers.R
@@ -122,7 +122,7 @@ fun ProductBottomButtons(onNavigateToCartClicked: () -> Unit, modifier: Modifier
     var openDialog by remember { mutableStateOf(false) }
 
     if (openDialog) {
-        CustomDialog(
+        ProductDetailCartDialog(
             onContinueClicked = {
                 openDialog = false
             },

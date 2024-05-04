@@ -20,8 +20,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
@@ -32,7 +34,7 @@ fun ColorPalettePreview() {
 @Preview
 @Composable
 fun ColorPickerItemPreview() {
-    ColorPickerItem() {}
+    ColorPickerItem({})
 }
 
 @Composable
@@ -53,11 +55,15 @@ fun ColorPalette(
         ) {
             colors.forEachIndexed { index, fillColor ->
                 val isSelected = index == selectedIndex
-                ColorPickerItem(isSelected, fillColor) {
-                    if (!isSelected) {
-                        selectedIndex = index
-                    }
-                }
+                ColorPickerItem(
+                    onItemClicked = {
+                        if (!isSelected) {
+                            selectedIndex = index
+                        }
+                    },
+                    isSelected = isSelected,
+                    fillColor = fillColor,
+                )
                 if (index != colors.size - 1) {
                     Spacer(modifier = Modifier.padding(top = 30.dp))
                 }
@@ -68,18 +74,21 @@ fun ColorPalette(
 
 @Composable
 fun ColorPickerItem(
+    onItemClicked: () -> Unit,
     isSelected: Boolean = false,
     fillColor: Color = Color.Magenta,
-    onItemClicked: () -> Unit
+    modifier: Modifier = Modifier
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    val borderColor = if (isSelected) Color(0xFF909090) else Color(0XFFF0F0F0)
+    val borderColor =
+        if (isSelected) colorResource(id = R.color.color_palette_selected) else colorResource(id = R.color.color_palette_unselected)
+
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(32.dp)
             .clip(CircleShape)
             .border(
-                width = 5.dp,
+                width = 4.dp,
                 color = borderColor,
                 shape = CircleShape
             )

@@ -35,9 +35,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.ui.common.model.Product
 import com.fjjukic.furniture4you.ui.home.model.CategoryFilterItem
+import com.fjjukic.furniture4you.ui.home.model.CategoryItem
 import com.fjjukic.furniture4you.ui.home.model.ProductItem
-import com.fjjukic.furniture4you.ui.model.Product
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
 
@@ -92,7 +93,7 @@ fun HomeHeader(onCartClick: () -> Unit, modifier: Modifier) {
                         color = colorResource(id = R.color.light_gray),
                     )
                 ) {
-                    append("Make home")
+                    append(stringResource(R.string.make_home))
                 }
                 append("\n")
                 withStyle(
@@ -103,7 +104,7 @@ fun HomeHeader(onCartClick: () -> Unit, modifier: Modifier) {
                         color = colorResource(id = R.color.medium_gray),
                     )
                 ) {
-                    append("Beautiful".uppercase())
+                    append(stringResource(R.string.beautiful).uppercase())
                 }
             }
         )
@@ -123,7 +124,7 @@ fun HomeHeader(onCartClick: () -> Unit, modifier: Modifier) {
 
 @Composable
 fun CategoryFilter(
-    categories: List<CategoryItemModel>,
+    categories: List<CategoryItem>,
     selectedCategory: Int,
     onCategorySelected: (Int) -> Unit,
     modifier: Modifier = Modifier
@@ -166,8 +167,3 @@ fun ProductList(
         }
     }
 }
-
-class CategoryItemModel(
-    val title: String,
-    val imageResId: Int
-)

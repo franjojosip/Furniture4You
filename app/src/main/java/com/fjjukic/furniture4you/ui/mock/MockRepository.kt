@@ -6,9 +6,9 @@ import com.fjjukic.furniture4you.ui.checkout.DeliveryOption
 import com.fjjukic.furniture4you.ui.checkout.PaymentInfo
 import com.fjjukic.furniture4you.ui.checkout.PriceInfo
 import com.fjjukic.furniture4you.ui.checkout.ShippingInfo
+import com.fjjukic.furniture4you.ui.common.model.Product
 import com.fjjukic.furniture4you.ui.home.CategoryItemModel
 import com.fjjukic.furniture4you.ui.home.HomeViewState
-import com.fjjukic.furniture4you.ui.model.Product
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewState
 import ht.ferit.fjjukic.foodlovers.R
@@ -104,6 +104,10 @@ object MockRepository {
         return getProducts().take(4).map {
             CartProduct(it)
         }
+    }
+
+    fun getCartProduct(): CartProduct {
+        return CartProduct(getProducts().first())
     }
 
     fun getProducts(): List<Product> {
