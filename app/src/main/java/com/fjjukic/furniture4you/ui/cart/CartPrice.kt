@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.components
+package com.fjjukic.furniture4you.ui.cart
 
 data class CartPrice(
     val fullPrice: Double,

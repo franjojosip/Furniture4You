@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.common
+package com.fjjukic.furniture4you.ui.common.utils
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping

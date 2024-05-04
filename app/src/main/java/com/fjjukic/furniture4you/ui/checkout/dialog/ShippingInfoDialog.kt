@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.fjjukic.furniture4you.ui.checkout.ShippingInfo
-import com.fjjukic.furniture4you.ui.common.OutlinedInputField
+import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import ht.ferit.fjjukic.foodlovers.R
@@ -100,7 +100,9 @@ fun ShippingInformationDialog(
                 onValueChange = {
                     fullName = it
                 },
-                shouldShowError = fullName.isBlank(),
+                isFieldValid = {
+                    it.isNotBlank()
+                },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Text
@@ -114,7 +116,9 @@ fun ShippingInformationDialog(
                 onValueChange = {
                     address = it
                 },
-                shouldShowError = address.isBlank(),
+                isFieldValid = {
+                    it.isNotBlank()
+                },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Text

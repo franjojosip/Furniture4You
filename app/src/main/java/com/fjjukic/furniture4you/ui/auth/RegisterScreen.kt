@@ -33,7 +33,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fjjukic.furniture4you.ui.common.Header
-import com.fjjukic.furniture4you.ui.common.OutlinedInputField
+import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
+import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
+import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
 
@@ -55,14 +57,14 @@ fun RegisterScreen(
             .verticalScroll(rememberScrollState())
     ) {
         Header(subtitle = stringResource(R.string.register_title))
-        RegisterForm(onLoginClicked = onLoginClicked)
+        RegisterForm(onLoginClicked)
     }
 }
 
 @Composable
 fun RegisterForm(
-    modifier: Modifier = Modifier,
-    onLoginClicked: () -> Unit
+    onLoginClicked: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -82,54 +84,63 @@ fun RegisterForm(
             .padding(24.dp)
     ) {
         OutlinedInputField(
+            value = name,
+            placeholder = stringResource(R.string.field_name),
+            onValueChange = { name = it },
+            isFieldValid = {
+                it.isNotBlank()
+            },
             modifier = Modifier
                 .padding(top = 24.dp)
-                .padding(horizontal = 24.dp),
-            value = name,
-            onValueChange = { name = it },
-            placeholder = stringResource(R.string.field_name)
+                .padding(horizontal = 24.dp)
         )
 
-        EmailInputField(Modifier.padding(top = 12.dp), email) {
-            email = it
-        }
+        EmailInputField(
+            value = email,
+            onValueChange = { email = it },
+            modifier = Modifier.padding(top = 12.dp)
+        )
 
-        PasswordInputField(Modifier.padding(top = 12.dp), password, isLastField = false) {
-            password = it
-        }
         PasswordInputField(
-            Modifier.padding(top = 12.dp),
-            confirmPassword,
-            stringResource(R.string.field_confirm_password),
-            true
-        ) {
-            confirmPassword = it
-        }
+            value = password,
+            onValueChange = { password = it },
+            isLastField = false,
+            modifier = Modifier.padding(top = 12.dp)
+        )
+
+        PasswordInputField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            isLastField = true,
+            labelResId = R.string.field_confirm_password,
+            placeholderResId = R.string.field_confirm_password,
+            modifier = Modifier.padding(top = 12.dp),
+        )
 
         Button(
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(Color(0xFF242424)),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
             modifier = modifier
                 .padding(top = 40.dp)
                 .width(260.dp)
                 .align(Alignment.CenterHorizontally),
             onClick = {
-                // Login logic
+                // Register logic
             }) {
             Text(
                 text = stringResource(R.string.login_button_sign_up).uppercase(),
                 fontSize = 18.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Medium,
-                color = Color(0xFFFFFFFF),
+                color = Color.White,
                 modifier = Modifier.padding(6.dp)
             )
         }
 
         ClickableText(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 30.dp, bottom = 40.dp),
+                .padding(vertical = 30.dp)
+                .align(Alignment.CenterHorizontally),
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
@@ -147,13 +158,13 @@ fun RegisterForm(
                         fontSize = 14.sp,
                         fontFamily = gelatioFamily,
                         fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF303030),
+                        color = colorResource(id = R.color.medium_gray),
                     )
                 ) {
                     append(stringResource(R.string.register_button_sign_in).uppercase())
                 }
             }, onClick = {
-                onLoginClicked.invoke()
+                onLoginClicked()
             })
     }
 }

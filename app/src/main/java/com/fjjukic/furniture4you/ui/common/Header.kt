@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,7 +26,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun HeaderPreview() {
-    Header(title = "TITLE", subtitle = "SUBTITLE")
+    Header(title = "Hello!", subtitle = "Welcome back")
 }
 
 @Composable
@@ -72,7 +73,7 @@ fun Header(
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.SemiBold,
                 letterSpacing = 1.2.sp,
-                color = Color(0xFF606060),
+                color = colorResource(id = R.color.gray),
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 24.dp, end = 24.dp, top = 16.dp)
@@ -80,11 +81,11 @@ fun Header(
         }
         if (subtitle != null) {
             Text(
-                text = stringResource(R.string.login_subtitle).uppercase(),
+                text = subtitle.uppercase(),
                 fontSize = 24.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF303030),
+                color = colorResource(id = R.color.medium_gray),
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(top = 12.dp, start = 24.dp, end = 24.dp)

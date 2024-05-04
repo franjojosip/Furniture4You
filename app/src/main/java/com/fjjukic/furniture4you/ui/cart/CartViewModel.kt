@@ -1,7 +1,6 @@
 package com.fjjukic.furniture4you.ui.cart
 
 import androidx.lifecycle.ViewModel
-import com.fjjukic.furniture4you.ui.components.CartPrice
 import com.fjjukic.furniture4you.ui.components.Message
 import com.fjjukic.furniture4you.ui.mock.MockRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

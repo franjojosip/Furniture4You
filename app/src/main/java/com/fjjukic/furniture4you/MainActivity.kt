@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Screens.Checkout.route //CHANGE TO AUTH
+                        startDestination = Graph.AUTH //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen(

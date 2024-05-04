@@ -8,6 +8,7 @@
     <color name="medium_gray">#303030</color>
     <color name="dark_gray">#242424</color>
     <color name="gold">#F2C94C</color>
+    <color name="error">#D0B92828</color>
 
     <color name="color_discount_price">#393939</color>
 
@@ -29,7 +30,7 @@
     <color name="color_category_filter_txt_selected">#303030</color>
     <color name="color_category_filter_txt_unselected">#909090</color>
 
-    <color name="checkout_field_color">#909090</color>
+    <color name="field_title_color">#909090</color>
 
 
     <color name="color_dialog_icon">#6650A4</color>

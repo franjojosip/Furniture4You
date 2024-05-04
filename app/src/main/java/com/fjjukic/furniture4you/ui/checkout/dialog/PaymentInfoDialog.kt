@@ -30,10 +30,10 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.text.isDigitsOnly
 import com.fjjukic.furniture4you.ui.checkout.PaymentInfo
-import com.fjjukic.furniture4you.ui.common.CardNumberTransformation
-import com.fjjukic.furniture4you.ui.common.ExpDateTransformation
-import com.fjjukic.furniture4you.ui.common.OutlinedInputField
-import com.fjjukic.furniture4you.ui.common.PaymentUtils
+import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
+import com.fjjukic.furniture4you.ui.common.utils.CardNumberTransformation
+import com.fjjukic.furniture4you.ui.common.utils.ExpDateTransformation
+import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import ht.ferit.fjjukic.foodlovers.R
@@ -106,7 +106,9 @@ fun CardInformationDialog(
                 onValueChange = {
                     cardHolder = it
                 },
-                shouldShowError = cardHolder.isBlank(),
+                isFieldValid = {
+                    it.isNotBlank()
+                },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Text
@@ -122,7 +124,9 @@ fun CardInformationDialog(
                         cardNumber = it
                     }
                 },
-                shouldShowError = !PaymentUtils.isValidCardNumber(cardNumber),
+                isFieldValid = {
+                    PaymentUtils.isValidCardNumber(it)
+                },
                 errorMessage = stringResource(id = R.string.invalid_card_number),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
@@ -148,7 +152,9 @@ fun CardInformationDialog(
                             cvv = it
                         }
                     },
-                    shouldShowError = !PaymentUtils.isValidCVV(cvv),
+                    isFieldValid = {
+                        PaymentUtils.isValidCVV(it)
+                    },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next,
                         keyboardType = KeyboardType.Number
@@ -165,7 +171,9 @@ fun CardInformationDialog(
                             expDate = it
                         }
                     },
-                    shouldShowError = !PaymentUtils.isValidExpDate(expDate),
+                    isFieldValid = {
+                        PaymentUtils.isValidExpDate(it)
+                    },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done,
                         keyboardType = KeyboardType.Number

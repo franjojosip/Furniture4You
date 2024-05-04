@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.components
+package com.fjjukic.furniture4you.ui.home.model
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fjjukic.furniture4you.ui.components.CartItem
 import com.fjjukic.furniture4you.ui.model.Product
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R

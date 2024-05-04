@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.common
+package com.fjjukic.furniture4you.ui.common.fields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource

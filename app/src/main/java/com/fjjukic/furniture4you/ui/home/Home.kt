@@ -35,8 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fjjukic.furniture4you.ui.components.CategoryFilterItem
-import com.fjjukic.furniture4you.ui.components.ProductItem
+import com.fjjukic.furniture4you.ui.home.model.CategoryFilterItem
+import com.fjjukic.furniture4you.ui.home.model.ProductItem
 import com.fjjukic.furniture4you.ui.model.Product
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R

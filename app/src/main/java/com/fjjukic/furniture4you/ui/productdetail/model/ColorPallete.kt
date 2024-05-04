@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.components
+package com.fjjukic.furniture4you.ui.productdetail.model
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

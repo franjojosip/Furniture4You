@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.components
+package com.fjjukic.furniture4you.ui.home.model
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

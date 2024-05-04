@@ -43,7 +43,7 @@ import com.fjjukic.furniture4you.ui.cart.Header
 import com.fjjukic.furniture4you.ui.checkout.dialog.DeliveryChoiceMenuDialog
 import com.fjjukic.furniture4you.ui.checkout.dialog.PaymentInfoDialog
 import com.fjjukic.furniture4you.ui.checkout.dialog.ShippingInfoDialog
-import com.fjjukic.furniture4you.ui.common.PaymentUtils
+import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
@@ -228,7 +228,7 @@ fun CheckoutItemHeader(label: String, onEditClick: () -> Unit, modifier: Modifie
                 fontSize = 18.sp,
                 fontFamily = nunitoSansFamily,
                 fontWeight = FontWeight.SemiBold,
-                color = colorResource(id = R.color.checkout_field_color)
+                color = colorResource(id = R.color.field_title_color)
             )
         )
         IconButton(

@@ -54,7 +54,7 @@ fun PreloginScreen(
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.SemiBold,
                 letterSpacing = 1.2.sp,
-                color = Color(0xFF606060),
+                color = colorResource(id = R.color.gray),
                 modifier = modifier
                     .align(Alignment.Start)
                     .padding(start = 24.dp, end = 24.dp, top = 30.dp)
@@ -64,10 +64,11 @@ fun PreloginScreen(
                 fontSize = 30.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF303030),
+                color = colorResource(id = R.color.medium_gray),
                 modifier = modifier
                     .align(Alignment.Start)
-                    .padding(top = 12.dp, start = 24.dp, end = 24.dp)
+                    .padding(top = 12.dp)
+                    .padding(horizontal = 24.dp)
             )
             Text(
                 text = stringResource(R.string.prelogin_description),
@@ -81,7 +82,7 @@ fun PreloginScreen(
             )
             Button(
                 shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(Color(0xFF242424)),
+                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
                 modifier = modifier
                     .padding(top = 160.dp)
                     .align(Alignment.CenterHorizontally),
@@ -90,7 +91,7 @@ fun PreloginScreen(
                     text = stringResource(R.string.prelogin_button_get_started),
                     fontSize = 18.sp,
                     fontFamily = gelatioFamily,
-                    color = Color(0xFFFFFFFF),
+                    color = Color.White,
                     modifier = Modifier.padding(6.dp)
                 )
             }
