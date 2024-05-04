@@ -20,7 +20,7 @@ sealed class Screens(val route: String) {
     sealed class MainScreen(route: String) : Screens(route) {
         data object Home : MainScreen("home_route")
         data object Favorites : MainScreen("favorites_route")
-        data object Notifications : MainScreen("notifications_route")
+        data object Notification : MainScreen("notification_route")
         data object Profile : MainScreen("profile_route")
     }
 
@@ -28,6 +28,8 @@ sealed class Screens(val route: String) {
     data object Checkout : Screens("checkout_route")
 
     data object SuccessOrder : Screens("success_order_route")
+
+    data object RatingReview : Screens("rating_review_route")
 
     data object ProductDetail : Screens("product_detail_route") {
         val productDetailArg = "product_id"

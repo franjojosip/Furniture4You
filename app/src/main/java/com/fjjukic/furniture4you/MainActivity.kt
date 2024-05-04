@@ -23,6 +23,8 @@ import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
 import com.fjjukic.furniture4you.ui.order.SuccessOrder
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewModel
+import com.fjjukic.furniture4you.ui.rating.RatingReview
+import com.fjjukic.furniture4you.ui.rating.RatingReviewViewModel
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Graph.AUTH //CHANGE TO AUTH
+                        startDestination = Graph.MAIN //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen(
@@ -62,14 +64,20 @@ class MainActivity : ComponentActivity() {
                             arguments = Screens.ProductDetail.arguments
                         ) {
                             ProductDetail(viewModel = ProductDetailViewModel(),
-                                onBackClicked = {
+                                onBackClick = {
                                     navHostController.popBackStack()
                                 },
-                                onNavigateToCartClicked = {
+                                onNavigateToCartClick = {
                                     navHostController.navigate(
                                         Screens.Cart.route
                                     )
-                                })
+                                },
+                                onReviewClick = {
+                                    navHostController.navigate(
+                                        Screens.RatingReview.route
+                                    )
+                                }
+                            )
                         }
                         composable(route = Screens.Cart.route) {
                             val viewModel = hiltViewModel<CartViewModel>()
@@ -117,6 +125,18 @@ class MainActivity : ComponentActivity() {
                                             inclusive = true
                                         }
                                     }
+                                }
+                            )
+                        }
+                        composable(route = Screens.RatingReview.route) {
+                            val viewModel = hiltViewModel<RatingReviewViewModel>()
+                            RatingReview(
+                                viewModel,
+                                onBackClicked = {
+                                    navHostController.popBackStack()
+                                },
+                                onSubmitClicked = {
+                                    /* TODO */
                                 }
                             )
                         }

@@ -34,7 +34,7 @@ import ht.ferit.fjjukic.foodlovers.R
     showBackground = true
 )
 @Composable
-fun ProductItemPreview(modifier: Modifier = Modifier) {
+fun ProductItemPreview() {
     ProductItem(MockRepository.getProducts().first(), {})
 }
 

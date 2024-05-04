@@ -45,6 +45,7 @@
     <string name="btn_add_all_to_my_cart">Add all to my cart</string>
     <string name="btn_checkout">Check out</string>
     <string name="btn_submit_order">Submit order</string>
+    <string name="btn_write_review">Write a review</string>
 
     <plurals name="review_count">
         <item quantity="one">%1d review</item>
@@ -71,10 +72,11 @@
 
     <string name="nav_home">Home</string>
     <string name="nav_favorites">Favorites</string>
-    <string name="nav_notifications">Notifications</string>
+    <string name="nav_notification">Notification</string>
     <string name="nav_profile">Profile</string>
     <string name="nav_my_cart">My cart</string>
     <string name="nav_checkout">Check out</string>
+    <string name="nav_rating_review">Rating &amp; Review</string>
 
     <string name="dialog_add_to_cart_title">Items added to cart</string>
     <string name="dialog_add_to_cart_subtitle">Do you want to continue with the shopping or go to checkout?</string>
@@ -112,4 +114,7 @@
     <string name="header_subtitle_mock">Welcome back</string>
     <string name="make_home">Make home</string>
     <string name="beautiful">Beautiful</string>
+
+    <string name="notification_archived">Notification archived!</string>
+    <string name="notification_deleted">Notification deleted!</string>
 </resources>

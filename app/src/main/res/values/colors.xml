@@ -10,6 +10,9 @@
     <color name="gold">#F2C94C</color>
     <color name="error">#D0B92828</color>
 
+    <color name="color_notification_background">#F5F5F5</color>
+    <color name="color_notification_background_old">#FFFFFF</color>
+
     <color name="color_discount_price">#393939</color>
 
     <color name="color_palette_selected">#909090</color>
@@ -34,6 +37,12 @@
     <color name="color_category_filter_txt_unselected">#909090</color>
 
     <color name="field_title_color">#909090</color>
+
+    <color name="notification_tag_new">#27AE60</color>
+    <color name="notification_tag_hot">#EB5757</color>
+
+    <color name="swipe_archive_background">#27AE60</color>
+    <color name="swipe_delete_background">#EB5757</color>
 
 
     <color name="color_dialog_icon">#6650A4</color>

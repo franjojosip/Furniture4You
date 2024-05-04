@@ -2,6 +2,8 @@ package com.fjjukic.furniture4you.ui.productdetail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,14 +54,15 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ProductPreviewScreenPreview() {
-    ProductDetail(viewModel = ProductDetailViewModel(), {}, {})
+    ProductDetail(viewModel = ProductDetailViewModel(), {}, {}, {})
 }
 
 @Composable
 fun ProductDetail(
     viewModel: ProductDetailViewModel,
-    onBackClicked: () -> Unit,
-    onNavigateToCartClicked: () -> Unit,
+    onBackClick: () -> Unit,
+    onNavigateToCartClick: () -> Unit,
+    onReviewClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val productState by viewModel.productState.collectAsStateWithLifecycle()
@@ -68,11 +71,11 @@ fun ProductDetail(
         modifier,
         topBar = {
             BackButton {
-                onBackClicked()
+                onBackClick()
             }
         },
         bottomBar = {
-            ProductBottomButtons(onNavigateToCartClicked)
+            ProductBottomButtons(onNavigateToCartClick)
         }
     ) { paddingValues ->
         Column(
@@ -87,6 +90,7 @@ fun ProductDetail(
                 productState.counter,
                 viewModel::onIncrementClick,
                 viewModel::onDecrementClick,
+                onReviewClick,
                 modifier = Modifier
                     .padding(24.dp)
             )
@@ -204,6 +208,7 @@ private fun ProductContent(
     itemCount: Int,
     onIncrementClick: () -> Unit,
     onDecrementClick: () -> Unit,
+    onReviewClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -233,7 +238,8 @@ private fun ProductContent(
 
         ReviewItem(
             rating = product.rating,
-            numOfReviews = product.reviews
+            numOfReviews = product.reviews,
+            onReviewClick = onReviewClick
         )
         Text(
             text = product.description,
@@ -245,7 +251,12 @@ private fun ProductContent(
 }
 
 @Composable
-private fun ReviewItem(rating: Double, numOfReviews: Int, modifier: Modifier = Modifier) {
+private fun ReviewItem(
+    rating: Double,
+    numOfReviews: Int,
+    onReviewClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val resources = LocalContext.current.resources
     val reviewCountFormattedString = remember(numOfReviews, resources) {
         resources.getQuantityString(
@@ -255,7 +266,11 @@ private fun ReviewItem(rating: Double, numOfReviews: Int, modifier: Modifier = M
     }
 
     Row(
-        modifier = modifier,
+        modifier = modifier.clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = null,
+            onClick = onReviewClick
+        ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(

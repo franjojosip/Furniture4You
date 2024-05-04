@@ -9,5 +9,5 @@ data class Product(
     val description: String,
     val imageUrl: String,
     @DrawableRes
-    val imageResId: Int
+    val imageResId: Int,
 )

@@ -181,7 +181,7 @@ fun Cart(
 
 @Preview(showBackground = true)
 @Composable
-fun TotalPriceItemPreview(modifier: Modifier = Modifier) {
+fun TotalPriceItemPreview() {
     TotalPriceItem(price = 130.00, 0.10)
 }
 
@@ -363,7 +363,7 @@ fun HeaderPreview() {
 fun Header(
     title: String,
     startIconResId: Int,
-    endIconResId: Int?,
+    endIconResId: Int? = null,
     onStartActionClick: () -> Unit,
     onEndActionClick: () -> Unit,
     modifier: Modifier = Modifier

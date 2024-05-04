@@ -27,10 +27,10 @@ data class BottomNavigationItem(
                 route = Screens.MainScreen.Favorites.route
             ),
             BottomNavigationItem(
-                label = stringResource(id = R.string.nav_notifications),
+                label = stringResource(id = R.string.nav_notification),
                 selectedIcon = R.drawable.ic_notification_black,
                 unselectedIcon = R.drawable.ic_notification,
-                route = Screens.MainScreen.Notifications.route
+                route = Screens.MainScreen.Notification.route
             ),
             BottomNavigationItem(
                 label = stringResource(id = R.string.nav_profile),
