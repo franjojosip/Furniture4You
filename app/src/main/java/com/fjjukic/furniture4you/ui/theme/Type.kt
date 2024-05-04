@@ -40,6 +40,11 @@ val NunitoSansTypography = Typography(
 )
 
 val GelatioTypography = Typography(
+    titleLarge = TextStyle(
+        fontFamily = gelatioFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 36.sp,
+    ),
     titleMedium = TextStyle(
         fontFamily = gelatioFamily,
         fontWeight = FontWeight.Medium,

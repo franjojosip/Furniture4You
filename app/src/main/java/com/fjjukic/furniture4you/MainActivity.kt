@@ -20,6 +20,7 @@ import com.fjjukic.furniture4you.ui.main.MainScreen
 import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
+import com.fjjukic.furniture4you.ui.order.SuccessOrder
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewModel
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Graph.MAIN //CHANGE TO AUTH
+                        startDestination = Screens.Checkout.route //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen(
@@ -97,7 +98,25 @@ class MainActivity : ComponentActivity() {
                                     navHostController.popBackStack()
                                 },
                                 onSubmitClicked = {
+                                    navHostController.navigate(
+                                        Screens.SuccessOrder.route
+                                    )
+                                }
+                            )
+                        }
+                        composable(route = Screens.SuccessOrder.route) {
+                            SuccessOrder(
+                                onTrackOrdersClicked = {
                                     /* TODO */
+                                },
+                                onBackToHomeClicked = {
+                                    navHostController.navigate(
+                                        Graph.MAIN
+                                    ) {
+                                        popUpTo(Graph.MAIN) {
+                                            inclusive = true
+                                        }
+                                    }
                                 }
                             )
                         }

@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.CustomTextField
+import com.fjjukic.furniture4you.ui.common.PaymentUtils
 import com.fjjukic.furniture4you.ui.components.ShoppingCounter
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
@@ -203,7 +204,7 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
                 Text(
                     text = stringResource(
                         id = R.string.product_price_title,
-                        String.format("%.2f", price)
+                        PaymentUtils.formatPrice(price)
                     ),
                     color = colorResource(id = R.color.color_discount_price),
                     fontWeight = FontWeight.Medium,
@@ -223,7 +224,7 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
                 Text(
                     text = stringResource(
                         id = R.string.product_discount_price_title,
-                        String.format("%.2f", price * discount)
+                        PaymentUtils.formatPrice(price * discount)
                     ),
                     color = colorResource(id = R.color.color_discount_price),
                     fontWeight = FontWeight.Medium,
@@ -233,7 +234,7 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
         }
         Row {
             Text(
-                text = "Total:",
+                text = stringResource(id = R.string.total_label),
                 color = colorResource(id = R.color.color_discount_price),
                 style = NunitoSansTypography.bodyMedium,
                 modifier = Modifier.weight(1f)
@@ -241,7 +242,7 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
             Text(
                 text = stringResource(
                     id = R.string.product_price_title,
-                    String.format("%.2f", price - (price * discount))
+                    PaymentUtils.formatPrice(price - (price * discount))
                 ),
                 color = colorResource(id = R.color.medium_gray),
                 style = NunitoSansTypography.bodyMedium
@@ -263,7 +264,7 @@ fun PromoCodeField(
             .fillMaxWidth()
             .height(44.dp)
             .background(Color.White),
-        elevation = CardDefaults.elevatedCardElevation(4.dp)
+        elevation = CardDefaults.elevatedCardElevation(3.dp)
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),

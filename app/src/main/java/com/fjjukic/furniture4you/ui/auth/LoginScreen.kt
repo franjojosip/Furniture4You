@@ -56,13 +56,12 @@ fun LoginScreenPreview() {
 
 @Composable
 fun LoginScreen(
-    modifier: Modifier = Modifier,
     onForgotPasswordClicked: () -> Unit,
     onRegisterClicked: () -> Unit,
     onLoginClicked: () -> Unit
 ) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
             .verticalScroll(rememberScrollState())
@@ -71,16 +70,16 @@ fun LoginScreen(
             title = stringResource(R.string.login_title),
             subtitle = stringResource(R.string.login_subtitle)
         )
-        LoginForm(modifier, onForgotPasswordClicked, onRegisterClicked, onLoginClicked)
+        LoginForm(onForgotPasswordClicked, onRegisterClicked, onLoginClicked)
     }
 }
 
 @Composable
 fun LoginForm(
-    modifier: Modifier = Modifier,
     onForgotPasswordClicked: () -> Unit,
     onRegisterClicked: () -> Unit,
-    onLoginClicked: () -> Unit
+    onLoginClicked: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var password by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -98,12 +97,18 @@ fun LoginForm(
             .padding(top = 24.dp, bottom = 24.dp, start = 24.dp, end = 24.dp)
     ) {
         OutlinedInputField(
-            modifier = Modifier.padding(top = 24.dp),
+            modifier = Modifier
+                .padding(top = 24.dp)
+                .padding(horizontal = 24.dp),
             value = email,
             onValueChange = { email = it },
             placeholder = stringResource(R.string.field_email),
             shouldShowError = email.isNotEmpty() && !isValidEmail(email),
-            errorMessage = stringResource(R.string.error_invalid_email)
+            errorMessage = stringResource(R.string.error_invalid_email),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Email
+            )
         )
         PasswordInputField(Modifier.padding(top = 12.dp), password, isLastField = true) {
             password = it

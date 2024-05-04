@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -81,7 +82,9 @@ fun RegisterForm(
             .padding(24.dp)
     ) {
         OutlinedInputField(
-            modifier = Modifier.padding(top = 24.dp),
+            modifier = Modifier
+                .padding(top = 24.dp)
+                .padding(horizontal = 24.dp),
             value = name,
             onValueChange = { name = it },
             placeholder = stringResource(R.string.field_name)
@@ -133,7 +136,7 @@ fun RegisterForm(
                         fontSize = 14.sp,
                         fontFamily = gelatioFamily,
                         fontWeight = FontWeight.Medium,
-                        color = Color(0xFF808080),
+                        color = colorResource(id = R.color.light_gray),
                     )
                 ) {
                     append(stringResource(R.string.register_have_account))

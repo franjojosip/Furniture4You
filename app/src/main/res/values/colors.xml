@@ -29,6 +29,8 @@
     <color name="color_category_filter_txt_selected">#303030</color>
     <color name="color_category_filter_txt_unselected">#909090</color>
 
+    <color name="checkout_field_color">#909090</color>
+
 
     <color name="color_dialog_icon">#6650A4</color>
     <color name="color_dialog_bottom_background">#F1EDFA</color>

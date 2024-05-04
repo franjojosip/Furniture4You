@@ -1,6 +1,11 @@
 package com.fjjukic.furniture4you.ui.mock
 
 import com.fjjukic.furniture4you.ui.cart.CartProduct
+import com.fjjukic.furniture4you.ui.checkout.CheckoutViewState
+import com.fjjukic.furniture4you.ui.checkout.DeliveryOption
+import com.fjjukic.furniture4you.ui.checkout.PaymentInfo
+import com.fjjukic.furniture4you.ui.checkout.PriceInfo
+import com.fjjukic.furniture4you.ui.checkout.ShippingInfo
 import com.fjjukic.furniture4you.ui.home.CategoryItemModel
 import com.fjjukic.furniture4you.ui.home.HomeViewState
 import com.fjjukic.furniture4you.ui.model.Product
@@ -14,6 +19,41 @@ object MockRepository {
         return HomeViewState(
             getCategories(),
             getProducts()
+        )
+    }
+
+    fun getCheckoutViewState(): CheckoutViewState {
+        val deliveryOptions = getDeliveryOptions()
+
+        return CheckoutViewState(
+            selectedDelivery = deliveryOptions.first(),
+            deliveryOptions = deliveryOptions,
+            shippingInfo = getShippingInfo(),
+            priceInfo = getPriceInfo(),
+            paymentInfo = getPaymentInfo()
+        )
+    }
+
+    fun getShippingInfo(): ShippingInfo {
+        return ShippingInfo(
+            fullName = "Bruno Fernandes",
+            address = "25 rue Robert Latouche, Nice, 06200, Côte D’azur, France",
+        )
+    }
+
+    fun getPriceInfo(): PriceInfo {
+        return PriceInfo(
+            orderPrice = getCartProducts().sumOf { it.product.price.toDouble() },
+            deliveryPrice = 6.00
+        )
+    }
+
+    fun getPaymentInfo(): PaymentInfo {
+        return PaymentInfo(
+            cardHolder = "Bruno Fernandes",
+            cardNumber = "1234567812343444",
+            cvv = "123",
+            expDate = "1223"
         )
     }
 
@@ -155,6 +195,26 @@ object MockRepository {
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
                 R.drawable.simple_desk
+            )
+        )
+    }
+
+    fun getDeliveryOptions(): List<DeliveryOption> {
+        return listOf(
+            DeliveryOption(
+                iconResId = R.drawable.ic_delivery,
+                description = "Fast (2–3 days)",
+                price = 6.00
+            ),
+            DeliveryOption(
+                iconResId = R.drawable.ic_delivery,
+                description = "Normal (4–5 days)",
+                price = 4.50
+            ),
+            DeliveryOption(
+                iconResId = R.drawable.ic_delivery,
+                description = "Slow (7–10 days)",
+                price = 3.00
             )
         )
     }

@@ -25,6 +25,14 @@
     <string name="field_confirm_password">Confirm Password</string>
     <string name="field_email">Email</string>
 
+    <string name="field_shipping_fullname">Full name</string>
+    <string name="field_shipping_address">Address</string>
+
+    <string name="field_card_number">Card number</string>
+    <string name="field_card_holder">Card holder</string>
+    <string name="field_card_cvv">CVV</string>
+    <string name="field_card_exp_date">MM / YY</string>
+
     <string name="error_invalid_field">Invalid field</string>
     <string name="error_invalid_email">Invalid email (ex. luka@mail.com)</string>
     <string name="error_invalid_password">Invalid password length [6–12]</string>
@@ -56,6 +64,7 @@
     <string name="content_desc_cart">Cart Icon</string>
     <string name="content_desc_back_btn">Back Button Icon</string>
     <string name="content_desc_enter_promo">Enter Promo Button Icon</string>
+    <string name="content_desc_edit">Edit Icon</string>
 
     <string name="new_feature_message">This feature will be available soon!</string>
     <string name="added_to_cart_message">Successfully added to cart!</string>
@@ -75,4 +84,28 @@
     <string name="promo_code_activated">Promo code activated!</string>
     <string name="promo_code_already_activated">Promo code already activated!</string>
     <string name="dismiss">Dismiss</string>
+
+    <string name="order_label">Order:</string>
+    <string name="delivery_label">Delivery:</string>
+    <string name="total_label">Total:</string>
+
+    <string name="shipping_address">Shipping Address</string>
+    <string name="shipping_information">Shipping information</string>
+
+    <string name="delivery_method">Delivery method</string>
+
+    <string name="payment">Payment</string>
+    <string name="payment_method_mock">Bruno Fernandes</string>
+    <string name="payment_method_number_mock">**** **** **** 3947</string>
+
+    <string name="order_success_title">Success!</string>
+    <string name="order_success_subtitle">Your order will be delivered soon.\nThank you for choosing our app!</string>
+    <string name="order_success_btn_track_orders">Track your orders</string>
+    <string name="order_success_btn_back_to_home">Back to home</string>
+
+    <string name="delivery_choice_btn_confirm">Confirm</string>
+    <string name="delivery_choice_btn_cancel">Cancel</string>
+    <string name="choose_delivery_method">Choose delivery method</string>
+    <string name="card_information">Card information</string>
+    <string name="invalid_card_number">Invalid card number</string>
 </resources>
