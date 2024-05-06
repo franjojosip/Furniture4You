@@ -215,14 +215,20 @@ fun ShippingAddress(
 @Preview
 @Composable
 fun CheckoutItemHeaderPreview() {
-    CheckoutItemHeader(stringResource(id = R.string.shipping_address), {})
+    CheckoutItemHeader(stringResource(id = R.string.shipping_address), onEditClick = {})
 }
 
 @Composable
-fun CheckoutItemHeader(label: String, onEditClick: () -> Unit, modifier: Modifier = Modifier) {
-    Row {
+fun CheckoutItemHeader(
+    label: String,
+    modifier: Modifier = Modifier,
+    onEditClick: (() -> Unit)? = null
+) {
+    Row(
+        modifier = modifier
+    ) {
         Text(
-            modifier = modifier.weight(1f),
+            modifier = Modifier.weight(1f),
             text = label,
             style = TextStyle(
                 fontSize = 18.sp,
@@ -231,15 +237,17 @@ fun CheckoutItemHeader(label: String, onEditClick: () -> Unit, modifier: Modifie
                 color = colorResource(id = R.color.field_title_color)
             )
         )
-        IconButton(
-            onClick = onEditClick,
-            modifier = Modifier.size(24.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_edit),
-                tint = colorResource(id = R.color.medium_gray),
-                contentDescription = stringResource(id = R.string.content_desc_edit)
-            )
+        if (onEditClick != null) {
+            IconButton(
+                onClick = onEditClick,
+                modifier = Modifier.size(24.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_edit),
+                    tint = colorResource(id = R.color.medium_gray),
+                    contentDescription = stringResource(id = R.string.content_desc_edit)
+                )
+            }
         }
     }
 }

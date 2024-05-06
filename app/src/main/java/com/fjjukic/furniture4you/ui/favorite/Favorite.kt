@@ -53,13 +53,14 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun FavoritePreview() {
-    Favorite(FavoriteViewModel(), {}, {})
+    Favorite(FavoriteViewModel(), {}, {}, {})
 }
 
 @Composable
 fun Favorite(
     viewModel: FavoriteViewModel,
     onProductClicked: (String) -> Unit,
+    onSearchClicked: () -> Unit,
     onCartClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -74,8 +75,8 @@ fun Favorite(
                 title = stringResource(id = R.string.nav_favorites),
                 startIconResId = R.drawable.ic_search,
                 endIconResId = R.drawable.ic_cart,
-                onStartActionClick = { /*TODO*/ },
-                onEndActionClick = { /*TODO*/ },
+                onStartActionClick = onSearchClicked,
+                onEndActionClick = onCartClicked,
                 modifier = Modifier.background(Color.White)
             )
         },
@@ -171,8 +172,8 @@ fun HeaderPreview() {
         title = "My cart",
         startIconResId = R.drawable.ic_search,
         endIconResId = R.drawable.ic_favorite,
-        onStartActionClick = { /*TODO*/ },
-        onEndActionClick = { /*TODO*/ })
+        onStartActionClick = {},
+        onEndActionClick = {})
 }
 
 @Composable

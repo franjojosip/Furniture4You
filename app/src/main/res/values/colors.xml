@@ -47,4 +47,7 @@
 
     <color name="color_dialog_icon">#6650A4</color>
     <color name="color_dialog_bottom_background">#F1EDFA</color>
+
+    <color name="color_switch_enabled">#27AE60</color>
+    <color name="color_switch_disabled">#E6E6E6</color>
 </resources>

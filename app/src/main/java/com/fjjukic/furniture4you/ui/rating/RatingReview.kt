@@ -76,7 +76,7 @@ fun RatingReview(
                 title = stringResource(id = R.string.nav_rating_review),
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClicked,
-                onEndActionClick = { /*TODO*/ },
+                onEndActionClick = {},
                 modifier = Modifier.background(Color.White)
             )
         },

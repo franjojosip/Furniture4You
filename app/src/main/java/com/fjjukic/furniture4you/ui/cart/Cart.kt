@@ -261,6 +261,7 @@ fun PromoCodeField(
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     var promoCode by remember { mutableStateOf("") }
+    var promoCodeEntered by remember { mutableStateOf(false) }
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -277,6 +278,7 @@ fun PromoCodeField(
                 onTextChanged = { newText ->
                     promoCode = newText
                 },
+                isEnabled = !promoCodeEntered,
                 placeholder = stringResource(id = R.string.enter_promo_code),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -285,8 +287,12 @@ fun PromoCodeField(
             IconButton(
                 onClick = {
                     focusManager.clearFocus()
-                    if (promoCode.isNotBlank()) {
+                    if (promoCode.isNotBlank() && promoCodeEntered) {
+                        promoCode = ""
+                        promoCodeEntered = false
+                    } else if (promoCode.isNotBlank()) {
                         onPromoCodeEntered(promoCode)
+                        promoCodeEntered = true
                     }
                 },
                 modifier = Modifier
@@ -295,7 +301,7 @@ fun PromoCodeField(
                     .background(colorResource(id = R.color.medium_gray))
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_next),
+                    painter = painterResource(id = if (promoCodeEntered) R.drawable.ic_trash else R.drawable.ic_next),
                     tint = Color.White,
                     contentDescription = stringResource(id = R.string.content_desc_enter_promo)
                 )
@@ -363,10 +369,10 @@ fun HeaderPreview() {
 fun Header(
     title: String,
     startIconResId: Int,
+    modifier: Modifier = Modifier,
     endIconResId: Int? = null,
     onStartActionClick: () -> Unit,
-    onEndActionClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onEndActionClick: () -> Unit
 ) {
     Row(
         modifier = modifier

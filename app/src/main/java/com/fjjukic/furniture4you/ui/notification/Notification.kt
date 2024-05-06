@@ -291,7 +291,7 @@ fun NotificationItem(
             Text(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(end = 16.dp),
+                    .padding(end = 16.dp, bottom = 1.dp),
                 text = notification.tag.tag,
                 fontFamily = nunitoSansFamily,
                 fontSize = 14.sp,

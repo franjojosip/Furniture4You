@@ -13,6 +13,8 @@ import com.fjjukic.furniture4you.ui.notification.NotificationModel
 import com.fjjukic.furniture4you.ui.notification.NotificationTag
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewState
+import com.fjjukic.furniture4you.ui.profile.SettingsViewState
+import com.fjjukic.furniture4you.ui.rating.MyReviewModel
 import com.fjjukic.furniture4you.ui.rating.RatingReviewViewState
 import com.fjjukic.furniture4you.ui.rating.Review
 import ht.ferit.fjjukic.foodlovers.R
@@ -352,6 +354,29 @@ object MockRepository {
                 date = "20/03/2023",
                 imageResId = R.drawable.img_person_three
             )
+        )
+    }
+
+    fun getMyReviews(): List<MyReviewModel> {
+        return getProducts().map {
+            MyReviewModel(
+                title = it.title,
+                price = it.price,
+                date = "25/03/2024",
+                description = "Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price",
+                imageResId = it.imageResId
+            )
+        }
+    }
+
+    fun getSettingsViewState(): SettingsViewState {
+        return SettingsViewState(
+            name = "Bruno Fernandes",
+            email = "bruno2304@gmail.com",
+            password = "*********",
+            salesState = true,
+            newArrivalsState = false,
+            deliveryStatusChangeState = false
         )
     }
 }

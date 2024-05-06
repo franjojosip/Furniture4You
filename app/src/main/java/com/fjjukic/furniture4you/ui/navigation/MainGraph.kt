@@ -14,18 +14,22 @@ import com.fjjukic.furniture4you.ui.home.Home
 import com.fjjukic.furniture4you.ui.home.HomeViewModel
 import com.fjjukic.furniture4you.ui.notification.Notification
 import com.fjjukic.furniture4you.ui.notification.NotificationViewModel
+import com.fjjukic.furniture4you.ui.profile.Profile
 
 @Composable
 fun MainGraph(
     onProductClick: (String) -> Unit,
+    onSearchClicked: () -> Unit,
     onCartClick: () -> Unit,
+    onMyReviewsClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     navHostController: NavHostController,
     paddingValues: PaddingValues
 ) {
     NavHost(
         navController = navHostController,
         route = Graph.MAIN,
-        startDestination = Screens.MainScreen.Notification.route,
+        startDestination = Screens.MainScreen.Profile.route,
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
         composable(Screens.MainScreen.Home.route) {
@@ -34,7 +38,12 @@ fun MainGraph(
         }
         composable(Screens.MainScreen.Favorites.route) {
             val viewModel = hiltViewModel<FavoriteViewModel>()
-            Favorite(viewModel, onProductClicked = onProductClick, onCartClicked = onCartClick)
+            Favorite(
+                viewModel,
+                onProductClicked = onProductClick,
+                onSearchClicked = onSearchClicked,
+                onCartClicked = onCartClick
+            )
         }
         composable(Screens.MainScreen.Notification.route) {
             val viewModel = hiltViewModel<NotificationViewModel>()
@@ -46,6 +55,12 @@ fun MainGraph(
             )
         }
         composable(Screens.MainScreen.Profile.route) {
+            Profile(
+                onSearchClick = {},
+                onLogoutClick = {},
+                onMyReviewsClick = onMyReviewsClick,
+                onSettingsClick = onSettingsClick
+            )
         }
     }
 }

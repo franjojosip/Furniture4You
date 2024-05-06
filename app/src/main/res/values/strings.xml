@@ -77,6 +77,8 @@
     <string name="nav_my_cart">My cart</string>
     <string name="nav_checkout">Check out</string>
     <string name="nav_rating_review">Rating &amp; Review</string>
+    <string name="nav_my_reviews">My reviews</string>
+    <string name="nav_settings">Settings</string>
 
     <string name="dialog_add_to_cart_title">Items added to cart</string>
     <string name="dialog_add_to_cart_subtitle">Do you want to continue with the shopping or go to checkout?</string>
@@ -91,9 +93,12 @@
     <string name="delivery_label">Delivery:</string>
     <string name="total_label">Total:</string>
 
+    <string name="personal_information">Personal Information</string>
+
     <string name="shipping_address">Shipping Address</string>
     <string name="shipping_information">Shipping information</string>
 
+    <string name="payment_method">Payment method</string>
     <string name="delivery_method">Delivery method</string>
 
     <string name="payment">Payment</string>
@@ -117,4 +122,21 @@
 
     <string name="notification_archived">Notification archived!</string>
     <string name="notification_deleted">Notification deleted!</string>
+
+
+    <string name="label_name">Name</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_notification">Notifications</string>
+    <string name="label_sales">Sales</string>
+    <string name="label_new_arrivals">New arrivals</string>
+    <string name="label_delivery_status_changes">Delivery status changes</string>
+    <string name="label_help_center">Help Center</string>
+    <string name="label_faq">FAQ</string>
+    <string name="label_contact_us">Contact us</string>
+    <string name="label_return">Return information</string>
+    <string name="label_delivery">Delivery information</string>
+
+    <string name="label_my_orders">My orders</string>
+    <string name="label_shipping_addresses">Shipping Addresses</string>
 </resources>

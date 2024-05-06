@@ -15,6 +15,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,6 +36,7 @@ fun CustomTextField(
     placeholder: String,
     modifier: Modifier = Modifier,
     singleLine: Boolean = true,
+    isEnabled: Boolean = true
 ) {
     BasicTextField(
         value = fieldValue.uppercase(),
@@ -54,6 +58,30 @@ fun CustomTextField(
             fontFamily = nunitoSansFamily,
             fontSize = 16.sp
         ),
+        enabled = isEnabled,
+        visualTransformation = {
+            val isBlank = it.text.isBlank()
+            val transformedText = if (isBlank) it.text else "#${it.text}"
+
+            TransformedText(
+                text = AnnotatedString(transformedText),
+                offsetMapping = object : OffsetMapping {
+                    override fun originalToTransformed(offset: Int): Int {
+                        return when (isBlank) {
+                            true -> 0
+                            else -> it.text.length + 1
+                        }
+                    }
+
+                    override fun transformedToOriginal(offset: Int): Int {
+                        return when (isBlank) {
+                            true -> 0
+                            else -> it.text.length
+                        }
+                    }
+                }
+            )
+        },
         interactionSource = remember { MutableInteractionSource() }
     ) { innerTextField ->
         Box(

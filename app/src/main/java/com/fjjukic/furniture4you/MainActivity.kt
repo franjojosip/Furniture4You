@@ -23,6 +23,10 @@ import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
 import com.fjjukic.furniture4you.ui.order.SuccessOrder
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewModel
+import com.fjjukic.furniture4you.ui.profile.Settings
+import com.fjjukic.furniture4you.ui.profile.SettingsViewModel
+import com.fjjukic.furniture4you.ui.rating.MyReview
+import com.fjjukic.furniture4you.ui.rating.MyReviewViewModel
 import com.fjjukic.furniture4you.ui.rating.RatingReview
 import com.fjjukic.furniture4you.ui.rating.RatingReviewViewModel
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
@@ -52,10 +56,17 @@ class MainActivity : ComponentActivity() {
                                         Screens.ProductDetail.getRouteWithArg(productId)
                                     )
                                 },
+                                onSearchClicked = {
+                                    /* TODO */
+                                },
                                 onCartClick = {
-                                    navHostController.navigate(
-                                        Screens.Cart.route
-                                    )
+                                    navHostController.navigate(Screens.Cart.route)
+                                },
+                                onMyReviewsClick = {
+                                    navHostController.navigate(Screens.MyReview.route)
+                                },
+                                onSettingsClick = {
+                                    navHostController.navigate(Screens.Settings.route)
                                 }
                             )
                         }
@@ -137,6 +148,27 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onSubmitClicked = {
                                     /* TODO */
+                                }
+                            )
+                        }
+                        composable(route = Screens.MyReview.route) {
+                            val viewModel = hiltViewModel<MyReviewViewModel>()
+                            MyReview(
+                                viewModel,
+                                onBackClicked = {
+                                    navHostController.popBackStack()
+                                },
+                                onSubmitClicked = {
+                                    /* TODO */
+                                }
+                            )
+                        }
+                        composable(route = Screens.Settings.route) {
+                            val viewModel = hiltViewModel<SettingsViewModel>()
+                            Settings(
+                                viewModel,
+                                onBackClicked = {
+                                    navHostController.popBackStack()
                                 }
                             )
                         }
