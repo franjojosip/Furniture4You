@@ -32,10 +32,10 @@ import ht.ferit.fjjukic.foodlovers.R
 fun PasswordInputField(
     value: String,
     onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
     isLastField: Boolean = false,
     labelResId: Int = R.string.field_password,
-    placeholderResId: Int = R.string.field_password,
-    modifier: Modifier = Modifier
+    placeholderResId: Int = R.string.field_password
 ) {
     var isError by remember { mutableStateOf(false) }
     var passwordVisibility by remember { mutableStateOf(false) }

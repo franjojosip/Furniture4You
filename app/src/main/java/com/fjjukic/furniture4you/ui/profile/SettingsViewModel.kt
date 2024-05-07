@@ -28,4 +28,16 @@ class SettingsViewModel @Inject constructor() : ViewModel() {
             }
         }
     }
+
+    fun onEditClick(personalInformation: PersonalInformation) {
+        _uiState.update {
+            it.copy(personalInformation = personalInformation)
+        }
+    }
+
+    fun onPasswordChange(value: String) {
+        _uiState.update {
+            it.copy(password = value.replace(Regex("\\S"), "*"))
+        }
+    }
 }

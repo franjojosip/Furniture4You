@@ -15,6 +15,7 @@ import com.fjjukic.furniture4you.ui.home.HomeViewModel
 import com.fjjukic.furniture4you.ui.notification.Notification
 import com.fjjukic.furniture4you.ui.notification.NotificationViewModel
 import com.fjjukic.furniture4you.ui.profile.Profile
+import com.fjjukic.furniture4you.ui.profile.ProfileViewModel
 
 @Composable
 fun MainGraph(
@@ -55,7 +56,9 @@ fun MainGraph(
             )
         }
         composable(Screens.MainScreen.Profile.route) {
+            val viewModel = hiltViewModel<ProfileViewModel>()
             Profile(
+                viewModel,
                 onSearchClick = {},
                 onLogoutClick = {},
                 onMyReviewsClick = onMyReviewsClick,

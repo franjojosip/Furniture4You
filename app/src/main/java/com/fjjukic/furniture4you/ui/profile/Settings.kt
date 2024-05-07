@@ -38,6 +38,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.cart.Header
 import com.fjjukic.furniture4you.ui.checkout.CheckoutItemHeader
+import com.fjjukic.furniture4you.ui.profile.dialog.PasswordChangeDialog
+import com.fjjukic.furniture4you.ui.profile.dialog.PersonalInformationChangeDialog
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 import ht.ferit.fjjukic.foodlovers.R
 
@@ -52,6 +54,34 @@ fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
     val context = LocalContext.current
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var openPersonalInformationDialog by remember { mutableStateOf(false) }
+    var passwordDialog by remember { mutableStateOf(false) }
+
+    if (openPersonalInformationDialog) {
+        PersonalInformationChangeDialog(
+            uiState.personalInformation,
+            onContinueClicked = {
+                openPersonalInformationDialog = false
+                viewModel.onEditClick(it)
+            },
+            onDismissClicked = {
+                openPersonalInformationDialog = false
+            }
+        )
+    }
+
+    if (passwordDialog) {
+        PasswordChangeDialog(
+            uiState.password,
+            onContinueClicked = {
+                passwordDialog = false
+                viewModel.onPasswordChange(it)
+            },
+            onDismissClicked = {
+                passwordDialog = false
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -73,25 +103,35 @@ fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
         ) {
             CheckoutItemHeader(
                 label = stringResource(R.string.personal_information),
-                onEditClick = {},
+                onEditClick = {
+                    openPersonalInformationDialog = true
+                },
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .padding(horizontal = 20.dp)
             )
-            PersonalInformationCard(stringResource(id = R.string.label_name), uiState.name)
+            PersonalInformationCard(
+                stringResource(id = R.string.label_name),
+                uiState.personalInformation.name
+            )
             PersonalInformationCard(
                 stringResource(id = R.string.label_email),
-                uiState.email
+                uiState.personalInformation.email
             )
 
             CheckoutItemHeader(
                 label = stringResource(R.string.label_password),
-                onEditClick = {},
+                onEditClick = {
+                    passwordDialog = true
+                },
                 modifier = Modifier
                     .padding(top = 40.dp)
                     .padding(horizontal = 20.dp)
             )
-            PersonalInformationCard(stringResource(id = R.string.label_password), uiState.password)
+            PersonalInformationCard(
+                stringResource(id = R.string.label_password),
+                uiState.password.replace(Regex("\\S"), "*")
+            )
 
             CheckoutItemHeader(
                 label = stringResource(R.string.label_notification),

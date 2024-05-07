@@ -139,4 +139,10 @@
 
     <string name="label_my_orders">My orders</string>
     <string name="label_shipping_addresses">Shipping Addresses</string>
+
+    <string name="desc_my_orders">Already have 10 orders</string>
+    <string name="desc_shipping_addresses">03 Addresses</string>
+    <string name="desc_payment_method">You have 2 cards</string>
+    <string name="desc_my_reviews">Reviews for 5 items</string>
+    <string name="desc_settings">Notification, Password, FAQ, Contact us</string>
 </resources>

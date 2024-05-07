@@ -13,6 +13,7 @@ import com.fjjukic.furniture4you.ui.notification.NotificationModel
 import com.fjjukic.furniture4you.ui.notification.NotificationTag
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewState
+import com.fjjukic.furniture4you.ui.profile.PersonalInformation
 import com.fjjukic.furniture4you.ui.profile.SettingsViewState
 import com.fjjukic.furniture4you.ui.rating.MyReviewModel
 import com.fjjukic.furniture4you.ui.rating.RatingReviewViewState
@@ -371,12 +372,21 @@ object MockRepository {
 
     fun getSettingsViewState(): SettingsViewState {
         return SettingsViewState(
-            name = "Bruno Fernandes",
-            email = "bruno2304@gmail.com",
-            password = "*********",
+            personalInformation = PersonalInformation(
+                name = "Bruno Fernandes",
+                email = "bruno2304@gmail.com",
+            ),
+            password = "bruno12345",
             salesState = true,
             newArrivalsState = false,
             deliveryStatusChangeState = false
+        )
+    }
+
+    fun getPersonalInformation(): PersonalInformation {
+        return PersonalInformation(
+            name = "Bruno Fernandes",
+            email = "bruno2304@gmail.com",
         )
     }
 }

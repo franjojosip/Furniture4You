@@ -14,11 +14,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.cart.Header
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 import ht.ferit.fjjukic.foodlovers.R
@@ -34,17 +35,18 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ProfilePreview() {
-    Profile({}, {}, {}, {})
+    Profile(ProfileViewModel(), {}, {}, {}, {})
 }
 
 @Composable
 fun Profile(
+    viewModel: ProfileViewModel,
     onSearchClick: () -> Unit,
     onLogoutClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
-    val context = LocalContext.current
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -88,7 +90,7 @@ fun Profile(
                 ) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = "Bruno Fernandes",
+                        text = uiState.personalInformation.name,
                         fontFamily = nunitoSansFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
@@ -98,7 +100,7 @@ fun Profile(
                     )
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = "bruno.fernandes@gmail.com",
+                        text = uiState.personalInformation.email,
                         fontFamily = nunitoSansFamily,
                         fontSize = 14.sp,
                         maxLines = 1,
@@ -109,27 +111,27 @@ fun Profile(
             }
             ClickableField(
                 title = stringResource(id = R.string.label_my_orders),
-                subtitle = "Already have 10 orders",
+                subtitle = stringResource(R.string.desc_my_orders),
                 onClick = { /*TODO*/ }
             )
             ClickableField(
                 title = stringResource(id = R.string.label_shipping_addresses),
-                subtitle = "3 Addresses",
+                subtitle = stringResource(R.string.desc_shipping_addresses),
                 onClick = { /*TODO*/ }
             )
             ClickableField(
                 title = stringResource(id = R.string.payment_method),
-                subtitle = "You have 2 cards",
+                subtitle = stringResource(R.string.desc_payment_method),
                 onClick = { /*TODO*/ }
             )
             ClickableField(
                 title = stringResource(id = R.string.nav_my_reviews),
-                subtitle = "Reviews for 5 items",
+                subtitle = stringResource(R.string.desc_my_reviews),
                 onClick = onMyReviewsClick
             )
             ClickableField(
                 title = stringResource(id = R.string.nav_settings),
-                subtitle = "Notification, Password, FAQ, Contact us",
+                subtitle = stringResource(R.string.desc_settings),
                 onClick = onSettingsClick
             )
         }
