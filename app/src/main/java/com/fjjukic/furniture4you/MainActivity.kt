@@ -21,6 +21,8 @@ import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
 import com.fjjukic.furniture4you.ui.order.SuccessOrder
+import com.fjjukic.furniture4you.ui.payment.PaymentMethod
+import com.fjjukic.furniture4you.ui.payment.PaymentMethodViewModel
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewModel
 import com.fjjukic.furniture4you.ui.profile.Settings
@@ -61,6 +63,9 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onCartClick = {
                                     navHostController.navigate(Screens.Cart.route)
+                                },
+                                onPaymentMethodClick = {
+                                    navHostController.navigate(Screens.PaymentMethod.route)
                                 },
                                 onMyReviewsClick = {
                                     navHostController.navigate(Screens.MyReview.route)
@@ -169,6 +174,18 @@ class MainActivity : ComponentActivity() {
                                 viewModel,
                                 onBackClicked = {
                                     navHostController.popBackStack()
+                                }
+                            )
+                        }
+                        composable(route = Screens.PaymentMethod.route) {
+                            val viewModel = hiltViewModel<PaymentMethodViewModel>()
+                            PaymentMethod(
+                                viewModel,
+                                onBackClick = {
+                                    navHostController.popBackStack()
+                                },
+                                onCardAddClick = {
+                                    /* TODO */
                                 }
                             )
                         }

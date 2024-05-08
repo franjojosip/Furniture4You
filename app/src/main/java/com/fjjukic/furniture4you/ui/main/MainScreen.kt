@@ -29,6 +29,7 @@ fun MainScreen(
     onProductClick: (String) -> Unit,
     onSearchClicked: () -> Unit,
     onCartClick: () -> Unit,
+    onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -87,6 +88,7 @@ fun MainScreen(
             onProductClick,
             onSearchClicked,
             onCartClick,
+            onPaymentMethodClick,
             onMyReviewsClick,
             onSettingsClick,
             navHostController,

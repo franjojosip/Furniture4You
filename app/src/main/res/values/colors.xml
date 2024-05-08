@@ -50,4 +50,7 @@
 
     <color name="color_switch_enabled">#27AE60</color>
     <color name="color_switch_disabled">#E6E6E6</color>
+
+    <color name="color_card_title">#D4D4D4</color>
+    <color name="color_default_payment_text">#222222</color>
 </resources>

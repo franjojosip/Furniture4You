@@ -22,6 +22,7 @@ fun MainGraph(
     onProductClick: (String) -> Unit,
     onSearchClicked: () -> Unit,
     onCartClick: () -> Unit,
+    onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
     onSettingsClick: () -> Unit,
     navHostController: NavHostController,
@@ -61,6 +62,7 @@ fun MainGraph(
                 viewModel,
                 onSearchClick = {},
                 onLogoutClick = {},
+                onPaymentMethodClick = onPaymentMethodClick,
                 onMyReviewsClick = onMyReviewsClick,
                 onSettingsClick = onSettingsClick
             )

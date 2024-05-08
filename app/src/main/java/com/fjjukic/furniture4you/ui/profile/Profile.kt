@@ -35,7 +35,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ProfilePreview() {
-    Profile(ProfileViewModel(), {}, {}, {}, {})
+    Profile(ProfileViewModel(), {}, {}, {}, {}, {})
 }
 
 @Composable
@@ -43,6 +43,7 @@ fun Profile(
     viewModel: ProfileViewModel,
     onSearchClick: () -> Unit,
     onLogoutClick: () -> Unit,
+    onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -122,7 +123,7 @@ fun Profile(
             ClickableField(
                 title = stringResource(id = R.string.payment_method),
                 subtitle = stringResource(R.string.desc_payment_method),
-                onClick = { /*TODO*/ }
+                onClick = onPaymentMethodClick
             )
             ClickableField(
                 title = stringResource(id = R.string.nav_my_reviews),

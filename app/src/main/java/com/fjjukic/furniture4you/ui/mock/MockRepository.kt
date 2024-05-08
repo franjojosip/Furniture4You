@@ -11,6 +11,7 @@ import com.fjjukic.furniture4you.ui.home.HomeViewState
 import com.fjjukic.furniture4you.ui.home.model.CategoryItem
 import com.fjjukic.furniture4you.ui.notification.NotificationModel
 import com.fjjukic.furniture4you.ui.notification.NotificationTag
+import com.fjjukic.furniture4you.ui.payment.PaymentCard
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewState
 import com.fjjukic.furniture4you.ui.profile.PersonalInformation
@@ -387,6 +388,25 @@ object MockRepository {
         return PersonalInformation(
             name = "Bruno Fernandes",
             email = "bruno2304@gmail.com",
+        )
+    }
+
+    fun getPaymentCards(): List<PaymentCard> {
+        return listOf(
+            PaymentCard(
+                cardNumber = "1234 1234 1234 3947",
+                cardHolder = "Jimmy Cutler",
+                cvv = "154",
+                expDate = "03/27",
+                isDefault = true
+            ),
+            PaymentCard(
+                cardNumber = "1234 1234 1234 3191",
+                cardHolder = "Ben Parker",
+                cvv = "184",
+                expDate = "07/23",
+                isDefault = true
+            ),
         )
     }
 }

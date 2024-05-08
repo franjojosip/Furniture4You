@@ -32,6 +32,7 @@ sealed class Screens(val route: String) {
     data object RatingReview : Screens("rating_review_route")
     data object MyReview : Screens("my_review_route")
     data object Settings : Screens("settings_route")
+    data object PaymentMethod : Screens("payment_method_route")
 
     data object ProductDetail : Screens("product_detail_route") {
         val productDetailArg = "product_id"
