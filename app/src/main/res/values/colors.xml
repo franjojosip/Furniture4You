@@ -25,7 +25,7 @@
     <color name="color_palette_second">#B4916C</color>
     <color name="color_palette_third">#E4CBAD</color>
 
-    <color name="color_placeholder">#999999</color>
+    <color name="color_placeholder">#B2B2B2</color>
 
     <color name="color_category_filter_bg_selected">#303030</color>
     <color name="color_category_filter_bg_unselected">#F5F5F5</color>
@@ -53,4 +53,9 @@
 
     <color name="color_card_title">#D4D4D4</color>
     <color name="color_default_payment_text">#222222</color>
+
+    <color name="color_checkbox_checked">#222222</color>
+    <color name="color_checkbox_unchecked">#9B9B9B</color>
+
+    <color name="color_fab_add_content">#222222</color>
 </resources>

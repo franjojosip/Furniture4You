@@ -97,7 +97,8 @@ fun PersonalInformationDialog(
                     .padding(top = 24.dp, bottom = 16.dp)
                     .padding(horizontal = 24.dp),
                 value = name,
-                placeholder = stringResource(R.string.field_name),
+                label = stringResource(R.string.field_name),
+                placeholder = stringResource(R.string.placeholder_name),
                 onValueChange = {
                     name = it
                 },

@@ -21,6 +21,7 @@ import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
 import com.fjjukic.furniture4you.ui.order.SuccessOrder
+import com.fjjukic.furniture4you.ui.payment.AddPaymentMethod
 import com.fjjukic.furniture4you.ui.payment.PaymentMethod
 import com.fjjukic.furniture4you.ui.payment.PaymentMethodViewModel
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
@@ -31,6 +32,8 @@ import com.fjjukic.furniture4you.ui.rating.MyReview
 import com.fjjukic.furniture4you.ui.rating.MyReviewViewModel
 import com.fjjukic.furniture4you.ui.rating.RatingReview
 import com.fjjukic.furniture4you.ui.rating.RatingReviewViewModel
+import com.fjjukic.furniture4you.ui.shipping.ShippingAddressSetting
+import com.fjjukic.furniture4you.ui.shipping.ShippingAddressViewModel
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,7 +52,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Graph.MAIN //CHANGE TO AUTH
+                        startDestination = Screens.ShippingAddressSetting.route //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen(
@@ -180,6 +183,30 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screens.PaymentMethod.route) {
                             val viewModel = hiltViewModel<PaymentMethodViewModel>()
                             PaymentMethod(
+                                viewModel,
+                                onBackClick = {
+                                    navHostController.popBackStack()
+                                },
+                                onCardAddClick = {
+                                    navHostController.navigate(Screens.AddPaymentMethod.route)
+                                }
+                            )
+                        }
+                        composable(route = Screens.AddPaymentMethod.route) {
+                            val viewModel = hiltViewModel<PaymentMethodViewModel>()
+                            AddPaymentMethod(
+                                viewModel,
+                                onBackClick = {
+                                    navHostController.popBackStack()
+                                },
+                                onCardAddClick = {
+                                    /* TODO */
+                                }
+                            )
+                        }
+                        composable(route = Screens.ShippingAddressSetting.route) {
+                            val viewModel = hiltViewModel<ShippingAddressViewModel>()
+                            ShippingAddressSetting(
                                 viewModel,
                                 onBackClick = {
                                     navHostController.popBackStack()

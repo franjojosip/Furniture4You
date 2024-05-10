@@ -96,7 +96,8 @@ fun ShippingInformationDialog(
                     .padding(top = 24.dp, bottom = 16.dp)
                     .padding(horizontal = 24.dp),
                 value = fullName,
-                placeholder = stringResource(R.string.field_shipping_fullname),
+                label = stringResource(R.string.field_shipping_fullname),
+                placeholder = stringResource(R.string.placeholder_name),
                 onValueChange = {
                     fullName = it
                 },
@@ -112,7 +113,8 @@ fun ShippingInformationDialog(
             OutlinedInputField(
                 modifier = Modifier.padding(horizontal = 24.dp),
                 value = address,
-                placeholder = stringResource(R.string.field_shipping_address),
+                label = stringResource(R.string.field_shipping_address),
+                placeholder = stringResource(R.string.placeholder_shipping_address),
                 onValueChange = {
                     address = it
                 },
@@ -143,7 +145,7 @@ fun ShippingInformationDialog(
                 TextButton(onClick = {
                     if (fullName.isNotEmpty() && address.isNotEmpty()) {
                         onContinueClicked(
-                            ShippingInfo(fullName, address)
+                            ShippingInfo(fullName = fullName, address = address)
                         )
                     }
                 }) {

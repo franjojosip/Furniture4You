@@ -85,7 +85,8 @@ fun RegisterForm(
     ) {
         OutlinedInputField(
             value = name,
-            placeholder = stringResource(R.string.field_name),
+            label = stringResource(R.string.field_name),
+            placeholder = stringResource(R.string.placeholder_name),
             onValueChange = { name = it },
             isFieldValid = {
                 it.isNotBlank()
@@ -113,7 +114,7 @@ fun RegisterForm(
             onValueChange = { confirmPassword = it },
             isLastField = true,
             labelResId = R.string.field_confirm_password,
-            placeholderResId = R.string.field_confirm_password,
+            placeholderResId = R.string.placeholder_password,
             modifier = Modifier.padding(top = 12.dp),
         )
 

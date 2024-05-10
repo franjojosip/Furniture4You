@@ -49,6 +49,24 @@ object MockRepository {
         )
     }
 
+    fun getShippingAddresses(): List<ShippingInfo> {
+        return listOf(
+            ShippingInfo(
+                fullName = "Bruno Fernandes",
+                address = "25 rue Robert Latouche, Nice, 06200, Côte D’azur, France",
+                isDefault = true
+            ),
+            ShippingInfo(
+                fullName = "Antonio Vivaldi",
+                address = "25 rue Robert Latouche, Nice, 06200, Côte D’azur, France",
+            ),
+            ShippingInfo(
+                fullName = "Mark Johnson",
+                address = "25 rue Robert Latouche, Nice, 06200, Côte D’azur, France",
+            )
+        )
+    }
+
     fun getPriceInfo(): PriceInfo {
         return PriceInfo(
             orderPrice = getCartProducts().sumOf { it.product.price.toDouble() },
@@ -394,19 +412,31 @@ object MockRepository {
     fun getPaymentCards(): List<PaymentCard> {
         return listOf(
             PaymentCard(
-                cardNumber = "1234 1234 1234 3947",
+                cardNumber = "1234123412343947",
                 cardHolder = "Jimmy Cutler",
                 cvv = "154",
-                expDate = "03/27",
+                expDate = "0327",
+                vendorLogoResId = R.drawable.ic_mastercard_tinted,
                 isDefault = true
             ),
             PaymentCard(
-                cardNumber = "1234 1234 1234 3191",
+                cardNumber = "1234123412343191",
                 cardHolder = "Ben Parker",
                 cvv = "184",
-                expDate = "07/23",
-                isDefault = true
+                expDate = "0723",
+                vendorLogoResId = R.drawable.ic_visa,
             ),
+        )
+    }
+
+    fun getMockCard(): PaymentCard {
+        return PaymentCard(
+            cardNumber = "123412341234XXXX",
+            cardHolder = "XXXXXX",
+            cvv = "XXX",
+            expDate = "XXXX",
+            vendorLogoResId = R.drawable.ic_mastercard_tinted,
+            isDefault = true
         )
     }
 }

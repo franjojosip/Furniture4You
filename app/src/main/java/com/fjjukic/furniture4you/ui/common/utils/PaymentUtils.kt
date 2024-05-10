@@ -13,7 +13,7 @@ object PaymentUtils {
 
     fun maskCardNumber(cardNumber: String): String {
         return cardNumber.chunked(4).joinToString(separator = " ")
-            .replace("\\d(?=.*\\d{4})".toRegex(), "*")
+            .replace("\\w(?=.*\\w{4})".toRegex(), "*")
     }
 
     fun isValidCardInformation(
@@ -24,6 +24,10 @@ object PaymentUtils {
     ): Boolean {
         return cardHolder.isNotEmpty() && isValidCardNumber(cardNumber)
                 && isValidCVV(cvv) && isValidExpDate(expDate)
+    }
+
+    fun formatExpDate(value: String): String {
+        return value.chunked(2).joinToString("/")
     }
 
     fun isValidCVV(cvv: String): Boolean {

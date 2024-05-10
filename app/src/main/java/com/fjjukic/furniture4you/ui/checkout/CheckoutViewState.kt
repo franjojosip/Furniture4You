@@ -23,8 +23,10 @@ data class DeliveryOption(
 )
 
 data class ShippingInfo(
+    val id: String = UUID.randomUUID().toString(),
     val fullName: String,
-    val address: String
+    val address: String,
+    val isDefault: Boolean = false
 )
 
 

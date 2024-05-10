@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
@@ -30,6 +31,7 @@ import ht.ferit.fjjukic.foodlovers.R
 fun OutlinedInputFieldPreview() {
     OutlinedInputField(
         value = "",
+        label = "Label",
         placeholder = "Preview",
         isFieldValid = { true },
         onValueChange = {},
@@ -40,13 +42,14 @@ fun OutlinedInputFieldPreview() {
 @Composable
 fun OutlinedInputField(
     value: String,
+    label: String,
     placeholder: String,
     onValueChange: (String) -> Unit,
     isFieldValid: (String) -> Boolean,
+    modifier: Modifier = Modifier,
     errorMessage: String? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    modifier: Modifier = Modifier
 ) {
     var isError by remember { mutableStateOf(false) }
 
@@ -55,7 +58,7 @@ fun OutlinedInputField(
             .fillMaxWidth()
     ) {
         Text(
-            text = placeholder,
+            text = label,
             fontSize = 14.sp,
             fontFamily = gelatioFamily,
             fontWeight = FontWeight.SemiBold,
@@ -70,7 +73,12 @@ fun OutlinedInputField(
                 onValueChange(it)
                 isError = !isFieldValid(it)
             },
-            placeholder = { Text(placeholder) },
+            placeholder = {
+                Text(
+                    placeholder,
+                    color = colorResource(id = R.color.color_placeholder)
+                )
+            },
             singleLine = true,
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions

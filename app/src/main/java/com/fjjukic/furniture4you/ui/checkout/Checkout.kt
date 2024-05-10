@@ -110,7 +110,9 @@ fun Checkout(
             ShippingAddress(
                 uiState.shippingInfo,
                 viewModel::onShippingInfoChanged,
-                modifier = Modifier.padding(top = 20.dp)
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .padding(horizontal = 20.dp)
             )
             Payment(
                 uiState.paymentInfo,
@@ -141,7 +143,8 @@ fun ShippingAddressPreview() {
 fun ShippingAddress(
     shippingInfo: ShippingInfo,
     onEditClick: (ShippingInfo) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    hasHeader: Boolean = true
 ) {
     var openDialog by remember { mutableStateOf(false) }
 
@@ -157,16 +160,18 @@ fun ShippingAddress(
             }
         )
     }
-    Column(modifier = modifier.padding(horizontal = 20.dp)) {
-        CheckoutItemHeader(
-            label = stringResource(R.string.shipping_address),
-            onEditClick = {
-                openDialog = true
-            }
-        )
+    Column(modifier = modifier) {
+        if (hasHeader) {
+            CheckoutItemHeader(
+                label = stringResource(R.string.shipping_address),
+                onEditClick = {
+                    openDialog = true
+                },
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+        }
         Card(
             modifier = Modifier
-                .padding(top = 12.dp)
                 .fillMaxWidth(),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 3.dp
@@ -175,21 +180,43 @@ fun ShippingAddress(
                 containerColor = Color.White
             )
         ) {
-            Text(
-                modifier = Modifier.padding(
-                    top = 16.dp,
-                    start = 20.dp,
-                    end = 20.dp,
-                    bottom = 10.dp
-                ),
-                text = shippingInfo.fullName,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontFamily = nunitoSansFamily,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(id = R.color.medium_gray)
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                            start = 20.dp,
+                            end = 20.dp,
+                            bottom = 10.dp
+                        )
+                        .weight(1f),
+                    text = shippingInfo.fullName,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = nunitoSansFamily,
+                        fontWeight = FontWeight.Bold,
+                        color = colorResource(id = R.color.medium_gray)
+                    )
                 )
-            )
+                if (!hasHeader) {
+                    IconButton(
+                        onClick = {
+                            openDialog = true
+                        },
+                        modifier = Modifier
+                            .padding(end = 20.dp)
+                            .size(24.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_edit),
+                            tint = colorResource(id = R.color.medium_gray),
+                            contentDescription = stringResource(id = R.string.content_desc_edit)
+                        )
+                    }
+                }
+            }
             HorizontalDivider(
                 color = colorResource(id = R.color.tinted_white),
                 thickness = 2.dp
