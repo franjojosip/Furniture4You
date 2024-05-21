@@ -19,6 +19,7 @@ import com.fjjukic.furniture4you.ui.profile.SettingsViewState
 import com.fjjukic.furniture4you.ui.rating.MyReviewModel
 import com.fjjukic.furniture4you.ui.rating.RatingReviewViewState
 import com.fjjukic.furniture4you.ui.rating.Review
+import com.fjjukic.furniture4you.ui.shipping.MenuItem
 import ht.ferit.fjjukic.foodlovers.R
 import java.util.UUID
 
@@ -43,27 +44,85 @@ object MockRepository {
     }
 
     fun getShippingInfo(): ShippingInfo {
-        return ShippingInfo(
-            fullName = "Bruno Fernandes",
-            address = "25 rue Robert Latouche, Nice, 06200, Côte D’azur, France",
-        )
+        return getShippingAddresses().first()
     }
 
     fun getShippingAddresses(): List<ShippingInfo> {
+        val country = getCountries().first()
+        val city = getCities().first()
         return listOf(
             ShippingInfo(
                 fullName = "Bruno Fernandes",
                 address = "25 rue Robert Latouche, Nice, 06200, Côte D’azur, France",
+                zipCode = "12345",
+                country = country,
+                city = city,
                 isDefault = true
             ),
             ShippingInfo(
                 fullName = "Antonio Vivaldi",
                 address = "25 rue Robert Latouche, Nice, 06200, Côte D’azur, France",
+                zipCode = "12345",
+                country = country,
+                city = city,
             ),
             ShippingInfo(
                 fullName = "Mark Johnson",
                 address = "25 rue Robert Latouche, Nice, 06200, Côte D’azur, France",
+                zipCode = "12345",
+                country = country,
+                city = city,
             )
+        )
+    }
+
+    fun getCountries(): List<MenuItem.Country> {
+        return listOf(
+            MenuItem.Country(id = "0", name = "United States"),
+            MenuItem.Country(id = "1", name = "China"),
+            MenuItem.Country(id = "2", name = "India"),
+            MenuItem.Country(id = "3", name = "Brazil"),
+            MenuItem.Country(id = "4", name = "Russia"),
+            MenuItem.Country(id = "5", name = "Japan"),
+            MenuItem.Country(id = "6", name = "Germany"),
+            MenuItem.Country(id = "7", name = "United Kingdom"),
+            MenuItem.Country(id = "8", name = "France"),
+            MenuItem.Country(id = "9", name = "Canada"),
+            MenuItem.Country(id = "10", name = "Australia"),
+            MenuItem.Country(id = "11", name = "South Africa"),
+            MenuItem.Country(id = "12", name = "Mexico"),
+            MenuItem.Country(id = "13", name = "South Korea"),
+            MenuItem.Country(id = "14", name = "Saudi Arabia"),
+            MenuItem.Country(id = "15", name = "Turkey"),
+            MenuItem.Country(id = "16", name = "Indonesia"),
+            MenuItem.Country(id = "17", name = "Nigeria"),
+            MenuItem.Country(id = "18", name = "Argentina"),
+            MenuItem.Country(id = "19", name = "Egypt")
+        ).sortedBy { it.name }
+    }
+
+    fun getCities(): List<MenuItem.City> {
+        return listOf(
+            MenuItem.City(name = "New York", countryId = "0"), // United States
+            MenuItem.City(name = "Beijing", countryId = "1"), // China
+            MenuItem.City(name = "New Delhi", countryId = "2"), // India
+            MenuItem.City(name = "Rio de Janeiro", countryId = "3"), // Brazil
+            MenuItem.City(name = "Moscow", countryId = "4"), // Russia
+            MenuItem.City(name = "Tokyo", countryId = "5"), // Japan
+            MenuItem.City(name = "Berlin", countryId = "6"), // Germany
+            MenuItem.City(name = "London", countryId = "7"), // United Kingdom
+            MenuItem.City(name = "Paris", countryId = "8"), // France
+            MenuItem.City(name = "Toronto", countryId = "9"), // Canada
+            MenuItem.City(name = "Sydney", countryId = "10"), // Australia
+            MenuItem.City(name = "Johannesburg", countryId = "11"), // South Africa
+            MenuItem.City(name = "Mexico City", countryId = "12"), // Mexico
+            MenuItem.City(name = "Seoul", countryId = "13"), // South Korea
+            MenuItem.City(name = "Riyadh", countryId = "14"), // Saudi Arabia
+            MenuItem.City(name = "Istanbul", countryId = "15"), // Turkey
+            MenuItem.City(name = "Jakarta", countryId = "16"), // Indonesia
+            MenuItem.City(name = "Lagos", countryId = "17"), // Nigeria
+            MenuItem.City(name = "Buenos Aires", countryId = "18"), // Argentina
+            MenuItem.City(name = "Cairo", countryId = "19") // Egypt
         )
     }
 

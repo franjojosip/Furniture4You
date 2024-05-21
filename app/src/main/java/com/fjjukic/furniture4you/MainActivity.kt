@@ -32,6 +32,7 @@ import com.fjjukic.furniture4you.ui.rating.MyReview
 import com.fjjukic.furniture4you.ui.rating.MyReviewViewModel
 import com.fjjukic.furniture4you.ui.rating.RatingReview
 import com.fjjukic.furniture4you.ui.rating.RatingReviewViewModel
+import com.fjjukic.furniture4you.ui.shipping.AddShippingAddress
 import com.fjjukic.furniture4you.ui.shipping.ShippingAddressSetting
 import com.fjjukic.furniture4you.ui.shipping.ShippingAddressViewModel
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
@@ -52,7 +53,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Screens.ShippingAddressSetting.route //CHANGE TO AUTH
+                        startDestination = Graph.MAIN //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen(
@@ -75,7 +76,10 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onSettingsClick = {
                                     navHostController.navigate(Screens.Settings.route)
-                                }
+                                },
+                                onShippingClick = {
+                                    navHostController.navigate(Screens.ShippingAddressSetting.route)
+                                },
                             )
                         }
                         composable(
@@ -155,7 +159,7 @@ class MainActivity : ComponentActivity() {
                                     navHostController.popBackStack()
                                 },
                                 onSubmitClicked = {
-                                    /* TODO */
+                                    navHostController.popBackStack()
                                 }
                             )
                         }
@@ -167,7 +171,7 @@ class MainActivity : ComponentActivity() {
                                     navHostController.popBackStack()
                                 },
                                 onSubmitClicked = {
-                                    /* TODO */
+                                    navHostController.navigate(Screens.Cart.route)
                                 }
                             )
                         }
@@ -198,9 +202,6 @@ class MainActivity : ComponentActivity() {
                                 viewModel,
                                 onBackClick = {
                                     navHostController.popBackStack()
-                                },
-                                onCardAddClick = {
-                                    /* TODO */
                                 }
                             )
                         }
@@ -211,8 +212,17 @@ class MainActivity : ComponentActivity() {
                                 onBackClick = {
                                     navHostController.popBackStack()
                                 },
-                                onCardAddClick = {
-                                    /* TODO */
+                                onAddressAddClick = {
+                                    navHostController.navigate(Screens.AddShippingAddress.route)
+                                }
+                            )
+                        }
+                        composable(route = Screens.AddShippingAddress.route) {
+                            val viewModel = hiltViewModel<ShippingAddressViewModel>()
+                            AddShippingAddress(
+                                viewModel,
+                                onBackClick = {
+                                    navHostController.popBackStack()
                                 }
                             )
                         }

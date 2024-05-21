@@ -38,7 +38,7 @@ fun ShippingAddressSettingPreview() {
 fun ShippingAddressSetting(
     viewModel: ShippingAddressViewModel,
     onBackClick: () -> Unit,
-    onCardAddClick: () -> Unit
+    onAddressAddClick: () -> Unit
 ) {
 
     val shippingAddresses by viewModel.shippingAddresses.collectAsStateWithLifecycle()
@@ -59,7 +59,7 @@ fun ShippingAddressSetting(
                 containerColor = Color.White,
                 contentColor = colorResource(id = R.color.color_fab_add_content),
                 shape = CircleShape,
-                onClick = onCardAddClick,
+                onClick = onAddressAddClick,
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,

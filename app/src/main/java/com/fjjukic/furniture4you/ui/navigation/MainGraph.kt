@@ -25,6 +25,7 @@ fun MainGraph(
     onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
     onSettingsClick: () -> Unit,
+    onShippingClick: () -> Unit,
     navHostController: NavHostController,
     paddingValues: PaddingValues
 ) {
@@ -64,7 +65,8 @@ fun MainGraph(
                 onLogoutClick = {},
                 onPaymentMethodClick = onPaymentMethodClick,
                 onMyReviewsClick = onMyReviewsClick,
-                onSettingsClick = onSettingsClick
+                onSettingsClick = onSettingsClick,
+                onShippingClick = onShippingClick,
             )
         }
     }

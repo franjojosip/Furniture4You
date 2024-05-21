@@ -1,5 +1,6 @@
 package com.fjjukic.furniture4you.ui.checkout
 
+import com.fjjukic.furniture4you.ui.shipping.MenuItem
 import java.util.UUID
 
 data class CheckoutViewState(
@@ -24,8 +25,11 @@ data class DeliveryOption(
 
 data class ShippingInfo(
     val id: String = UUID.randomUUID().toString(),
-    val fullName: String,
-    val address: String,
+    val fullName: String = "",
+    val address: String = "",
+    val zipCode: String = "",
+    val country: MenuItem.Country? = null,
+    val city: MenuItem.City? = null,
     val isDefault: Boolean = false
 )
 

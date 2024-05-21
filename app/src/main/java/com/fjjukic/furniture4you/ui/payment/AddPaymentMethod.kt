@@ -42,14 +42,13 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun AddPaymentMethodPreview() {
-    AddPaymentMethod(PaymentMethodViewModel(), {}, {})
+    AddPaymentMethod(PaymentMethodViewModel(), {})
 }
 
 @Composable
 fun AddPaymentMethod(
     viewModel: PaymentMethodViewModel,
-    onBackClick: () -> Unit,
-    onCardAddClick: () -> Unit
+    onBackClick: () -> Unit
 ) {
     val mockCard by viewModel.mockCard.collectAsStateWithLifecycle()
 
@@ -79,9 +78,7 @@ fun AddPaymentMethod(
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
                         .height(60.dp)
                         .fillMaxWidth(),
-                    onClick = {
-                        onCardAddClick()
-                    }
+                    onClick = {}
                 ) {
                     Text(
                         text = stringResource(id = R.string.btn_add_new_card).uppercase(),

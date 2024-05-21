@@ -102,7 +102,7 @@ fun RatingReview(
                     }
                 ) {
                     Text(
-                        text = stringResource(id = R.string.btn_add_all_to_my_cart),
+                        text = stringResource(id = R.string.btn_write_review),
                         style = GelatioTypography.bodyMedium,
                         color = Color.White
                     )

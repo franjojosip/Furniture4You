@@ -35,7 +35,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ProfilePreview() {
-    Profile(ProfileViewModel(), {}, {}, {}, {}, {})
+    Profile(ProfileViewModel(), {}, {}, {}, {}, {}, {})
 }
 
 @Composable
@@ -45,7 +45,8 @@ fun Profile(
     onLogoutClick: () -> Unit,
     onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    onShippingClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -118,7 +119,7 @@ fun Profile(
             ClickableField(
                 title = stringResource(id = R.string.label_shipping_addresses),
                 subtitle = stringResource(R.string.desc_shipping_addresses),
-                onClick = { /*TODO*/ }
+                onClick = onShippingClick
             )
             ClickableField(
                 title = stringResource(id = R.string.payment_method),

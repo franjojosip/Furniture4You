@@ -145,7 +145,10 @@ fun ShippingInformationDialog(
                 TextButton(onClick = {
                     if (fullName.isNotEmpty() && address.isNotEmpty()) {
                         onContinueClicked(
-                            ShippingInfo(fullName = fullName, address = address)
+                            shippingInfo.copy(
+                                fullName = fullName,
+                                address = address
+                            )
                         )
                     }
                 }) {

@@ -8,6 +8,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -16,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -31,7 +33,8 @@ fun MainScreen(
     onCartClick: () -> Unit,
     onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    onShippingClick: () -> Unit
 ) {
     val navHostController: NavHostController = rememberNavController()
     var navigationSelectedItem by rememberSaveable { mutableIntStateOf(0) }
@@ -40,47 +43,49 @@ fun MainScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            NavigationBar(
-                containerColor = Color.White
-            ) {
-                BottomNavigationItem().bottomNavigationItems()
-                    .forEachIndexed { index, navigationItem ->
-                        val selected =
-                            navigationItem.route == backStackEntry.value?.destination?.route
-                        val icon =
-                            if (selected) navigationItem.selectedIcon else navigationItem.unselectedIcon
-                        NavigationBarItem(
-                            selected = selected,
-                            icon = {
-                                if (!selected && navigationItem.route == Screens.MainScreen.Notification.route) {
-                                    BadgedBox(badge = { Badge() }) {
+            Surface(shadowElevation = 8.dp) {
+                NavigationBar(
+                    containerColor = Color.White,
+                ) {
+                    BottomNavigationItem().bottomNavigationItems()
+                        .forEachIndexed { index, navigationItem ->
+                            val selected =
+                                navigationItem.route == backStackEntry.value?.destination?.route
+                            val icon =
+                                if (selected) navigationItem.selectedIcon else navigationItem.unselectedIcon
+                            NavigationBarItem(
+                                selected = selected,
+                                icon = {
+                                    if (!selected && navigationItem.route == Screens.MainScreen.Notification.route) {
+                                        BadgedBox(badge = { Badge() }) {
+                                            Icon(
+                                                painterResource(icon),
+                                                contentDescription = navigationItem.label
+                                            )
+                                        }
+                                    } else {
                                         Icon(
                                             painterResource(icon),
                                             contentDescription = navigationItem.label
                                         )
                                     }
-                                } else {
-                                    Icon(
-                                        painterResource(icon),
-                                        contentDescription = navigationItem.label
-                                    )
-                                }
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = Color.White
-                            ),
-                            onClick = {
-                                navigationSelectedItem = index
-                                navHostController.navigate(navigationItem.route) {
-                                    popUpTo(navHostController.graph.findStartDestination().id) {
-                                        saveState = true
+                                },
+                                colors = NavigationBarItemDefaults.colors(
+                                    indicatorColor = Color.White
+                                ),
+                                onClick = {
+                                    navigationSelectedItem = index
+                                    navHostController.navigate(navigationItem.route) {
+                                        popUpTo(navHostController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
                                     }
-                                    launchSingleTop = true
-                                    restoreState = true
                                 }
-                            }
-                        )
-                    }
+                            )
+                        }
+                }
             }
         }
     ) { paddingValues ->
@@ -91,6 +96,7 @@ fun MainScreen(
             onPaymentMethodClick,
             onMyReviewsClick,
             onSettingsClick,
+            onShippingClick,
             navHostController,
             paddingValues
         )
