@@ -8,43 +8,44 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.fjjukic.furniture4you.ui.favorite.Favorite
-import com.fjjukic.furniture4you.ui.favorite.FavoriteViewModel
 import com.fjjukic.furniture4you.ui.home.Home
 import com.fjjukic.furniture4you.ui.home.HomeViewModel
-import com.fjjukic.furniture4you.ui.notification.Notification
-import com.fjjukic.furniture4you.ui.notification.NotificationViewModel
-import com.fjjukic.furniture4you.ui.profile.Profile
-import com.fjjukic.furniture4you.ui.profile.ProfileViewModel
+import com.fjjukic.furniture4you.ui.main.favorite.Favorite
+import com.fjjukic.furniture4you.ui.main.favorite.FavoriteViewModel
+import com.fjjukic.furniture4you.ui.main.notification.Notification
+import com.fjjukic.furniture4you.ui.main.notification.NotificationViewModel
+import com.fjjukic.furniture4you.ui.main.profile.Profile
+import com.fjjukic.furniture4you.ui.main.profile.ProfileViewModel
 
 @Composable
 fun MainGraph(
     onProductClick: (String) -> Unit,
-    onSearchClicked: () -> Unit,
+    onSearchClick: () -> Unit,
     onCartClick: () -> Unit,
     onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onShippingClick: () -> Unit,
+    onMyOrderClick: () -> Unit,
     navHostController: NavHostController,
     paddingValues: PaddingValues
 ) {
     NavHost(
         navController = navHostController,
         route = Graph.MAIN,
-        startDestination = Screens.MainScreen.Profile.route,
+        startDestination = Screens.MainScreen.Home.route,
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
         composable(Screens.MainScreen.Home.route) {
             val viewModel = hiltViewModel<HomeViewModel>()
-            Home(viewModel, onProductClick, onCartClick)
+            Home(viewModel, onProductClick, onCartClick, onSearchClick)
         }
         composable(Screens.MainScreen.Favorites.route) {
             val viewModel = hiltViewModel<FavoriteViewModel>()
             Favorite(
                 viewModel,
                 onProductClicked = onProductClick,
-                onSearchClicked = onSearchClicked,
+                onSearchClicked = onSearchClick,
                 onCartClicked = onCartClick
             )
         }
@@ -52,9 +53,7 @@ fun MainGraph(
             val viewModel = hiltViewModel<NotificationViewModel>()
             Notification(
                 viewModel,
-                onSearchClicked = {
-                    /* TODO */
-                }
+                onSearchClicked = onSearchClick
             )
         }
         composable(Screens.MainScreen.Profile.route) {
@@ -67,6 +66,7 @@ fun MainGraph(
                 onMyReviewsClick = onMyReviewsClick,
                 onSettingsClick = onSettingsClick,
                 onShippingClick = onShippingClick,
+                onMyOrderClick = onMyOrderClick,
             )
         }
     }

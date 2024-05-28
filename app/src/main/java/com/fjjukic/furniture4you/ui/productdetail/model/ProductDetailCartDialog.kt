@@ -67,14 +67,14 @@ fun ProductDetailDialog(
         )
     ) {
         Column(
-            modifier = modifier.background(Color.White)
+            modifier = modifier.background(colorResource(id = R.color.white))
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_cart),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.tint(
-                    color = colorResource(id = R.color.color_dialog_icon)
+                    color = colorResource(id = R.color.dialog_icon)
                 ),
                 modifier = Modifier
                     .padding(top = 30.dp)
@@ -107,8 +107,7 @@ fun ProductDetailDialog(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp)
-                    .background(colorResource(id = R.color.color_dialog_bottom_background)),
+                    .padding(top = 10.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
 

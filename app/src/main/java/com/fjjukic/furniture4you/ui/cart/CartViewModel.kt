@@ -23,7 +23,7 @@ class CartViewModel @Inject constructor() : ViewModel() {
     private val _showMessage = MutableStateFlow<Message?>(null)
     val showMessage: StateFlow<Message?> = _showMessage
 
-    private var discountPercentage: Double = 0.0
+    private var discount: Double = 0.0
     private var promoCode = ""
 
     init {
@@ -34,7 +34,7 @@ class CartViewModel @Inject constructor() : ViewModel() {
         val isNewPromoCode = promoCode != newPromoCode
         if (isNewPromoCode) {
             promoCode = newPromoCode
-            discountPercentage = Random.nextDouble(0.00, 0.30)
+            discount = Random.nextDouble(0.00, 0.30)
             updatePrice()
         }
         _showMessage.value = Message(
@@ -43,19 +43,19 @@ class CartViewModel @Inject constructor() : ViewModel() {
         )
     }
 
-    fun onRemoveClicked(productId: String) {
+    fun onRemoveClick(productId: String) {
         _products.value = _products.value.filter {
             it.product.id != productId
         }
         updatePrice()
     }
 
-    fun onCounterIncrement(productId: String) {
+    fun onIncrementClick(productId: String) {
         val count = _products.value.first { it.product.id == productId }.count
         updateProductCount(productId, count + 1)
     }
 
-    fun onCounterDecrement(productId: String) {
+    fun onDecrementClick(productId: String) {
         val count = _products.value.first { it.product.id == productId }.count
         if (count > 1) {
             updateProductCount(productId, count - 1)
@@ -75,7 +75,7 @@ class CartViewModel @Inject constructor() : ViewModel() {
 
     private fun updatePrice() {
         val fullPrice = _products.value.sumOf { it.product.price.toDouble() * it.count }
-        _price.update { it.copy(fullPrice = fullPrice, discount = discountPercentage) }
+        _price.update { it.copy(price = fullPrice, discount = discount) }
     }
 
     fun onSnackbarShown() {

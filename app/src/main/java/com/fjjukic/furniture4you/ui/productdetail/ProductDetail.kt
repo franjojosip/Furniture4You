@@ -84,7 +84,10 @@ fun ProductDetail(
                 .background(Color.White)
                 .padding(bottom = paddingValues.calculateBottomPadding())
         ) {
-            ImageSlider(productState.selectedProductDetail.imageUrl)
+            ImageSlider(
+                productState.selectedProductDetail.imageUrl,
+                productState.selectedProductDetail.productOptions
+            )
             ProductContent(
                 productState.selectedProductDetail,
                 productState.counter,
@@ -174,13 +177,18 @@ fun ProductBottomButtons(onNavigateToCartClicked: () -> Unit, modifier: Modifier
 }
 
 @Composable
-private fun ImageSlider(imageUrl: String, modifier: Modifier = Modifier) {
+private fun ImageSlider(
+    imageUrl: String,
+    options: List<ProductColorOption>,
+    modifier: Modifier = Modifier
+) {
+    var currentImage by remember { mutableStateOf(imageUrl) }
     Box(modifier) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUrl)
-                .fallback(R.drawable.img_minimal_stand)
-                .placeholder(R.drawable.img_minimal_stand)
+                .data(currentImage)
+                .fallback(R.drawable.img_white_table)
+                .placeholder(R.drawable.img_white_table)
                 .build(),
             contentDescription = stringResource(R.string.content_desc_product_image),
             contentScale = ContentScale.Crop,
@@ -197,7 +205,10 @@ private fun ImageSlider(imageUrl: String, modifier: Modifier = Modifier) {
                 colorResource(id = R.color.color_palette_first),
                 colorResource(id = R.color.color_palette_second),
                 colorResource(id = R.color.color_palette_third)
-            )
+            ),
+            onColorSelected = { index ->
+                currentImage = options[index].imageUrl
+            }
         )
     }
 }
@@ -276,7 +287,7 @@ private fun ReviewItem(
         Image(
             painter = painterResource(R.drawable.ic_star),
             contentDescription = stringResource(R.string.content_desc_rating),
-            colorFilter = ColorFilter.tint(colorResource(id = R.color.gold)),
+            colorFilter = ColorFilter.tint(colorResource(id = R.color.star)),
             modifier = Modifier.size(20.dp)
         )
         Text(

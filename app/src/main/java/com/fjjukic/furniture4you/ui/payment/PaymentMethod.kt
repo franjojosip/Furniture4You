@@ -48,7 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fjjukic.furniture4you.ui.cart.Header
+import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
@@ -71,7 +71,7 @@ fun PaymentMethod(
 
     Scaffold(
         topBar = {
-            Header(
+            Toolbar(
                 title = stringResource(id = R.string.nav_payment_method),
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,
@@ -83,7 +83,7 @@ fun PaymentMethod(
             FloatingActionButton(
                 modifier = Modifier.size(52.dp),
                 containerColor = Color.White,
-                contentColor = colorResource(id = R.color.color_fab_add_content),
+                contentColor = colorResource(id = R.color.bg_fab_content),
                 shape = CircleShape,
                 onClick = onCardAddClick,
             ) {
@@ -271,8 +271,8 @@ fun DefaultPaymentCheckbox(
                 }
             },
             colors = CheckboxDefaults.colors(
-                checkedColor = colorResource(id = R.color.color_checkbox_checked),
-                uncheckedColor = colorResource(id = R.color.color_checkbox_unchecked)
+                checkedColor = colorResource(id = R.color.checkbox_checked),
+                uncheckedColor = colorResource(id = R.color.checkbox_unchecked)
             )
         )
         Text(

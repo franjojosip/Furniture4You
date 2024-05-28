@@ -27,24 +27,28 @@ fun NavGraphBuilder.authNavigationGraph(navHostController: NavHostController) {
         }
         composable(Screens.AuthScreen.Login.route) {
             LoginScreen(
-                onForgotPasswordClicked = {
+                onForgotPasswordClick = {
                     navHostController.navigate(Screens.AuthScreen.ForgotPassword.route)
-                }, onRegisterClicked = {
+                }, onRegisterClick = {
                     navHostController.navigate(Screens.AuthScreen.Register.route)
-                }, onLoginClicked = {
+                }, onLoginClick = {
                     navHostController.navigate(Graph.MAIN)
                 }
             )
         }
         composable(Screens.AuthScreen.Register.route) {
-            RegisterScreen {
-                navHostController.popBackStack(Screens.AuthScreen.Login.route, false)
-            }
+            RegisterScreen(
+                onLoginClick = {
+                    navHostController.popBackStack(Screens.AuthScreen.Login.route, false)
+                }
+            )
         }
         composable(Screens.AuthScreen.ForgotPassword.route) {
-            ForgotPasswordScreen {
-                navHostController.popBackStack(Screens.AuthScreen.Login.route, false)
-            }
+            ForgotPasswordScreen(
+                onLoginClick = {
+                    navHostController.popBackStack(Screens.AuthScreen.Login.route, false)
+                }
+            )
         }
     }
 }

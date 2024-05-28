@@ -35,7 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fjjukic.furniture4you.ui.cart.Header
+import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.theme.FieldTextColor
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
@@ -62,7 +62,7 @@ fun AddShippingAddress(
 
     Scaffold(
         topBar = {
-            Header(
+            Toolbar(
                 title = stringResource(id = R.string.nav_add_shipping_address),
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,
@@ -218,7 +218,7 @@ fun DynamicSelectTextField(
                 value = selectedValue,
                 onValueChange = {},
                 placeholder = {
-                    Text(placeholder, color = colorResource(id = R.color.color_placeholder))
+                    Text(placeholder, color = colorResource(id = R.color.placeholder))
                 },
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)

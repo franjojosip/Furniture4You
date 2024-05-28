@@ -22,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -40,34 +39,36 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(onForgotPasswordClicked = {}, onRegisterClicked = {}, onLoginClicked = {})
+    LoginScreen(onForgotPasswordClick = {}, onRegisterClick = {}, onLoginClick = {})
 }
 
 @Composable
 fun LoginScreen(
-    onForgotPasswordClicked: () -> Unit,
-    onRegisterClicked: () -> Unit,
-    onLoginClicked: () -> Unit
+    onForgotPasswordClick: () -> Unit,
+    onRegisterClick: () -> Unit,
+    onLoginClick: () -> Unit
 ) {
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
-            .verticalScroll(rememberScrollState())
+            .background(colorResource(id = R.color.white))
+            .verticalScroll(scrollState)
     ) {
         Header(
             title = stringResource(R.string.login_title),
             subtitle = stringResource(R.string.login_subtitle)
         )
-        LoginForm(onForgotPasswordClicked, onRegisterClicked, onLoginClicked)
+        LoginForm(onForgotPasswordClick, onRegisterClick, onLoginClick)
     }
 }
 
 @Composable
 fun LoginForm(
-    onForgotPasswordClicked: () -> Unit,
-    onRegisterClicked: () -> Unit,
-    onLoginClicked: () -> Unit,
+    onForgotPasswordClick: () -> Unit,
+    onRegisterClick: () -> Unit,
+    onLoginClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var password by remember { mutableStateOf("") }
@@ -75,7 +76,7 @@ fun LoginForm(
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = Color.White,
+            containerColor = colorResource(id = R.color.white),
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 12.dp
@@ -88,8 +89,7 @@ fun LoginForm(
         EmailInputField(
             value = email,
             onValueChange = { email = it },
-            modifier = Modifier
-                .padding(top = 24.dp)
+            modifier = Modifier.padding(top = 24.dp)
         )
 
         PasswordInputField(
@@ -100,18 +100,17 @@ fun LoginForm(
         )
 
         ClickableText(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 30.dp),
             text = AnnotatedString(stringResource(R.string.login_button_forgot_password)),
             style = TextStyle(
                 fontSize = 18.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.SemiBold,
                 color = colorResource(id = R.color.medium_gray),
-            ), onClick = {
-                onForgotPasswordClicked()
-            }
+            ),
+            onClick = { onForgotPasswordClick() },
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 30.dp),
         )
 
         Button(
@@ -121,30 +120,30 @@ fun LoginForm(
                 .padding(top = 40.dp)
                 .width(260.dp)
                 .align(Alignment.CenterHorizontally),
-            onClick = onLoginClicked
+            onClick = onLoginClick
         ) {
             Text(
                 text = stringResource(R.string.login_button),
                 fontSize = 18.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Medium,
-                color = Color.White,
+                color = colorResource(id = R.color.white),
                 modifier = Modifier.padding(6.dp)
             )
         }
 
         ClickableText(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 30.dp, bottom = 40.dp),
             text = AnnotatedString(stringResource(R.string.login_button_sign_up).uppercase()),
             style = TextStyle(
                 fontSize = 18.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Medium,
-                color = colorResource(id = R.color.medium_gray),
-            ), onClick = {
-                onRegisterClicked()
-            })
+                color = colorResource(id = R.color.dark_gray),
+            ),
+            onClick = { onRegisterClick() },
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 30.dp, bottom = 40.dp)
+        )
     }
 }

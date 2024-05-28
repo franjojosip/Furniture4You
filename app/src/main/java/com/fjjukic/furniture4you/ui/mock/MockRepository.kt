@@ -9,19 +9,23 @@ import com.fjjukic.furniture4you.ui.checkout.ShippingInfo
 import com.fjjukic.furniture4you.ui.common.model.Product
 import com.fjjukic.furniture4you.ui.home.HomeViewState
 import com.fjjukic.furniture4you.ui.home.model.CategoryItem
-import com.fjjukic.furniture4you.ui.notification.NotificationModel
-import com.fjjukic.furniture4you.ui.notification.NotificationTag
+import com.fjjukic.furniture4you.ui.main.notification.NotificationModel
+import com.fjjukic.furniture4you.ui.main.notification.NotificationTag
+import com.fjjukic.furniture4you.ui.main.profile.PersonalInformation
+import com.fjjukic.furniture4you.ui.main.profile.SettingsViewState
+import com.fjjukic.furniture4you.ui.order.MyOrderViewModel
+import com.fjjukic.furniture4you.ui.order.Order
 import com.fjjukic.furniture4you.ui.payment.PaymentCard
+import com.fjjukic.furniture4you.ui.productdetail.ProductColorOption
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewState
-import com.fjjukic.furniture4you.ui.profile.PersonalInformation
-import com.fjjukic.furniture4you.ui.profile.SettingsViewState
 import com.fjjukic.furniture4you.ui.rating.MyReviewModel
 import com.fjjukic.furniture4you.ui.rating.RatingReviewViewState
 import com.fjjukic.furniture4you.ui.rating.Review
 import com.fjjukic.furniture4you.ui.shipping.MenuItem
 import ht.ferit.fjjukic.foodlovers.R
 import java.util.UUID
+import kotlin.random.Random
 
 object MockRepository {
     fun getHomeState(): HomeViewState {
@@ -152,7 +156,21 @@ object MockRepository {
             description = "Minimal Stand is made of by natural wood. The design that is very simple and minimal. " +
                     "This is truly one of the best furnitures in any family for now. " +
                     "With 3 different colors, you can easily select the best match for your home.",
-            imageUrl = "https://jysk.co.uk/dining-room/dining-sets/s361125-marstrand-hvidovre.jpg",
+            imageUrl = "https://www.ikea.com/hr/hr/images/products/lack-stolic-bijela__0702214_pe724347_s5.jpg",
+            productOptions = listOf(
+                ProductColorOption(
+                    0,
+                    "https://www.ikea.com/hr/hr/images/products/lack-stolic-bijela__0702214_pe724347_s5.jpg"
+                ),
+                ProductColorOption(
+                    1,
+                    "https://www.ikea.com/hr/hr/images/products/lack-stolic-crno-smeda__0836233_pe601379_s5.jpg"
+                ),
+                ProductColorOption(
+                    2,
+                    "https://www.ikea.com/hr/hr/images/products/lack-stolic-efekt-bijelo-bajcanog-hrasta__0837100_pe709586_s5.jpg"
+                ),
+            ),
             price = 49.99,
             reviews = 43
         )
@@ -325,7 +343,7 @@ object MockRepository {
                 imageResId = R.drawable.minimal_stand,
                 tag = NotificationTag(
                     "New",
-                    R.color.notification_tag_new
+                    R.color.tag_new
                 )
             ),
             NotificationModel(
@@ -339,7 +357,7 @@ object MockRepository {
                 hideImage = true,
                 tag = NotificationTag(
                     "HOT!",
-                    R.color.notification_tag_hot
+                    R.color.tag_hot
                 )
             ),
             NotificationModel(
@@ -378,7 +396,7 @@ object MockRepository {
                 hideImage = true,
                 tag = NotificationTag(
                     "New",
-                    R.color.notification_tag_new
+                    R.color.tag_new
                 )
             ),
             NotificationModel(
@@ -402,7 +420,7 @@ object MockRepository {
                 hideImage = true,
                 tag = NotificationTag(
                     "HOT!",
-                    R.color.notification_tag_hot
+                    R.color.tag_hot
                 )
             ),
             NotificationModel(
@@ -497,5 +515,43 @@ object MockRepository {
             vendorLogoResId = R.drawable.ic_mastercard_tinted,
             isDefault = true
         )
+    }
+
+    private fun generateRandom10DigitString(): String {
+        val digits = (1..9).map { Random.nextInt(0, 10) }
+        return digits.joinToString("")
+    }
+
+    fun getOrders(): List<Order> {
+        return List(10) {
+            Order(
+                number = generateRandom10DigitString(),
+                date = "20/03/2020",
+                quantity = 3,
+                amount = 150.00,
+                status = MyOrderViewModel.OrderStatus.Delivered
+            )
+        }
+            .plus(
+                List(10) {
+                    Order(
+                        number = "238562312",
+                        date = "20/03/2020",
+                        quantity = 3,
+                        amount = 150.00,
+                        status = MyOrderViewModel.OrderStatus.Canceled
+                    )
+                })
+            .plus(
+                List(10) {
+                    Order(
+                        number = "238562312",
+                        date = "20/03/2020",
+                        quantity = 3,
+                        amount = 150.00,
+                        status = MyOrderViewModel.OrderStatus.Processing
+                    )
+                }
+            )
     }
 }

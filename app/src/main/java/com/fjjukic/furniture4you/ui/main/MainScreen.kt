@@ -15,7 +15,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -25,16 +25,18 @@ import androidx.navigation.compose.rememberNavController
 import com.fjjukic.furniture4you.ui.components.BottomNavigationItem
 import com.fjjukic.furniture4you.ui.navigation.MainGraph
 import com.fjjukic.furniture4you.ui.navigation.Screens
+import ht.ferit.fjjukic.foodlovers.R
 
 @Composable
 fun MainScreen(
     onProductClick: (String) -> Unit,
-    onSearchClicked: () -> Unit,
+    onSearchClick: () -> Unit,
     onCartClick: () -> Unit,
     onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
     onSettingsClick: () -> Unit,
-    onShippingClick: () -> Unit
+    onShippingClick: () -> Unit,
+    onMyOrderClick: () -> Unit
 ) {
     val navHostController: NavHostController = rememberNavController()
     var navigationSelectedItem by rememberSaveable { mutableIntStateOf(0) }
@@ -45,7 +47,7 @@ fun MainScreen(
         bottomBar = {
             Surface(shadowElevation = 8.dp) {
                 NavigationBar(
-                    containerColor = Color.White,
+                    containerColor = colorResource(id = R.color.white),
                 ) {
                     BottomNavigationItem().bottomNavigationItems()
                         .forEachIndexed { index, navigationItem ->
@@ -71,7 +73,7 @@ fun MainScreen(
                                     }
                                 },
                                 colors = NavigationBarItemDefaults.colors(
-                                    indicatorColor = Color.White
+                                    indicatorColor = colorResource(id = R.color.white)
                                 ),
                                 onClick = {
                                     navigationSelectedItem = index
@@ -91,12 +93,13 @@ fun MainScreen(
     ) { paddingValues ->
         MainGraph(
             onProductClick,
-            onSearchClicked,
+            onSearchClick,
             onCartClick,
             onPaymentMethodClick,
             onMyReviewsClick,
             onSettingsClick,
             onShippingClick,
+            onMyOrderClick,
             navHostController,
             paddingValues
         )

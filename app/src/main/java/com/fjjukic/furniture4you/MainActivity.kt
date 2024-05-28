@@ -12,26 +12,27 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.fjjukic.furniture4you.ui.cart.Cart
-import com.fjjukic.furniture4you.ui.cart.CartViewModel
+import com.fjjukic.furniture4you.ui.cart.CartScreen
 import com.fjjukic.furniture4you.ui.checkout.Checkout
-import com.fjjukic.furniture4you.ui.checkout.CheckoutViewModel
 import com.fjjukic.furniture4you.ui.main.MainScreen
+import com.fjjukic.furniture4you.ui.main.profile.Settings
+import com.fjjukic.furniture4you.ui.main.profile.SettingsViewModel
 import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
+import com.fjjukic.furniture4you.ui.order.MyOrder
+import com.fjjukic.furniture4you.ui.order.MyOrderViewModel
 import com.fjjukic.furniture4you.ui.order.SuccessOrder
 import com.fjjukic.furniture4you.ui.payment.AddPaymentMethod
 import com.fjjukic.furniture4you.ui.payment.PaymentMethod
 import com.fjjukic.furniture4you.ui.payment.PaymentMethodViewModel
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewModel
-import com.fjjukic.furniture4you.ui.profile.Settings
-import com.fjjukic.furniture4you.ui.profile.SettingsViewModel
 import com.fjjukic.furniture4you.ui.rating.MyReview
 import com.fjjukic.furniture4you.ui.rating.MyReviewViewModel
 import com.fjjukic.furniture4you.ui.rating.RatingReview
 import com.fjjukic.furniture4you.ui.rating.RatingReviewViewModel
+import com.fjjukic.furniture4you.ui.search.Search
 import com.fjjukic.furniture4you.ui.shipping.AddShippingAddress
 import com.fjjukic.furniture4you.ui.shipping.ShippingAddressSetting
 import com.fjjukic.furniture4you.ui.shipping.ShippingAddressViewModel
@@ -57,13 +58,13 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen(
-                                onProductClick = { productId ->
+                                onProductClick = {
                                     navHostController.navigate(
-                                        Screens.ProductDetail.getRouteWithArg(productId)
+                                        Screens.ProductDetail.getRouteWithArg(it)
                                     )
                                 },
-                                onSearchClicked = {
-                                    /* TODO */
+                                onSearchClick = {
+                                    navHostController.navigate(Screens.Search.route)
                                 },
                                 onCartClick = {
                                     navHostController.navigate(Screens.Cart.route)
@@ -80,6 +81,9 @@ class MainActivity : ComponentActivity() {
                                 onShippingClick = {
                                     navHostController.navigate(Screens.ShippingAddressSetting.route)
                                 },
+                                onMyOrderClick = {
+                                    navHostController.navigate(Screens.MyOrder.route)
+                                }
                             )
                         }
                         composable(
@@ -103,18 +107,16 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(route = Screens.Cart.route) {
-                            val viewModel = hiltViewModel<CartViewModel>()
-                            Cart(
-                                viewModel,
-                                onProductClicked = { productId ->
+                            CartScreen(
+                                onProductClick = {
                                     navHostController.navigate(
-                                        Screens.ProductDetail.getRouteWithArg(productId)
+                                        Screens.ProductDetail.getRouteWithArg(it)
                                     )
                                 },
-                                onBackClicked = {
+                                onBackClick = {
                                     navHostController.popBackStack()
                                 },
-                                onCheckoutClicked = {
+                                onCheckoutClick = {
                                     navHostController.navigate(
                                         Screens.Checkout.route
                                     )
@@ -122,9 +124,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(route = Screens.Checkout.route) {
-                            val viewModel = hiltViewModel<CheckoutViewModel>()
                             Checkout(
-                                viewModel,
                                 onBackClicked = {
                                     navHostController.popBackStack()
                                 },
@@ -221,6 +221,22 @@ class MainActivity : ComponentActivity() {
                             val viewModel = hiltViewModel<ShippingAddressViewModel>()
                             AddShippingAddress(
                                 viewModel,
+                                onBackClick = {
+                                    navHostController.popBackStack()
+                                }
+                            )
+                        }
+                        composable(route = Screens.MyOrder.route) {
+                            val viewModel = hiltViewModel<MyOrderViewModel>()
+                            MyOrder(
+                                viewModel,
+                                onBackClick = {
+                                    navHostController.popBackStack()
+                                }
+                            )
+                        }
+                        composable(route = Screens.Search.route) {
+                            Search(
                                 onBackClick = {
                                     navHostController.popBackStack()
                                 }

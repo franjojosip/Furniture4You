@@ -46,13 +46,13 @@ import ht.ferit.fjjukic.foodlovers.R
 fun DeliveryChoiceMenuDialog(
     selectedOptionId: String,
     deliveryOptions: List<DeliveryOption>,
+    onContinueClick: (String) -> Unit,
+    onDismissClick: () -> Unit,
     dismissOnBackPress: Boolean = true,
-    dismissOnClickOutside: Boolean = true,
-    onContinueClicked: (String) -> Unit,
-    onDismissClicked: () -> Unit
+    dismissOnClickOutside: Boolean = true
 ) {
     Dialog(
-        onDismissRequest = onDismissClicked,
+        onDismissRequest = onDismissClick,
         properties = DialogProperties(
             dismissOnBackPress = dismissOnBackPress,
             dismissOnClickOutside = dismissOnClickOutside
@@ -61,8 +61,8 @@ fun DeliveryChoiceMenuDialog(
         DeliveryChoiceMenu(
             selectedOptionId = selectedOptionId,
             deliveryOptions = deliveryOptions,
-            onDismissClicked = onDismissClicked,
-            onContinueClicked = onContinueClicked
+            onDismissClick = onDismissClick,
+            onContinueClick = onContinueClick
         )
     }
 }
@@ -71,8 +71,8 @@ fun DeliveryChoiceMenuDialog(
 fun DeliveryChoiceMenu(
     selectedOptionId: String,
     deliveryOptions: List<DeliveryOption>,
-    onDismissClicked: () -> Unit,
-    onContinueClicked: (String) -> Unit,
+    onDismissClick: () -> Unit,
+    onContinueClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var selectedIndex by remember {
@@ -85,7 +85,7 @@ fun DeliveryChoiceMenu(
         )
     ) {
         Column(
-            modifier = modifier.background(Color.White)
+            modifier = modifier.background(colorResource(id = R.color.white))
         ) {
             Text(
                 modifier = Modifier
@@ -108,11 +108,10 @@ fun DeliveryChoiceMenu(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp)
-                    .background(colorResource(id = R.color.color_dialog_bottom_background)),
+                    .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                TextButton(onClick = onDismissClicked) {
+                TextButton(onClick = onDismissClick) {
                     Text(
                         stringResource(id = R.string.delivery_choice_btn_cancel),
                         fontWeight = FontWeight.Bold,
@@ -121,7 +120,7 @@ fun DeliveryChoiceMenu(
                     )
                 }
                 TextButton(onClick = {
-                    onContinueClicked(deliveryOptions[selectedIndex].id)
+                    onContinueClick(deliveryOptions[selectedIndex].id)
                 }) {
                     Text(
                         stringResource(id = R.string.delivery_choice_btn_confirm),

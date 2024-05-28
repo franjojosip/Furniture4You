@@ -28,7 +28,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ColorPalettePreview() {
-    ColorPalette()
+    ColorPalette(onColorSelected = {})
 }
 
 @Preview
@@ -40,7 +40,8 @@ fun ColorPickerItemPreview() {
 @Composable
 fun ColorPalette(
     modifier: Modifier = Modifier,
-    colors: List<Color> = listOf(Color.Red, Color.Yellow, Color.Green)
+    colors: List<Color> = listOf(Color.Red, Color.Yellow, Color.Green),
+    onColorSelected: (Int) -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(0) }
 
@@ -59,6 +60,7 @@ fun ColorPalette(
                     onItemClicked = {
                         if (!isSelected) {
                             selectedIndex = index
+                            onColorSelected(index)
                         }
                     },
                     isSelected = isSelected,

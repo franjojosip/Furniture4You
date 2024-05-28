@@ -45,7 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fjjukic.furniture4you.ui.cart.Header
+import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
@@ -72,7 +72,7 @@ fun RatingReview(
         modifier,
         containerColor = Color.Transparent,
         topBar = {
-            Header(
+            Toolbar(
                 title = stringResource(id = R.string.nav_rating_review),
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClicked,
@@ -206,7 +206,7 @@ fun ProductHeader(
                 Image(
                     painter = painterResource(R.drawable.ic_star),
                     contentDescription = stringResource(R.string.content_desc_rating),
-                    colorFilter = ColorFilter.tint(colorResource(id = R.color.gold)),
+                    colorFilter = ColorFilter.tint(colorResource(id = R.color.star)),
                     modifier = Modifier.size(20.dp)
                 )
                 Text(
@@ -280,7 +280,7 @@ fun Review(review: Review, modifier: Modifier = Modifier) {
                         painter = painterResource(id = R.drawable.ic_star),
                         contentDescription = stringResource(R.string.content_desc_rating),
                         contentScale = ContentScale.None,
-                        colorFilter = ColorFilter.tint(color = colorResource(id = R.color.gold)),
+                        colorFilter = ColorFilter.tint(color = colorResource(id = R.color.star)),
                         modifier = Modifier.padding(end = 2.dp)
                     )
                 }

@@ -34,8 +34,8 @@ fun CartItemPreview() {
 fun CartItem(
     onItemSelected: () -> Unit,
     modifier: Modifier = Modifier,
-    itemColor: Color = Color.White,
-    itemBackground: Color = colorResource(id = R.color.transparent_gray),
+    itemColor: Color = colorResource(id = R.color.white),
+    itemBackground: Color = colorResource(id = R.color.color_transparent_gray),
     itemRadius: Dp = 6.dp
 ) {
 

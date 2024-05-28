@@ -76,7 +76,7 @@ fun OutlinedInputField(
             placeholder = {
                 Text(
                     placeholder,
-                    color = colorResource(id = R.color.color_placeholder)
+                    color = colorResource(id = R.color.placeholder)
                 )
             },
             singleLine = true,

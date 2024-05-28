@@ -1,9 +1,6 @@
 package com.fjjukic.furniture4you.ui.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,19 +14,19 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.BasicText
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,14 +42,15 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun HomePreview() {
-    Home(HomeViewModel(), onProductClicked = {}, onCartClicked = {})
+    Home(HomeViewModel(), onProductClicked = {}, onCartClick = {}, onSearchClick = {})
 }
 
 @Composable
 fun Home(
     viewModel: HomeViewModel,
     onProductClicked: (String) -> Unit,
-    onCartClicked: () -> Unit,
+    onCartClick: () -> Unit,
+    onSearchClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val homeState by viewModel.homeState.collectAsStateWithLifecycle()
@@ -61,9 +59,9 @@ fun Home(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(colorResource(id = R.color.white))
     ) {
-        HomeHeader(onCartClicked, modifier = Modifier.padding(top = 6.dp))
+        HomeHeader(onSearchClick, onCartClick)
         CategoryFilter(homeState.categories, selectedCategory, { index ->
             viewModel.setSelectedCategory(index)
         })
@@ -72,18 +70,24 @@ fun Home(
 }
 
 @Composable
-fun HomeHeader(onCartClick: () -> Unit, modifier: Modifier) {
+fun HomeHeader(onSearchClick: () -> Unit, onCartClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp, start = 16.dp, end = 16.dp)
     ) {
-        Image(
-            modifier = Modifier.padding(start = 20.dp),
-            painter = painterResource(id = R.drawable.ic_search),
-            contentDescription = stringResource(id = R.string.content_desc_search)
-        )
-        BasicText(
+        IconButton(onClick = onSearchClick) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_search),
+                tint = colorResource(id = R.color.dark_gray),
+                contentDescription = stringResource(R.string.content_desc_action_start_icon)
+            )
+        }
+        Text(
+            modifier = Modifier
+                .padding(top = 6.dp)
+                .weight(1f),
+            textAlign = TextAlign.Center,
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
@@ -108,17 +112,13 @@ fun HomeHeader(onCartClick: () -> Unit, modifier: Modifier) {
                 }
             }
         )
-        Image(
-            modifier = Modifier
-                .padding(end = 20.dp)
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = onCartClick
-                ),
-            painter = painterResource(id = R.drawable.ic_cart),
-            contentDescription = stringResource(id = R.string.content_desc_cart)
-        )
+        IconButton(onClick = onCartClick) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_cart),
+                tint = colorResource(id = R.color.dark_gray),
+                contentDescription = stringResource(R.string.content_desc_action_end_icon)
+            )
+        }
     }
 }
 

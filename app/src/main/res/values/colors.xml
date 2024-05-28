@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
     <color name="tinted_white">#F0F0F0</color>
-    <color name="light_gray">#FF808080</color>
+    <color name="light_gray">#808080</color>
     <color name="gray">#606060</color>
     <color name="medium_gray">#303030</color>
     <color name="dark_gray">#242424</color>
-    <color name="gold">#F2C94C</color>
-    <color name="error">#D0B92828</color>
 
-    <color name="color_notification_background">#F5F5F5</color>
-    <color name="color_notification_background_old">#FFFFFF</color>
+    <color name="error">#D0B92828</color>
+    <color name="star">#F2C94C</color>
+
+    <color name="tab_selected">#242424</color>
+    <color name="tab_unselected">#999999</color>
+
+    <color name="bg_notification_new">#F5F5F5</color>
+    <color name="bg_notification_old">@color/white</color>
 
     <color name="color_discount_price">#393939</color>
 
     <color name="color_palette_selected">#909090</color>
     <color name="color_palette_unselected">#F0F0F0</color>
 
-    <color name="transparent_gray">#66606060</color>
-    <color name="favorite_cart_item_background">#F3F3F3</color>
+    <color name="color_transparent_gray">#66606060</color>
+    <color name="color_favorite_cart_item_background">#F3F3F3</color>
 
-    <color name="color_palette_first">#FFFFFF</color>
-    <color name="color_palette_second">#B4916C</color>
+    <color name="color_palette_first">@color/white</color>
+    <color name="color_palette_second">#3B1005</color>
     <color name="color_palette_third">#E4CBAD</color>
 
-    <color name="color_placeholder">#B2B2B2</color>
+    <color name="placeholder">#B2B2B2</color>
 
     <color name="color_category_filter_bg_selected">#303030</color>
     <color name="color_category_filter_bg_unselected">#F5F5F5</color>
 
-    <color name="color_category_filter_img_selected">#FFFFFF</color>
+    <color name="color_category_filter_img_selected">@color/white</color>
     <color name="color_category_filter_img_unselected">#909090</color>
 
     <color name="color_category_filter_txt_selected">#303030</color>
@@ -38,24 +43,26 @@
 
     <color name="field_title_color">#909090</color>
 
-    <color name="notification_tag_new">#27AE60</color>
-    <color name="notification_tag_hot">#EB5757</color>
+    <color name="tag_new">#27AE60</color>
+    <color name="tag_hot">#EB5757</color>
 
-    <color name="swipe_archive_background">#27AE60</color>
-    <color name="swipe_delete_background">#EB5757</color>
+    <color name="bg_swipe_archive">#27AE60</color>
+    <color name="bg_swipe_delete">#EB5757</color>
 
 
-    <color name="color_dialog_icon">#6650A4</color>
-    <color name="color_dialog_bottom_background">#F1EDFA</color>
-
-    <color name="color_switch_enabled">#27AE60</color>
-    <color name="color_switch_disabled">#E6E6E6</color>
+    <color name="dialog_icon">#6650A4</color>
+    <color name="switch_enabled">#27AE60</color>
+    <color name="switch_disabled">#E6E6E6</color>
 
     <color name="color_card_title">#D4D4D4</color>
     <color name="color_default_payment_text">#222222</color>
 
-    <color name="color_checkbox_checked">#222222</color>
-    <color name="color_checkbox_unchecked">#9B9B9B</color>
+    <color name="checkbox_checked">#222222</color>
+    <color name="checkbox_unchecked">#9B9B9B</color>
 
-    <color name="color_fab_add_content">#222222</color>
+    <color name="bg_fab_content">#222222</color>
+
+    <color name="status_delivered">#34B36A</color>
+    <color name="status_processing">#F2C94C</color>
+    <color name="status_canceled">#EB5757</color>
 </resources>

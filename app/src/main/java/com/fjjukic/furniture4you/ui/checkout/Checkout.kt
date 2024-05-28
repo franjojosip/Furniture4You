@@ -29,7 +29,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,11 +37,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fjjukic.furniture4you.ui.cart.Header
 import com.fjjukic.furniture4you.ui.checkout.dialog.DeliveryChoiceMenuDialog
 import com.fjjukic.furniture4you.ui.checkout.dialog.PaymentInfoDialog
 import com.fjjukic.furniture4you.ui.checkout.dialog.ShippingInfoDialog
+import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
@@ -52,28 +52,26 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun CheckoutPreview() {
-    Checkout(CheckoutViewModel(), {}, {})
+    Checkout({}, {})
 }
 
 @Composable
 fun Checkout(
-    viewModel: CheckoutViewModel,
     onBackClicked: () -> Unit,
     onSubmitClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: CheckoutViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier,
         topBar = {
-            Header(
+            Toolbar(
                 title = stringResource(id = R.string.nav_checkout),
                 startIconResId = R.drawable.ic_back,
-                endIconResId = null,
                 onStartActionClick = onBackClicked,
-                onEndActionClick = {},
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.white))
             )
         },
         bottomBar = {
@@ -84,17 +82,16 @@ fun Checkout(
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
                     modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
+                        .padding(horizontal = 20.dp)
+                        .padding(bottom = 20.dp)
                         .height(60.dp)
                         .fillMaxWidth(),
-                    onClick = {
-                        onSubmitClicked()
-                    }
+                    onClick = { onSubmitClicked() }
                 ) {
                     Text(
                         text = stringResource(id = R.string.btn_submit_order).uppercase(),
                         style = GelatioTypography.bodyMedium,
-                        color = Color.White
+                        color = colorResource(id = R.color.white)
                     )
                 }
             }
@@ -102,7 +99,7 @@ fun Checkout(
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.white))
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
@@ -122,9 +119,7 @@ fun Checkout(
             DeliveryMethod(
                 uiState.selectedDelivery,
                 uiState.deliveryOptions,
-                onOptionSelected = {
-                    viewModel.onDeliveryOptionSelected(it)
-                },
+                onOptionSelected = viewModel::onDeliveryOptionSelected,
                 modifier = Modifier.padding(top = 30.dp)
             )
             PriceList(uiState.priceInfo)
@@ -155,9 +150,7 @@ fun ShippingAddress(
                 openDialog = false
                 onEditClick(it)
             },
-            onDismissClicked = {
-                openDialog = false
-            }
+            onDismissClicked = { openDialog = false }
         )
     }
     Column(modifier = modifier) {
@@ -171,13 +164,12 @@ fun ShippingAddress(
             )
         }
         Card(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 3.dp
             ),
             colors = CardDefaults.cardColors(
-                containerColor = Color.White
+                containerColor = colorResource(id = R.color.white)
             )
         ) {
             Row(
@@ -320,7 +312,7 @@ fun Payment(
                 defaultElevation = 3.dp
             ),
             colors = CardDefaults.cardColors(
-                containerColor = Color.White
+                containerColor = colorResource(id = R.color.white)
             )
         ) {
             Row(
@@ -331,11 +323,11 @@ fun Payment(
                     modifier = Modifier.padding(start = 20.dp, top = 16.dp, bottom = 16.dp),
                     shadowElevation = 1.dp,
                     shape = RoundedCornerShape(8.dp),
-                    contentColor = Color.White,
+                    contentColor = colorResource(id = R.color.white),
                 ) {
                     Image(
                         modifier = Modifier
-                            .background(Color.White)
+                            .background(colorResource(id = R.color.white))
                             .padding(horizontal = 16.dp, vertical = 4.dp),
                         painter = painterResource(id = R.drawable.mastercard),
                         contentDescription = ""
@@ -376,11 +368,11 @@ fun DeliveryMethod(
         DeliveryChoiceMenuDialog(
             selectedOption.id,
             deliveryOptions,
-            onContinueClicked = {
+            onContinueClick = {
                 openDialog = false
                 onOptionSelected(it)
             },
-            onDismissClicked = {
+            onDismissClick = {
                 openDialog = false
             }
         )
@@ -399,7 +391,7 @@ fun DeliveryMethod(
                 defaultElevation = 2.dp
             ),
             colors = CardDefaults.cardColors(
-                containerColor = Color.White
+                containerColor = colorResource(id = R.color.white)
             )
         ) {
             Row(
@@ -408,7 +400,7 @@ fun DeliveryMethod(
             ) {
                 Image(
                     modifier = Modifier
-                        .background(Color.White)
+                        .background(colorResource(id = R.color.white))
                         .padding(horizontal = 16.dp, vertical = 4.dp),
                     painter = painterResource(id = selectedOption.iconResId),
                     contentDescription = ""
@@ -446,7 +438,7 @@ fun PriceList(
                 defaultElevation = 2.dp
             ),
             colors = CardDefaults.cardColors(
-                containerColor = Color.White
+                containerColor = colorResource(id = R.color.white)
             )
         ) {
             PriceItem(

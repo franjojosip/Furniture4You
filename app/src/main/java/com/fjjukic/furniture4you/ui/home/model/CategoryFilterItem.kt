@@ -58,7 +58,7 @@ fun CategoryFilterItem(
         else colorResource(id = R.color.color_category_filter_bg_unselected)
 
     val imageColor =
-        if (isSelected) colorResource(id = R.color.color_category_filter_img_selected)
+        if (isSelected) colorResource(id = R.color.white)
         else colorResource(id = R.color.color_category_filter_img_unselected)
 
     val textColor =

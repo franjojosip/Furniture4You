@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -91,7 +90,7 @@ fun PreloginScreen(
                     text = stringResource(R.string.prelogin_button_get_started),
                     fontSize = 18.sp,
                     fontFamily = gelatioFamily,
-                    color = Color.White,
+                    color = colorResource(id = R.color.white),
                     modifier = Modifier.padding(6.dp)
                 )
             }

@@ -57,6 +57,7 @@
 
     <string name="counter_label">%02d</string>
     <string name="product_price_title">$ %1s</string>
+    <string name="order_price_title">$%1s</string>
     <string name="product_discount_price_title">-$ %1s</string>
     <string name="review_count_title">(%1s)</string>
     <string name="btn_add_to_cart">Add to cart</string>
@@ -86,6 +87,7 @@
     <string name="content_desc_back_btn">Back Button Icon</string>
     <string name="content_desc_enter_promo">Enter Promo Button Icon</string>
     <string name="content_desc_edit">Edit Icon</string>
+    <string name="content_desc_archive">Archive Icon</string>
 
     <string name="new_feature_message">This feature will be available soon!</string>
     <string name="added_to_cart_message">Successfully added to cart!</string>
@@ -102,6 +104,7 @@
     <string name="nav_payment_method">Payment method</string>
     <string name="nav_shipping_address">Shipping address</string>
     <string name="nav_add_shipping_address">Add shipping address</string>
+    <string name="nav_my_order">My order</string>
 
     <string name="dialog_add_to_cart_title">Items added to cart</string>
     <string name="dialog_add_to_cart_subtitle">Do you want to continue with the shopping or go to checkout?</string>
@@ -171,4 +174,9 @@
     <string name="card_holder_name">Card Holder Name</string>
     <string name="expiry_date">Expiry Date</string>
     <string name="default_payment_method">Use as default payment method</string>
+    <string name="total_amount">Total Amount:</string>
+    <string name="detail">Detail</string>
+    <string name="quantity">Quantity:</string>
+    <string name="cart_price">Price:</string>
+    <string name="cart_discount">Discount(%1$s%%):</string>
 </resources>

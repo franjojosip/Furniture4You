@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fjjukic.furniture4you.ui.cart.Header
+import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.common.utils.CardNumberTransformation
 import com.fjjukic.furniture4you.ui.common.utils.ExpDateTransformation
@@ -59,7 +59,7 @@ fun AddPaymentMethod(
 
     Scaffold(
         topBar = {
-            Header(
+            Toolbar(
                 title = stringResource(id = R.string.nav_payment_method),
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,

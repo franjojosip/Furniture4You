@@ -86,7 +86,7 @@ fun CardInformationDialog(
         )
     ) {
         Column(
-            modifier = modifier.background(Color.White)
+            modifier = modifier.background(colorResource(id = R.color.white))
         ) {
             Text(
                 modifier = Modifier
@@ -189,8 +189,7 @@ fun CardInformationDialog(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 24.dp)
-                    .background(colorResource(id = R.color.color_dialog_bottom_background)),
+                    .padding(top = 24.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 TextButton(onClick = onDismissClicked) {
