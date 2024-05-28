@@ -40,7 +40,7 @@ fun EmailInputField(
             fontSize = 14.sp,
             fontFamily = gelatioFamily,
             fontWeight = FontWeight.SemiBold,
-            color = colorResource(id = R.color.field_title_color)
+            color = colorResource(id = R.color.color_field_title)
         )
         OutlinedTextField(
             modifier = Modifier
@@ -57,9 +57,7 @@ fun EmailInputField(
         )
 
         if (isError) {
-            ErrorField(
-                errorMessage = stringResource(R.string.error_invalid_email)
-            )
+            ErrorField(errorMessage = stringResource(R.string.error_invalid_email))
         }
     }
 }

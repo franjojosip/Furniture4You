@@ -32,7 +32,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -41,6 +40,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -54,16 +54,16 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ProductPreviewScreenPreview() {
-    ProductDetail(viewModel = ProductDetailViewModel(), {}, {}, {})
+    ProductDetail(onBackClick = {}, onNavigateToCartClick = {}, onReviewClick = {})
 }
 
 @Composable
 fun ProductDetail(
-    viewModel: ProductDetailViewModel,
     onBackClick: () -> Unit,
     onNavigateToCartClick: () -> Unit,
     onReviewClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: ProductDetailViewModel = hiltViewModel(),
 ) {
     val productState by viewModel.productState.collectAsStateWithLifecycle()
 
@@ -81,21 +81,20 @@ fun ProductDetail(
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
                 .padding(bottom = paddingValues.calculateBottomPadding())
         ) {
             ImageSlider(
-                productState.selectedProductDetail.imageUrl,
-                productState.selectedProductDetail.productOptions
+                imageUrl = productState.selectedProductDetail.imageUrl,
+                options = productState.selectedProductDetail.productOptions
             )
             ProductContent(
-                productState.selectedProductDetail,
-                productState.counter,
-                viewModel::onIncrementClick,
-                viewModel::onDecrementClick,
-                onReviewClick,
-                modifier = Modifier
-                    .padding(24.dp)
+                product = productState.selectedProductDetail,
+                itemCount = productState.counter,
+                onIncrementClick = viewModel::onIncrementClick,
+                onDecrementClick = viewModel::onDecrementClick,
+                onReviewClick = onReviewClick,
+                modifier = Modifier.padding(24.dp)
             )
         }
     }
@@ -124,18 +123,21 @@ fun BackButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 }
 
 @Composable
-fun ProductBottomButtons(onNavigateToCartClicked: () -> Unit, modifier: Modifier = Modifier) {
+fun ProductBottomButtons(
+    onNavigateToCartClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     var isFavoriteSelected by remember { mutableStateOf(false) }
     var openDialog by remember { mutableStateOf(false) }
 
     if (openDialog) {
         ProductDetailCartDialog(
-            onContinueClicked = {
+            onContinueClick = {
                 openDialog = false
             },
-            onDismissClicked = {
+            onDismissClick = {
                 openDialog = false
-                onNavigateToCartClicked()
+                onNavigateToCartClick()
             }
         )
     }
@@ -148,17 +150,17 @@ fun ProductBottomButtons(onNavigateToCartClicked: () -> Unit, modifier: Modifier
             modifier = Modifier
                 .size(60.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(colorResource(id = R.color.tinted_white))
+                .background(colorResource(id = R.color.color_tinted_white))
         ) {
             Icon(
                 painter = painterResource(id = if (isFavoriteSelected) R.drawable.ic_favorite_black else R.drawable.ic_favorite),
                 contentDescription = stringResource(id = R.string.content_desc_favorite_icon),
-                tint = Color.Black
+                tint = colorResource(id = R.color.color_black)
             )
         }
         Button(
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
             modifier = Modifier
                 .padding(start = 16.dp)
                 .height(60.dp)
@@ -170,7 +172,7 @@ fun ProductBottomButtons(onNavigateToCartClicked: () -> Unit, modifier: Modifier
             Text(
                 text = stringResource(id = R.string.btn_add_to_cart),
                 style = GelatioTypography.bodyMedium,
-                color = Color.White
+                color = colorResource(id = R.color.color_white)
             )
         }
     }
@@ -206,7 +208,7 @@ private fun ImageSlider(
                 colorResource(id = R.color.color_palette_second),
                 colorResource(id = R.color.color_palette_third)
             ),
-            onColorSelected = { index ->
+            onColorSelect = { index ->
                 currentImage = options[index].imageUrl
             }
         )
@@ -223,21 +225,20 @@ private fun ProductContent(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .background(Color.White)
+        modifier = modifier.background(colorResource(id = R.color.color_white))
     ) {
         Text(
             text = product.title,
             style = GelatioTypography.titleMedium,
-            color = colorResource(id = R.color.medium_gray),
+            color = colorResource(id = R.color.color_medium_gray),
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = stringResource(id = R.string.product_price_title, product.price),
+                text = stringResource(id = R.string.title_product_price, product.price),
                 style = NunitoSansTypography.bodyLarge,
-                color = colorResource(id = R.color.medium_gray),
+                color = colorResource(id = R.color.color_medium_gray),
                 modifier = Modifier.weight(1f),
             )
             ShoppingCounter(
@@ -255,7 +256,7 @@ private fun ProductContent(
         Text(
             text = product.description,
             style = NunitoSansTypography.labelSmall,
-            color = colorResource(id = R.color.gray),
+            color = colorResource(id = R.color.color_gray),
             modifier = Modifier.padding(top = 16.dp)
         )
     }
@@ -271,7 +272,7 @@ private fun ReviewItem(
     val resources = LocalContext.current.resources
     val reviewCountFormattedString = remember(numOfReviews, resources) {
         resources.getQuantityString(
-            R.plurals.review_count,
+            R.plurals.label_review_count,
             numOfReviews, numOfReviews
         )
     }
@@ -287,19 +288,19 @@ private fun ReviewItem(
         Image(
             painter = painterResource(R.drawable.ic_star),
             contentDescription = stringResource(R.string.content_desc_rating),
-            colorFilter = ColorFilter.tint(colorResource(id = R.color.star)),
+            colorFilter = ColorFilter.tint(colorResource(id = R.color.color_star)),
             modifier = Modifier.size(20.dp)
         )
         Text(
             text = rating.toString(),
             style = NunitoSansTypography.labelLarge,
-            color = colorResource(id = R.color.medium_gray),
+            color = colorResource(id = R.color.color_medium_gray),
             modifier = Modifier.padding(start = 8.dp)
         )
         Text(
-            text = stringResource(id = R.string.review_count_title, reviewCountFormattedString),
+            text = stringResource(id = R.string.title_review_count, reviewCountFormattedString),
             style = NunitoSansTypography.labelSmall,
-            color = colorResource(id = R.color.light_gray),
+            color = colorResource(id = R.color.color_light_gray),
             modifier = Modifier.padding(start = 20.dp)
         )
     }

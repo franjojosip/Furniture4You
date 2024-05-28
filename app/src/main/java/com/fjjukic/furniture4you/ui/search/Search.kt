@@ -43,7 +43,7 @@ fun Search(onBackClick: () -> Unit) {
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(androidx.compose.ui.graphics.Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         }
     ) { paddingValues ->
@@ -52,7 +52,7 @@ fun Search(onBackClick: () -> Unit) {
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(paddingValues)
-                .background(androidx.compose.ui.graphics.Color.White)
+                .background(colorResource(id = R.color.color_white))
         ) {
             SearchBar()
         }
@@ -90,8 +90,8 @@ private fun SearchBar(
                 IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Outlined.Search,
-                        tint = colorResource(id = R.color.dark_gray),
-                        contentDescription = stringResource(R.string.desc_shipping_addresses)
+                        tint = colorResource(id = R.color.color_dark_gray),
+                        contentDescription = stringResource(R.string.mock_shipping_addresses)
                     )
                 }
             }
@@ -106,7 +106,7 @@ private fun SearchBar(
             )
             if (searching) {
                 CircularProgressIndicator(
-                    color = colorResource(id = R.color.dark_gray),
+                    color = colorResource(id = R.color.color_dark_gray),
                     modifier = Modifier
                         .padding(horizontal = 6.dp)
                         .size(24.dp)
@@ -128,13 +128,13 @@ private fun SearchHint() {
     ) {
         Icon(
             imageVector = Icons.Outlined.Search,
-            tint = colorResource(id = R.color.dark_gray),
+            tint = colorResource(id = R.color.color_dark_gray),
             contentDescription = stringResource(R.string.content_desc_search)
         )
         Spacer(Modifier.width(8.dp))
         Text(
             text = stringResource(R.string.content_desc_archive),
-            color = colorResource(id = R.color.dark_gray),
+            color = colorResource(id = R.color.color_dark_gray),
         )
     }
 }

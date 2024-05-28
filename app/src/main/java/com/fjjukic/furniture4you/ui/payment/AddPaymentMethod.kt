@@ -22,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -30,6 +29,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
@@ -42,13 +42,13 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun AddPaymentMethodPreview() {
-    AddPaymentMethod(PaymentMethodViewModel(), {})
+    AddPaymentMethod(onBackClick = {})
 }
 
 @Composable
 fun AddPaymentMethod(
-    viewModel: PaymentMethodViewModel,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: PaymentMethodViewModel = hiltViewModel()
 ) {
     val mockCard by viewModel.mockCard.collectAsStateWithLifecycle()
 
@@ -64,7 +64,7 @@ fun AddPaymentMethod(
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         },
         bottomBar = {
@@ -73,7 +73,7 @@ fun AddPaymentMethod(
             ) {
                 Button(
                     shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
                     modifier = Modifier
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
                         .height(60.dp)
@@ -83,7 +83,7 @@ fun AddPaymentMethod(
                     Text(
                         text = stringResource(id = R.string.btn_add_new_card).uppercase(),
                         style = GelatioTypography.bodyMedium,
-                        color = Color.White
+                        color = colorResource(id = R.color.color_white)
                     )
                 }
             }
@@ -92,14 +92,16 @@ fun AddPaymentMethod(
 
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
         ) {
             PaymentCardItem(
                 card = mockCard,
-                modifier = Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 40.dp)
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 20.dp, bottom = 40.dp)
             )
 
             OutlinedInputField(
@@ -134,7 +136,7 @@ fun AddPaymentMethod(
                 isFieldValid = {
                     PaymentUtils.isValidCardNumber(it)
                 },
-                errorMessage = stringResource(id = R.string.invalid_card_number),
+                errorMessage = stringResource(id = R.string.error_invalid_card_number),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Number

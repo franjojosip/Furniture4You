@@ -13,7 +13,7 @@ class CheckoutViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(MockRepository.getCheckoutViewState())
     val uiState: StateFlow<CheckoutViewState> = _uiState
 
-    fun onDeliveryOptionSelected(optionId: String) {
+    fun onDeliveryOptionSelect(optionId: String) {
         _uiState.update {
             val selectedDelivery =
                 it.deliveryOptions.first { deliveryOption -> deliveryOption.id == optionId }
@@ -27,7 +27,7 @@ class CheckoutViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun onPaymentInfoChanged(paymentInfo: PaymentInfo) {
+    fun onPaymentInfoChange(paymentInfo: PaymentInfo) {
         _uiState.update {
             it.copy(
                 paymentInfo = paymentInfo
@@ -35,7 +35,7 @@ class CheckoutViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun onShippingInfoChanged(shippingInfo: ShippingInfo) {
+    fun onShippingInfoChange(shippingInfo: ShippingInfo) {
         _uiState.update {
             it.copy(
                 shippingInfo = shippingInfo

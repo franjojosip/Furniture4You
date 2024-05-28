@@ -17,7 +17,8 @@ class MyOrderViewModel @Inject constructor() : ViewModel() {
     val tabs = listOf(OrderStatus.Delivered, OrderStatus.Processing, OrderStatus.Canceled)
 
     private val orders = MockRepository.getOrders()
-    val deliveredOrders = orders.filter { it.status == OrderStatus.Delivered }
+
+    val deliveredOrders get() = orders.filter { it.status == OrderStatus.Delivered }
     val processedOrders = orders.filter { it.status == OrderStatus.Processing }
     val canceledOrders = orders.filter { it.status == OrderStatus.Canceled }
 

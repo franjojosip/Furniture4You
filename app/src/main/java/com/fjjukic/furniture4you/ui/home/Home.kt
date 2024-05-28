@@ -31,8 +31,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fjjukic.furniture4you.ui.common.model.Product
+import com.fjjukic.furniture4you.ui.components.Product
 import com.fjjukic.furniture4you.ui.home.model.CategoryFilterItem
 import com.fjjukic.furniture4you.ui.home.model.CategoryItem
 import com.fjjukic.furniture4you.ui.home.model.ProductItem
@@ -42,16 +43,16 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun HomePreview() {
-    Home(HomeViewModel(), onProductClicked = {}, onCartClick = {}, onSearchClick = {})
+    Home(onProductClick = {}, onCartClick = {}, onSearchClick = {})
 }
 
 @Composable
 fun Home(
-    viewModel: HomeViewModel,
-    onProductClicked: (String) -> Unit,
+    onProductClick: (String) -> Unit,
     onCartClick: () -> Unit,
     onSearchClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeState by viewModel.homeState.collectAsStateWithLifecycle()
     val selectedCategory by viewModel.selectedCategory.collectAsStateWithLifecycle()
@@ -59,18 +60,22 @@ fun Home(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white))
+            .background(colorResource(id = R.color.color_white))
     ) {
         HomeHeader(onSearchClick, onCartClick)
         CategoryFilter(homeState.categories, selectedCategory, { index ->
             viewModel.setSelectedCategory(index)
         })
-        ProductList(homeState.products, onProductClicked)
+        ProductList(homeState.products, onProductClick)
     }
 }
 
 @Composable
-fun HomeHeader(onSearchClick: () -> Unit, onCartClick: () -> Unit, modifier: Modifier = Modifier) {
+fun HomeHeader(
+    onSearchClick: () -> Unit,
+    onCartClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -79,7 +84,7 @@ fun HomeHeader(onSearchClick: () -> Unit, onCartClick: () -> Unit, modifier: Mod
         IconButton(onClick = onSearchClick) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_search),
-                tint = colorResource(id = R.color.dark_gray),
+                tint = colorResource(id = R.color.color_dark_gray),
                 contentDescription = stringResource(R.string.content_desc_action_start_icon)
             )
         }
@@ -94,10 +99,10 @@ fun HomeHeader(onSearchClick: () -> Unit, onCartClick: () -> Unit, modifier: Mod
                         fontSize = 18.sp,
                         fontFamily = gelatioFamily,
                         fontWeight = FontWeight.Light,
-                        color = colorResource(id = R.color.light_gray),
+                        color = colorResource(id = R.color.color_light_gray),
                     )
                 ) {
-                    append(stringResource(R.string.make_home))
+                    append(stringResource(R.string.title_make_home))
                 }
                 append("\n")
                 withStyle(
@@ -105,17 +110,17 @@ fun HomeHeader(onSearchClick: () -> Unit, onCartClick: () -> Unit, modifier: Mod
                         fontSize = 18.sp,
                         fontFamily = gelatioFamily,
                         fontWeight = FontWeight.SemiBold,
-                        color = colorResource(id = R.color.medium_gray),
+                        color = colorResource(id = R.color.color_medium_gray),
                     )
                 ) {
-                    append(stringResource(R.string.beautiful).uppercase())
+                    append(stringResource(R.string.title_beautiful).uppercase())
                 }
             }
         )
         IconButton(onClick = onCartClick) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_cart),
-                tint = colorResource(id = R.color.dark_gray),
+                tint = colorResource(id = R.color.color_dark_gray),
                 contentDescription = stringResource(R.string.content_desc_action_end_icon)
             )
         }
@@ -140,7 +145,7 @@ fun CategoryFilter(
                 title = item.title,
                 isSelected = index == selectedCategory,
                 imageResId = item.imageResId,
-                onCategorySelected = { onCategorySelected.invoke(index) },
+                onCategorySelect = { onCategorySelected(index) },
                 modifier = Modifier.padding(end = 20.dp)
             )
         }
@@ -162,7 +167,7 @@ fun ProductList(
         items(products) { product ->
             ProductItem(
                 product,
-                onProductClicked = onProductClicked
+                onProductClick = onProductClicked
             )
         }
     }

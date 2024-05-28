@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.components
+package com.fjjukic.furniture4you.ui.cart
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -27,14 +28,14 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun CartItemPreview() {
-    CartItem({})
+    CartItem(onItemSelect = {})
 }
 
 @Composable
 fun CartItem(
-    onItemSelected: () -> Unit,
+    onItemSelect: () -> Unit,
     modifier: Modifier = Modifier,
-    itemColor: Color = colorResource(id = R.color.white),
+    itemColor: Color = colorResource(id = R.color.color_white),
     itemBackground: Color = colorResource(id = R.color.color_transparent_gray),
     itemRadius: Dp = 6.dp
 ) {
@@ -50,13 +51,13 @@ fun CartItem(
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null
-                ) { onItemSelected.invoke() }
+                ) { onItemSelect() }
         ) {
             Image(
                 modifier = Modifier.align(Alignment.Center),
                 painter = painterResource(id = R.drawable.ic_shopping_cart),
                 colorFilter = ColorFilter.tint(itemColor),
-                contentDescription = "",
+                contentDescription = stringResource(id = R.string.content_desc_cart),
                 contentScale = ContentScale.None
             )
         }

@@ -50,14 +50,14 @@ fun Toolbar(
         IconButton(onClick = onStartActionClick) {
             Icon(
                 painter = painterResource(id = startIconResId),
-                tint = colorResource(id = R.color.dark_gray),
+                tint = colorResource(id = R.color.color_dark_gray),
                 contentDescription = stringResource(R.string.content_desc_action_start_icon)
             )
         }
         Text(
             text = title,
             style = NunitoSansTypography.titleSmall,
-            color = colorResource(id = R.color.medium_gray),
+            color = colorResource(id = R.color.color_medium_gray),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .weight(1f)
@@ -67,7 +67,7 @@ fun Toolbar(
             IconButton(onClick = onEndActionClick) {
                 Icon(
                     painter = painterResource(id = endIconResId),
-                    tint = colorResource(id = R.color.dark_gray),
+                    tint = colorResource(id = R.color.color_dark_gray),
                     contentDescription = stringResource(R.string.content_desc_action_end_icon)
                 )
             }

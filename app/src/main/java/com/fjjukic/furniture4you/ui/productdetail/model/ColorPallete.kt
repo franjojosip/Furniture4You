@@ -28,20 +28,25 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ColorPalettePreview() {
-    ColorPalette(onColorSelected = {})
+    ColorPalette(
+        colors = listOf(
+            colorResource(id = R.color.color_palette_first),
+            colorResource(id = R.color.color_palette_second),
+            colorResource(id = R.color.color_palette_third)
+        ), onColorSelect = {})
 }
 
 @Preview
 @Composable
 fun ColorPickerItemPreview() {
-    ColorPickerItem({})
+    ColorPickerItem(onItemClick = {})
 }
 
 @Composable
 fun ColorPalette(
+    colors: List<Color>,
+    onColorSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    colors: List<Color> = listOf(Color.Red, Color.Yellow, Color.Green),
-    onColorSelected: (Int) -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(0) }
 
@@ -49,7 +54,7 @@ fun ColorPalette(
         shadowElevation = 8.dp,
         modifier = modifier,
         shape = RoundedCornerShape(36.dp),
-        contentColor = Color.White,
+        contentColor = colorResource(id = R.color.color_white),
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -57,10 +62,10 @@ fun ColorPalette(
             colors.forEachIndexed { index, fillColor ->
                 val isSelected = index == selectedIndex
                 ColorPickerItem(
-                    onItemClicked = {
+                    onItemClick = {
                         if (!isSelected) {
                             selectedIndex = index
-                            onColorSelected(index)
+                            onColorSelect(index)
                         }
                     },
                     isSelected = isSelected,
@@ -76,9 +81,9 @@ fun ColorPalette(
 
 @Composable
 fun ColorPickerItem(
-    onItemClicked: () -> Unit,
+    onItemClick: () -> Unit,
     isSelected: Boolean = false,
-    fillColor: Color = Color.Magenta,
+    fillColor: Color = colorResource(id = R.color.color_palette_second),
     modifier: Modifier = Modifier
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -97,7 +102,7 @@ fun ColorPickerItem(
             .clickable(
                 interactionSource = interactionSource,
                 indication = null,
-                onClick = onItemClicked
+                onClick = onItemClick
             )
     ) {
         Box(

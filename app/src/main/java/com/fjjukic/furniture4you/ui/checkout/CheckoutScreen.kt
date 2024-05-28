@@ -52,13 +52,13 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun CheckoutPreview() {
-    Checkout({}, {})
+    CheckoutScreen(onBackClick = {}, onSubmitClick = {})
 }
 
 @Composable
-fun Checkout(
-    onBackClicked: () -> Unit,
-    onSubmitClicked: () -> Unit,
+fun CheckoutScreen(
+    onBackClick: () -> Unit,
+    onSubmitClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CheckoutViewModel = hiltViewModel(),
 ) {
@@ -70,8 +70,8 @@ fun Checkout(
             Toolbar(
                 title = stringResource(id = R.string.nav_checkout),
                 startIconResId = R.drawable.ic_back,
-                onStartActionClick = onBackClicked,
-                modifier = Modifier.background(colorResource(id = R.color.white))
+                onStartActionClick = onBackClick,
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         },
         bottomBar = {
@@ -80,18 +80,18 @@ fun Checkout(
             ) {
                 Button(
                     shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
                         .padding(bottom = 20.dp)
                         .height(60.dp)
                         .fillMaxWidth(),
-                    onClick = { onSubmitClicked() }
+                    onClick = { onSubmitClick() }
                 ) {
                     Text(
                         text = stringResource(id = R.string.btn_submit_order).uppercase(),
                         style = GelatioTypography.bodyMedium,
-                        color = colorResource(id = R.color.white)
+                        color = colorResource(id = R.color.color_white)
                     )
                 }
             }
@@ -99,30 +99,30 @@ fun Checkout(
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .background(colorResource(id = R.color.white))
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
         ) {
             ShippingAddress(
-                uiState.shippingInfo,
-                viewModel::onShippingInfoChanged,
+                shippingInfo = uiState.shippingInfo,
+                onShippingInfoChange = viewModel::onShippingInfoChange,
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .padding(horizontal = 20.dp)
             )
             Payment(
-                uiState.paymentInfo,
-                viewModel::onPaymentInfoChanged,
+                paymentInfo = uiState.paymentInfo,
+                onEditClick = viewModel::onPaymentInfoChange,
                 modifier = Modifier.padding(top = 30.dp)
             )
             DeliveryMethod(
-                uiState.selectedDelivery,
-                uiState.deliveryOptions,
-                onOptionSelected = viewModel::onDeliveryOptionSelected,
+                selectedOption = uiState.selectedDelivery,
+                deliveryOptions = uiState.deliveryOptions,
+                onDeliveryOptionSelect = viewModel::onDeliveryOptionSelect,
                 modifier = Modifier.padding(top = 30.dp)
             )
-            PriceList(uiState.priceInfo)
+            PriceOverview(uiState.priceInfo)
         }
     }
 }
@@ -131,13 +131,13 @@ fun Checkout(
 @Preview
 @Composable
 fun ShippingAddressPreview() {
-    ShippingAddress(MockRepository.getShippingInfo(), {})
+    ShippingAddress(shippingInfo = MockRepository.getShippingInfo(), onShippingInfoChange = {})
 }
 
 @Composable
 fun ShippingAddress(
     shippingInfo: ShippingInfo,
-    onEditClick: (ShippingInfo) -> Unit,
+    onShippingInfoChange: (ShippingInfo) -> Unit,
     modifier: Modifier = Modifier,
     hasHeader: Boolean = true
 ) {
@@ -148,7 +148,7 @@ fun ShippingAddress(
             shippingInfo,
             onContinueClicked = {
                 openDialog = false
-                onEditClick(it)
+                onShippingInfoChange(it)
             },
             onDismissClicked = { openDialog = false }
         )
@@ -156,7 +156,7 @@ fun ShippingAddress(
     Column(modifier = modifier) {
         if (hasHeader) {
             CheckoutItemHeader(
-                label = stringResource(R.string.shipping_address),
+                label = stringResource(R.string.field_shipping_address),
                 onEditClick = {
                     openDialog = true
                 },
@@ -169,7 +169,7 @@ fun ShippingAddress(
                 defaultElevation = 3.dp
             ),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.white)
+                containerColor = colorResource(id = R.color.color_white)
             )
         ) {
             Row(
@@ -177,19 +177,15 @@ fun ShippingAddress(
             ) {
                 Text(
                     modifier = Modifier
-                        .padding(
-                            top = 16.dp,
-                            start = 20.dp,
-                            end = 20.dp,
-                            bottom = 10.dp
-                        )
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 16.dp, bottom = 10.dp)
                         .weight(1f),
                     text = shippingInfo.fullName,
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontFamily = nunitoSansFamily,
                         fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.medium_gray)
+                        color = colorResource(id = R.color.color_medium_gray)
                     )
                 )
                 if (!hasHeader) {
@@ -203,28 +199,25 @@ fun ShippingAddress(
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_edit),
-                            tint = colorResource(id = R.color.medium_gray),
+                            tint = colorResource(id = R.color.color_medium_gray),
                             contentDescription = stringResource(id = R.string.content_desc_edit)
                         )
                     }
                 }
             }
             HorizontalDivider(
-                color = colorResource(id = R.color.tinted_white),
+                color = colorResource(id = R.color.color_tinted_white),
                 thickness = 2.dp
             )
             Text(
-                modifier = Modifier.padding(
-                    top = 16.dp,
-                    start = 20.dp,
-                    end = 20.dp,
-                    bottom = 16.dp
-                ),
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 16.dp, bottom = 16.dp),
                 text = shippingInfo.address,
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontFamily = nunitoSansFamily,
-                    color = colorResource(id = R.color.light_gray)
+                    color = colorResource(id = R.color.color_light_gray)
                 )
             )
         }
@@ -234,7 +227,9 @@ fun ShippingAddress(
 @Preview
 @Composable
 fun CheckoutItemHeaderPreview() {
-    CheckoutItemHeader(stringResource(id = R.string.shipping_address), onEditClick = {})
+    CheckoutItemHeader(
+        label = stringResource(id = R.string.field_shipping_address),
+        onEditClick = {})
 }
 
 @Composable
@@ -253,7 +248,7 @@ fun CheckoutItemHeader(
                 fontSize = 18.sp,
                 fontFamily = nunitoSansFamily,
                 fontWeight = FontWeight.SemiBold,
-                color = colorResource(id = R.color.field_title_color)
+                color = colorResource(id = R.color.color_field_title)
             )
         )
         if (onEditClick != null) {
@@ -263,7 +258,7 @@ fun CheckoutItemHeader(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_edit),
-                    tint = colorResource(id = R.color.medium_gray),
+                    tint = colorResource(id = R.color.color_medium_gray),
                     contentDescription = stringResource(id = R.string.content_desc_edit)
                 )
             }
@@ -275,7 +270,7 @@ fun CheckoutItemHeader(
 @Preview
 @Composable
 fun PaymentPreview() {
-    Payment(MockRepository.getPaymentInfo(), {})
+    Payment(paymentInfo = MockRepository.getPaymentInfo(), onEditClick = {})
 }
 
 @Composable
@@ -289,18 +284,18 @@ fun Payment(
     if (openDialog) {
         PaymentInfoDialog(
             paymentInfo,
-            onContinueClicked = {
+            onContinueClick = {
                 openDialog = false
                 onEditClick(it)
             },
-            onDismissClicked = {
+            onDismissClick = {
                 openDialog = false
             }
         )
     }
     Column(modifier = modifier.padding(horizontal = 20.dp)) {
         CheckoutItemHeader(
-            label = stringResource(R.string.payment),
+            label = stringResource(R.string.title_payment),
             onEditClick = {
                 openDialog = true
             }
@@ -312,7 +307,7 @@ fun Payment(
                 defaultElevation = 3.dp
             ),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.white)
+                containerColor = colorResource(id = R.color.color_white)
             )
         ) {
             Row(
@@ -320,17 +315,19 @@ fun Payment(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Surface(
-                    modifier = Modifier.padding(start = 20.dp, top = 16.dp, bottom = 16.dp),
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .padding(start = 20.dp),
                     shadowElevation = 1.dp,
                     shape = RoundedCornerShape(8.dp),
-                    contentColor = colorResource(id = R.color.white),
+                    contentColor = colorResource(id = R.color.color_white),
                 ) {
                     Image(
                         modifier = Modifier
-                            .background(colorResource(id = R.color.white))
+                            .background(colorResource(id = R.color.color_white))
                             .padding(horizontal = 16.dp, vertical = 4.dp),
-                        painter = painterResource(id = R.drawable.mastercard),
-                        contentDescription = ""
+                        painter = painterResource(id = R.drawable.ic_mastercard),
+                        contentDescription = stringResource(id = R.string.content_desc_vendor)
                     )
                 }
                 Text(
@@ -340,7 +337,7 @@ fun Payment(
                         fontSize = 18.sp,
                         fontFamily = nunitoSansFamily,
                         fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.medium_gray)
+                        color = colorResource(id = R.color.color_medium_gray)
                     )
                 )
             }
@@ -352,14 +349,17 @@ fun Payment(
 @Composable
 fun DeliveryMethodPreview() {
     val options = MockRepository.getDeliveryOptions()
-    DeliveryMethod(options.first(), options, {})
+    DeliveryMethod(
+        selectedOption = options.first(),
+        deliveryOptions = options,
+        onDeliveryOptionSelect = {})
 }
 
 @Composable
 fun DeliveryMethod(
     selectedOption: DeliveryOption,
     deliveryOptions: List<DeliveryOption>,
-    onOptionSelected: (String) -> Unit,
+    onDeliveryOptionSelect: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var openDialog by remember { mutableStateOf(false) }
@@ -370,7 +370,7 @@ fun DeliveryMethod(
             deliveryOptions,
             onContinueClick = {
                 openDialog = false
-                onOptionSelected(it)
+                onDeliveryOptionSelect(it)
             },
             onDismissClick = {
                 openDialog = false
@@ -379,7 +379,7 @@ fun DeliveryMethod(
     }
     Column(modifier = modifier.padding(horizontal = 20.dp)) {
         CheckoutItemHeader(
-            label = stringResource(R.string.delivery_method),
+            label = stringResource(R.string.title_delivery_method),
             onEditClick = {
                 openDialog = true
             }
@@ -391,7 +391,7 @@ fun DeliveryMethod(
                 defaultElevation = 2.dp
             ),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.white)
+                containerColor = colorResource(id = R.color.color_white)
             )
         ) {
             Row(
@@ -400,10 +400,10 @@ fun DeliveryMethod(
             ) {
                 Image(
                     modifier = Modifier
-                        .background(colorResource(id = R.color.white))
+                        .background(colorResource(id = R.color.color_white))
                         .padding(horizontal = 16.dp, vertical = 4.dp),
                     painter = painterResource(id = selectedOption.iconResId),
-                    contentDescription = ""
+                    contentDescription = stringResource(id = R.string.content_desc_delivery_icon)
                 )
                 Text(
                     modifier = Modifier.padding(16.dp),
@@ -412,7 +412,7 @@ fun DeliveryMethod(
                         fontSize = 18.sp,
                         fontFamily = nunitoSansFamily,
                         fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.medium_gray)
+                        color = colorResource(id = R.color.color_medium_gray)
                     )
                 )
             }
@@ -423,11 +423,11 @@ fun DeliveryMethod(
 @Preview
 @Composable
 fun PriceListPreview() {
-    PriceList(MockRepository.getPriceInfo())
+    PriceOverview(priceInfo = MockRepository.getPriceInfo())
 }
 
 @Composable
-fun PriceList(
+fun PriceOverview(
     priceInfo: PriceInfo,
     modifier: Modifier = Modifier
 ) {
@@ -438,34 +438,31 @@ fun PriceList(
                 defaultElevation = 2.dp
             ),
             colors = CardDefaults.cardColors(
-                containerColor = colorResource(id = R.color.white)
+                containerColor = colorResource(id = R.color.color_white)
             )
         ) {
             PriceItem(
-                R.string.order_label,
-                priceInfo.orderPrice,
-                Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)
+                titleResId = R.string.title_checkout_order,
+                price = priceInfo.orderPrice,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 16.dp)
             )
             PriceItem(
-                R.string.delivery_label,
-                priceInfo.deliveryPrice,
-                Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)
+                titleResId = R.string.title_checkout_delivery,
+                price = priceInfo.deliveryPrice,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 16.dp)
             )
             PriceItem(
-                R.string.total_label,
-                priceInfo.orderPrice + priceInfo.deliveryPrice,
-                Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
-                true
+                titleResId = R.string.title_checkout_total,
+                price = priceInfo.orderPrice + priceInfo.deliveryPrice,
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+                isMainPrice = true
             )
         }
     }
-}
-
-
-@Preview
-@Composable
-fun PriceItemPreview() {
-    PriceItem(R.string.order_label, 85.00)
 }
 
 @Composable
@@ -475,22 +472,20 @@ fun PriceItem(
     modifier: Modifier = Modifier,
     isMainPrice: Boolean = false
 ) {
-    Row(
-        modifier = modifier
-    ) {
+    Row(modifier) {
         Text(
             text = stringResource(id = titleResId),
-            color = colorResource(id = R.color.light_gray),
+            color = colorResource(id = R.color.color_light_gray),
             fontSize = 18.sp,
             fontFamily = nunitoSansFamily,
             modifier = Modifier.weight(1f)
         )
         Text(
             text = stringResource(
-                id = R.string.product_price_title,
+                id = R.string.title_product_price,
                 PaymentUtils.formatPrice(price)
             ),
-            color = colorResource(id = R.color.dark_gray),
+            color = colorResource(id = R.color.color_dark_gray),
             fontSize = 18.sp,
             fontFamily = nunitoSansFamily,
             fontWeight = if (isMainPrice) FontWeight.Bold else FontWeight.SemiBold

@@ -26,7 +26,7 @@ class ShippingAddressViewModel @Inject constructor() : ViewModel() {
     private val _newShippingAddress = MutableStateFlow(ShippingInfo())
     val newShippingAddress: StateFlow<ShippingInfo> = _newShippingAddress
 
-    fun onCountrySelected(country: MenuItem.Country) {
+    fun onCountrySelect(country: MenuItem.Country) {
         if (country.id != _newShippingAddress.value.country?.id) {
             val cities = MockRepository.getCities()
             _cities.value = cities.filter { it.countryId == country.id }
@@ -77,7 +77,7 @@ class ShippingAddressViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun onCitySelected(city: MenuItem.City) {
+    fun onCitySelect(city: MenuItem.City) {
         _newShippingAddress.update {
             it.copy(city = city)
         }

@@ -14,11 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,14 +28,18 @@ import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
-fun CustomTextFieldPreview() {
-    CustomTextField("", {}, "Placeholder")
+fun PromoCodeFieldPreview() {
+    PromoCodeField(
+        fieldValue = "",
+        onTextChange = {},
+        placeholder = stringResource(id = R.string.placeholder_enter_promo_code)
+    )
 }
 
 @Composable
-fun CustomTextField(
+fun PromoCodeField(
     fieldValue: String,
-    onTextChanged: (String) -> Unit,
+    onTextChange: (String) -> Unit,
     placeholder: String,
     modifier: Modifier = Modifier,
     singleLine: Boolean = true,
@@ -44,12 +49,12 @@ fun CustomTextField(
         value = fieldValue.uppercase(),
         onValueChange = {
             if (it.length <= 20) {
-                onTextChanged(it)
+                onTextChange(it)
             }
         },
         modifier = modifier
             .background(
-                colorResource(id = R.color.white),
+                colorResource(id = R.color.color_white),
                 RoundedCornerShape(10.dp),
             )
             .padding(horizontal = 20.dp)
@@ -61,29 +66,7 @@ fun CustomTextField(
             fontSize = 16.sp
         ),
         enabled = isEnabled,
-        visualTransformation = {
-            val isBlank = it.text.isBlank()
-            val transformedText = if (isBlank) it.text else "#${it.text}"
-
-            TransformedText(
-                text = AnnotatedString(transformedText),
-                offsetMapping = object : OffsetMapping {
-                    override fun originalToTransformed(offset: Int): Int {
-                        return when (isBlank) {
-                            true -> 0
-                            else -> it.text.length + 1
-                        }
-                    }
-
-                    override fun transformedToOriginal(offset: Int): Int {
-                        return when (isBlank) {
-                            true -> 0
-                            else -> it.text.length
-                        }
-                    }
-                }
-            )
-        },
+        visualTransformation = PromoCodeFieldTransformation(),
         interactionSource = remember { MutableInteractionSource() }
     ) { innerTextField ->
         Box(
@@ -93,12 +76,36 @@ fun CustomTextField(
                 Text(
                     placeholder,
                     style = LocalTextStyle.current.copy(
-                        color = Color.Black.copy(alpha = 0.3f),
+                        color = colorResource(id = R.color.color_black).copy(alpha = 0.3f),
                         fontSize = 16.sp
                     )
                 )
             }
             innerTextField()
         }
+    }
+}
+
+class PromoCodeFieldTransformation : VisualTransformation {
+    override fun filter(text: AnnotatedString): TransformedText {
+        val isBlank = text.text.isBlank()
+        val transformedText = if (isBlank) text.text else "#${text.text}"
+
+        val promoCodeOffsetMapping = object : OffsetMapping {
+            override fun originalToTransformed(offset: Int): Int {
+                return when (isBlank) {
+                    true -> 0
+                    else -> text.text.length + 1
+                }
+            }
+
+            override fun transformedToOriginal(offset: Int): Int {
+                return when (isBlank) {
+                    true -> 0
+                    else -> text.text.length
+                }
+            }
+        }
+        return TransformedText(AnnotatedString(transformedText), promoCodeOffsetMapping)
     }
 }

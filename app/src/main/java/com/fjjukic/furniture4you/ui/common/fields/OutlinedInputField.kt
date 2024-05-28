@@ -1,6 +1,5 @@
 package com.fjjukic.furniture4you.ui.common.fields
 
-import android.os.SystemClock
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,7 +8,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,21 +19,20 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.fjjukic.furniture4you.ui.theme.ErrorColor
 import com.fjjukic.furniture4you.ui.theme.FieldTextColor
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun OutlinedInputFieldPreview() {
     OutlinedInputField(
         value = "",
-        label = "Label",
-        placeholder = "Preview",
+        label = stringResource(id = R.string.placeholder_name),
+        placeholder = stringResource(id = R.string.placeholder_name),
         isFieldValid = { true },
         onValueChange = {},
-        errorMessage = "Error message"
+        errorMessage = stringResource(id = R.string.placeholder_name)
     )
 }
 
@@ -74,10 +71,7 @@ fun OutlinedInputField(
                 isError = !isFieldValid(it)
             },
             placeholder = {
-                Text(
-                    placeholder,
-                    color = colorResource(id = R.color.placeholder)
-                )
+                Text(text = placeholder, color = colorResource(id = R.color.color_placeholder))
             },
             singleLine = true,
             visualTransformation = visualTransformation,
@@ -85,25 +79,7 @@ fun OutlinedInputField(
         )
 
         if (isError) {
-            Text(
-                modifier = Modifier.padding(start = 6.dp, end = 6.dp, top = 6.dp),
-                text = errorMessage ?: stringResource(R.string.error_invalid_field),
-                fontSize = 12.sp,
-                color = ErrorColor
-            )
+            ErrorField(errorMessage = errorMessage ?: stringResource(R.string.error_invalid_field))
         }
     }
-}
-
-@Composable
-inline fun debounced(crossinline onClick: () -> Unit, debounceTime: Long = 1000L): () -> Unit {
-    var lastTimeClicked by remember { mutableLongStateOf(0L) }
-    val onClickLambda: () -> Unit = {
-        val now = SystemClock.uptimeMillis()
-        if (now - lastTimeClicked > debounceTime) {
-            onClick()
-        }
-        lastTimeClicked = now
-    }
-    return onClickLambda
 }

@@ -16,6 +16,6 @@ fun ErrorField(errorMessage: String?, modifier: Modifier = Modifier) {
         modifier = modifier.padding(start = 6.dp, end = 6.dp, top = 6.dp),
         text = errorMessage ?: stringResource(R.string.error_invalid_field),
         fontSize = 12.sp,
-        color = colorResource(id = R.color.error)
+        color = colorResource(id = R.color.color_error)
     )
 }

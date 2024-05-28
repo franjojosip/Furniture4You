@@ -1,97 +1,7 @@
 <resources>
     <string name="app_name">Furniture4You</string>
 
-    <string name="prelogin_title">Make your</string>
-    <string name="prelogin_subtitle">Home beautiful</string>
-    <string name="prelogin_description">The best simple place where you discover most wonderful furnitures and make your home beautiful</string>
-    <string name="prelogin_button_get_started">Get Started</string>
-
-    <string name="login_title">Hello!</string>
-    <string name="login_subtitle">Welcome back</string>
-    <string name="login_button_forgot_password">Forgot Password</string>
-    <string name="login_button_sign_up">Sign up</string>
-    <string name="login_button">Log in</string>
-
-    <string name="register_title">Welcome</string>
-    <string name="register_have_account">Already have account?</string>
-    <string name="register_button_sign_in">Sign up</string>
-
-    <string name="reset_password_title">Reset password</string>
-    <string name="reset_password_button">Send email</string>
-    <string name="reset_button_remember_password">Remember your password?</string>
-
-    <string name="field_name">Name</string>
-    <string name="field_password">Password</string>
-    <string name="field_confirm_password">Confirm Password</string>
-    <string name="field_email">Email</string>
-
-    <string name="field_shipping_fullname">Full name</string>
-    <string name="field_shipping_address">Address</string>
-    <string name="field_shipping_zipcode">Zipcode (Postal code)</string>
-    <string name="field_country">Country</string>
-    <string name="field_city">City</string>
-
-    <string name="field_card_number">Card Number</string>
-    <string name="field_card_holder">Card Holder</string>
-    <string name="field_card_cvv">CVV</string>
-    <string name="field_card_exp_date">Expiration Date</string>
-
-    <string name="placeholder_name">Ex. Mark Johnson</string>
-    <string name="placeholder_password">Enter your password</string>
-    <string name="placeholder_confirm_password">Repeat your password</string>
-    <string name="placeholder_shipping_address">Ex. 25 rue Robert Latouche, Nice, 06200, France</string>
-    <string name="placeholder_address">Ex. 25 Robert Latouche street</string>
-    <string name="placeholder_zipcode">Ex. 23512</string>
-    <string name="placeholder_country">Select country</string>
-    <string name="placeholder_city">Select city</string>
-
-    <string name="placeholder_card_holder">Ex. Mark Johnson</string>
-    <string name="placeholder_card_number">Ex. 1234 5678 1234 5678</string>
-    <string name="placeholder_card_cvv">Ex. 754</string>
-    <string name="placeholder_card_exp_date">Ex. MM/YY</string>
-
-    <string name="error_invalid_field">Invalid field</string>
-    <string name="error_invalid_email">Invalid email (ex. luka@mail.com)</string>
-    <string name="error_invalid_password">Invalid password length [6–12]</string>
-    <string name="error_invalid_zipcode">Invalid format (5 digit code)</string>
-
-    <string name="counter_label">%02d</string>
-    <string name="product_price_title">$ %1s</string>
-    <string name="order_price_title">$%1s</string>
-    <string name="product_discount_price_title">-$ %1s</string>
-    <string name="review_count_title">(%1s)</string>
-    <string name="btn_add_to_cart">Add to cart</string>
-    <string name="btn_add_all_to_my_cart">Add all to my cart</string>
-    <string name="btn_checkout">Check out</string>
-    <string name="btn_submit_order">Submit order</string>
-    <string name="btn_write_review">Write a review</string>
-    <string name="btn_add_new_card">Add new card</string>
-    <string name="btn_save_address">Save address</string>
-
-    <plurals name="review_count">
-        <item quantity="one">%1d review</item>
-        <item quantity="other">%1d reviews</item>
-    </plurals>
-
-    <string name="content_desc_prelogin_background">Prelogin background</string>
-    <string name="content_desc_launcher_icon">Launcher icon</string>
-    <string name="content_desc_product_image">Product image</string>
-    <string name="content_desc_favorite_icon">Favorite icon</string>
-    <string name="content_desc_visibility_icon">Visibility Icon</string>
-    <string name="content_desc_action_start_icon">Action start icon</string>
-    <string name="content_desc_action_end_icon">Action end icon</string>
-    <string name="content_desc_rating">Rating Icon</string>
-    <string name="content_desc_product">Product image</string>
-    <string name="content_desc_search">Search Icon</string>
-    <string name="content_desc_cart">Cart Icon</string>
-    <string name="content_desc_back_btn">Back Button Icon</string>
-    <string name="content_desc_enter_promo">Enter Promo Button Icon</string>
-    <string name="content_desc_edit">Edit Icon</string>
-    <string name="content_desc_archive">Archive Icon</string>
-
-    <string name="new_feature_message">This feature will be available soon!</string>
-    <string name="added_to_cart_message">Successfully added to cart!</string>
-
+    <!--    Nav routes    -->
     <string name="nav_home">Home</string>
     <string name="nav_favorites">Favorites</string>
     <string name="nav_notification">Notification</string>
@@ -106,77 +16,165 @@
     <string name="nav_add_shipping_address">Add shipping address</string>
     <string name="nav_my_order">My order</string>
 
-    <string name="dialog_add_to_cart_title">Items added to cart</string>
-    <string name="dialog_add_to_cart_subtitle">Do you want to continue with the shopping or go to checkout?</string>
-    <string name="dialog_add_to_cart_cancel">Open cart</string>
-    <string name="dialog_add_to_cart_continue">Continue shopping</string>
-    <string name="enter_promo_code">Enter your promo code</string>
-    <string name="promo_code_activated">Promo code activated!</string>
-    <string name="promo_code_already_activated">Promo code already activated!</string>
-    <string name="dismiss">Dismiss</string>
+    <!--    Content description labels  -->
+    <string name="content_desc_action_start_icon">Action start icon</string>
+    <string name="content_desc_action_end_icon">Action end icon</string>
+    <string name="content_desc_archive">Archive Icon</string>
+    <string name="content_desc_back_btn">Back Button Icon</string>
+    <string name="content_desc_cart">Cart Icon</string>
+    <string name="content_desc_delivery_icon">Favorite icon</string>
+    <string name="content_desc_edit">Edit Icon</string>
+    <string name="content_desc_enter_promo">Enter Promo Button Icon</string>
+    <string name="content_desc_favorite_icon">Favorite icon</string>
+    <string name="content_desc_launcher_icon">Launcher icon</string>
+    <string name="content_desc_prelogin_background">Prelogin background</string>
+    <string name="content_desc_product_image">Product image</string>
+    <string name="content_desc_product">Product image</string>
+    <string name="content_desc_rating">Rating Icon</string>
+    <string name="content_desc_search">Search Icon</string>
+    <string name="content_desc_visibility_icon">Visibility Icon</string>
+    <string name="content_desc_vendor">Vendor image</string>
 
-    <string name="order_label">Order:</string>
-    <string name="delivery_label">Delivery:</string>
-    <string name="total_label">Total:</string>
+    <!--    Field labels   -->
+    <string name="field_name">Name</string>
+    <string name="field_password">Password</string>
+    <string name="field_confirm_password">Confirm Password</string>
+    <string name="field_email">Email</string>
 
-    <string name="personal_information">Personal Information</string>
+    <string name="field_card_number">Card Number</string>
+    <string name="field_card_holder">Card Holder</string>
+    <string name="field_card_cvv">CVV</string>
+    <string name="field_card_exp_date">Expiration Date</string>
 
-    <string name="shipping_address">Shipping Address</string>
-    <string name="shipping_information">Shipping information</string>
+    <string name="field_city">City</string>
+    <string name="field_country">Country</string>
+    <string name="field_shipping_address">Shipping Address</string>
+    <string name="field_shipping_fullname">Full name</string>
+    <string name="field_shipping_zipcode">Zipcode (Postal code)</string>
 
-    <string name="payment_method">Payment method</string>
-    <string name="delivery_method">Delivery method</string>
+    <!--    Placeholder labels   -->
+    <string name="placeholder_name">Ex. Mark Johnson</string>
+    <string name="placeholder_password">Enter your password</string>
+    <string name="placeholder_confirm_password">Repeat your password</string>
+    <string name="placeholder_enter_promo_code">Enter your promo code</string>
 
-    <string name="payment">Payment</string>
-    <string name="payment_method_mock">Bruno Fernandes</string>
-    <string name="payment_method_number_mock">**** **** **** 3947</string>
+    <string name="placeholder_country">Select country</string>
+    <string name="placeholder_city">Select city</string>
+    <string name="placeholder_shipping_address">Ex. 25 rue Robert Latouche, Nice, 06200, France</string>
+    <string name="placeholder_address">Ex. 25 Robert Latouche street</string>
+    <string name="placeholder_zipcode">Ex. 23512</string>
 
-    <string name="order_success_title">Success!</string>
-    <string name="order_success_subtitle">Your order will be delivered soon.\nThank you for choosing our app!</string>
-    <string name="order_success_btn_track_orders">Track your orders</string>
-    <string name="order_success_btn_back_to_home">Back to home</string>
+    <string name="placeholder_card_holder">Ex. Mark Johnson</string>
+    <string name="placeholder_card_number">Ex. 1234 5678 1234 5678</string>
+    <string name="placeholder_card_cvv">Ex. 754</string>
+    <string name="placeholder_card_exp_date">Ex. MM/YY</string>
 
-    <string name="delivery_choice_btn_confirm">Confirm</string>
-    <string name="delivery_choice_btn_cancel">Cancel</string>
-    <string name="choose_delivery_method">Choose delivery method</string>
-    <string name="card_information">Card information</string>
-    <string name="invalid_card_number">Invalid card number</string>
-    <string name="header_title_mock">Hello!</string>
-    <string name="header_subtitle_mock">Welcome back</string>
-    <string name="make_home">Make home</string>
-    <string name="beautiful">Beautiful</string>
+    <!--    Error field labels   -->
+    <string name="error_invalid_card_number">Invalid card number</string>
+    <string name="error_invalid_field">Invalid field</string>
+    <string name="error_invalid_email">Invalid email (ex. luka@mail.com)</string>
+    <string name="error_invalid_password">Invalid password length [6–12]</string>
+    <string name="error_invalid_zipcode">Invalid format (5 digit code)</string>
+    <string name="error_promo_code_already_activated">Promo code already activated!</string>
 
-    <string name="notification_archived">Notification archived!</string>
-    <string name="notification_deleted">Notification deleted!</string>
+    <!--    Button labels   -->
+    <string name="btn_add_to_cart">Add to cart</string>
+    <string name="btn_add_all_to_my_cart">Add all to my cart</string>
+    <string name="btn_add_new_card">Add new card</string>
+    <string name="btn_back_to_home">Back to home</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_continue_shopping">Continue shopping</string>
+    <string name="btn_checkout">Check out</string>
+    <string name="btn_dismiss">Dismiss</string>
+    <string name="btn_forgot_password">Forgot Password</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="btn_login">Log in</string>
+    <string name="btn_open_cart">Open cart</string>
+    <string name="btn_remember_your_password">Remember your password?</string>
+    <string name="btn_save_address">Save address</string>
+    <string name="btn_send_email">Send email</string>
+    <string name="btn_sign_up">Sign up</string>
+    <string name="btn_submit_order">Submit order</string>
+    <string name="btn_track_orders">Track your orders</string>
+    <string name="btn_write_review">Write a review</string>
 
+    <!--    Mock labels   -->
+    <string name="mock_my_orders">Already have 10 orders</string>
+    <string name="mock_payment_method">You have 2 cards</string>
+    <string name="mock_my_reviews">Reviews for 5 items</string>
+    <string name="mock_shipping_addresses">03 Addresses</string>
+    <string name="mock_subtitle_header">Welcome back</string>
+    <string name="mock_title_header">Hello!</string>
 
-    <string name="label_name">Name</string>
-    <string name="label_email">Email</string>
-    <string name="label_password">Password</string>
-    <string name="label_notification">Notifications</string>
-    <string name="label_sales">Sales</string>
-    <string name="label_new_arrivals">New arrivals</string>
-    <string name="label_delivery_status_changes">Delivery status changes</string>
-    <string name="label_help_center">Help Center</string>
-    <string name="label_faq">FAQ</string>
+    <!--    Title labels   -->
+    <string name="title_add_to_cart">Items added to cart</string>
+    <string name="title_beautiful">Beautiful</string>
+    <string name="title_checkout_delivery">Delivery:</string>
+    <string name="title_checkout_order">Order:</string>
+    <string name="title_checkout_total">Total:</string>
+    <string name="title_delivery_method">Delivery method</string>
+    <string name="title_login">Hello!</string>
+    <string name="title_make_home">Make home</string>
+    <string name="title_notification_archived">Notification archived!</string>
+    <string name="title_notification_deleted">Notification deleted!</string>
+    <string name="title_order_price">$%1s</string>
+    <string name="title_order_success">Success!</string>
+    <string name="title_payment">Payment</string>
+    <string name="title_payment_method">Payment method</string>
+    <string name="title_personal_information">Personal Information</string>
+    <string name="title_prelogin">Make your</string>
+    <string name="title_product_discount">-$ %1s</string>
+    <string name="title_product_price">$ %1s</string>
+    <string name="title_register">Welcome</string>
+    <string name="title_reset_password">Reset password</string>
+    <string name="title_review_count">(%1s)</string>
+    <string name="title_shipping_information">Shipping information</string>
+
+    <!--    Subtitle labels   -->
+    <string name="subtitle_add_to_cart">Do you want to continue with the shopping or go to checkout?</string>
+    <string name="subtitle_login">Welcome back</string>
+    <string name="subtitle_order_success">Your order will be delivered soon.\nThank you for choosing our app!</string>
+    <string name="subtitle_prelogin">Home beautiful</string>
+
+    <!--    Other labels   -->
+    <string name="label_add_payment_method">Add payment</string>
+    <string name="label_add_shipping_address">Add address</string>
+    <string name="label_card_holder_name">Card Holder Name</string>
+    <string name="label_card_information">Card information</string>
+    <string name="label_cart_discount">Discount(%1$s%%):</string>
+    <string name="label_cart_price">Price:</string>
+    <string name="label_choose_delivery_method">Choose delivery method</string>
     <string name="label_contact_us">Contact us</string>
-    <string name="label_return">Return information</string>
+    <string name="label_counter">%02d</string>
+    <string name="label_default_payment_method">Use as default payment method</string>
     <string name="label_delivery">Delivery information</string>
-
+    <string name="label_delivery_status_changes">Delivery status changes</string>
+    <string name="label_detail">Detail</string>
+    <string name="label_email">Email</string>
+    <string name="label_expiry_date">Expiry Date</string>
+    <string name="label_faq">FAQ</string>
+    <string name="label_help_center">Help Center</string>
     <string name="label_my_orders">My orders</string>
+    <string name="label_name">Name</string>
+    <string name="label_new_arrivals">New arrivals</string>
+    <string name="label_new_feature">This feature will be available soon!</string>
+    <string name="label_notification">Notifications</string>
+    <string name="label_order_number">Order No%1$s</string>
+    <string name="label_password">Password</string>
+    <string name="label_prelogin_description">The best simple place where you discover most wonderful furnitures and make your home beautiful</string>
+    <string name="label_promo_code_activated">Promo code activated!</string>
+    <string name="label_quantity">Quantity:</string>
+    <string name="label_register_have_account">Already have account?</string>
+    <string name="label_return">Return information</string>
+    <string name="label_sales">Sales</string>
+    <string name="label_settings">Notification, Password, FAQ, Contact us</string>
     <string name="label_shipping_addresses">Shipping Addresses</string>
+    <string name="label_successfully_added_to_cart">Successfully added to cart!</string>
+    <string name="label_total_amount">Total Amount:</string>
 
-    <string name="desc_my_orders">Already have 10 orders</string>
-    <string name="desc_shipping_addresses">03 Addresses</string>
-    <string name="desc_payment_method">You have 2 cards</string>
-    <string name="desc_my_reviews">Reviews for 5 items</string>
-    <string name="desc_settings">Notification, Password, FAQ, Contact us</string>
-    <string name="card_holder_name">Card Holder Name</string>
-    <string name="expiry_date">Expiry Date</string>
-    <string name="default_payment_method">Use as default payment method</string>
-    <string name="total_amount">Total Amount:</string>
-    <string name="detail">Detail</string>
-    <string name="quantity">Quantity:</string>
-    <string name="cart_price">Price:</string>
-    <string name="cart_discount">Discount(%1$s%%):</string>
+    <plurals name="label_review_count">
+        <item quantity="one">%1d review</item>
+        <item quantity="other">%1d reviews</item>
+    </plurals>
 </resources>

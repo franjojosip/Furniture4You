@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -34,29 +33,29 @@ import ht.ferit.fjjukic.foodlovers.R
 
 @Composable
 fun ProductDetailCartDialog(
+    onContinueClick: () -> Unit,
+    onDismissClick: () -> Unit,
     dismissOnBackPress: Boolean = true,
-    dismissOnClickOutside: Boolean = true,
-    onContinueClicked: () -> Unit,
-    onDismissClicked: () -> Unit
+    dismissOnClickOutside: Boolean = true
 ) {
     Dialog(
-        onDismissRequest = onDismissClicked,
+        onDismissRequest = onDismissClick,
         properties = DialogProperties(
             dismissOnBackPress = dismissOnBackPress,
             dismissOnClickOutside = dismissOnClickOutside
         )
     ) {
         ProductDetailDialog(
-            onDismissClicked = onDismissClicked,
-            onContinueClicked = onContinueClicked
+            onDismissClick = onDismissClick,
+            onContinueClick = onContinueClick
         )
     }
 }
 
 @Composable
 fun ProductDetailDialog(
-    onDismissClicked: () -> Unit,
-    onContinueClicked: () -> Unit,
+    onDismissClick: () -> Unit,
+    onContinueClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -67,14 +66,14 @@ fun ProductDetailDialog(
         )
     ) {
         Column(
-            modifier = modifier.background(colorResource(id = R.color.white))
+            modifier = modifier.background(colorResource(id = R.color.color_white))
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_cart),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.tint(
-                    color = colorResource(id = R.color.dialog_icon)
+                    color = colorResource(id = R.color.bg_dialog_icon)
                 ),
                 modifier = Modifier
                     .padding(top = 30.dp)
@@ -85,7 +84,7 @@ fun ProductDetailDialog(
 
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = stringResource(R.string.dialog_add_to_cart_title),
+                    text = stringResource(R.string.title_add_to_cart),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(top = 4.dp)
@@ -95,7 +94,7 @@ fun ProductDetailDialog(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = stringResource(R.string.dialog_add_to_cart_subtitle),
+                    text = stringResource(R.string.subtitle_add_to_cart),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(top = 10.dp)
@@ -111,20 +110,20 @@ fun ProductDetailDialog(
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
 
-                TextButton(onClick = onDismissClicked) {
+                TextButton(onClick = onDismissClick) {
 
                     Text(
-                        stringResource(id = R.string.dialog_add_to_cart_cancel),
+                        stringResource(id = R.string.btn_open_cart),
                         fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.gray),
+                        color = colorResource(id = R.color.color_gray),
                         modifier = Modifier.padding(vertical = 6.dp)
                     )
                 }
-                TextButton(onClick = onContinueClicked) {
+                TextButton(onClick = onContinueClick) {
                     Text(
-                        stringResource(id = R.string.dialog_add_to_cart_continue),
+                        stringResource(id = R.string.btn_continue_shopping),
                         fontWeight = FontWeight.ExtraBold,
-                        color = Color.Black,
+                        color = colorResource(id = R.color.color_black),
                         modifier = Modifier.padding(vertical = 6.dp)
                     )
                 }
@@ -137,5 +136,5 @@ fun ProductDetailDialog(
 @Preview
 @Composable
 fun MyDialogUIPreview() {
-    ProductDetailDialog({}, {})
+    ProductDetailDialog(onContinueClick = {}, onDismissClick = {})
 }

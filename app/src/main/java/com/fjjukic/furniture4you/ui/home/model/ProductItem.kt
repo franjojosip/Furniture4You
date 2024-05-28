@@ -24,8 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.fjjukic.furniture4you.ui.common.model.Product
-import com.fjjukic.furniture4you.ui.components.CartItem
+import com.fjjukic.furniture4you.ui.cart.CartItem
+import com.fjjukic.furniture4you.ui.components.Product
 import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
@@ -35,13 +35,13 @@ import ht.ferit.fjjukic.foodlovers.R
 )
 @Composable
 fun ProductItemPreview() {
-    ProductItem(MockRepository.getProducts().first(), {})
+    ProductItem(product = MockRepository.getProducts().first(), onProductClick = {})
 }
 
 @Composable
 fun ProductItem(
     product: Product,
-    onProductClicked: (String) -> Unit,
+    onProductClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -54,7 +54,7 @@ fun ProductItem(
                 .clip(RoundedCornerShape(10.dp))
                 .width(150.dp)
                 .height(200.dp)
-                .clickable { onProductClicked.invoke(product.id) }
+                .clickable { onProductClick(product.id) }
         ) {
             Image(
                 modifier = Modifier
@@ -66,8 +66,8 @@ fun ProductItem(
             )
 
             CartItem(
-                {
-                    onProductClicked.invoke(product.id)
+                onItemSelect = {
+                    onProductClick(product.id)
                 },
                 modifier = Modifier
                     .wrapContentSize()
@@ -78,25 +78,26 @@ fun ProductItem(
         Text(
             modifier = Modifier
                 .align(Alignment.Start)
-                .padding(top = 8.dp, start = 2.dp, end = 2.dp),
+                .padding(horizontal = 2.dp)
+                .padding(top = 8.dp),
             text = product.title,
             style = TextStyle(
                 fontSize = 14.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Normal,
-                color = colorResource(id = R.color.gray)
+                color = colorResource(id = R.color.color_gray)
             )
         )
         Text(
             modifier = Modifier
                 .align(Alignment.Start)
                 .padding(horizontal = 2.dp),
-            text = stringResource(id = R.string.product_price_title, product.price),
+            text = stringResource(id = R.string.title_product_price, product.price),
             style = TextStyle(
                 fontSize = 14.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.medium_gray)
+                color = colorResource(id = R.color.color_medium_gray)
             )
         )
     }

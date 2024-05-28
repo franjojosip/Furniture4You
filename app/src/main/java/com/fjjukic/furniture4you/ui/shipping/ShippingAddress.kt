@@ -17,11 +17,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.checkout.ShippingAddress
 import com.fjjukic.furniture4you.ui.common.Toolbar
@@ -31,14 +31,14 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ShippingAddressSettingPreview() {
-    ShippingAddressSetting(ShippingAddressViewModel(), {}, {})
+    ShippingAddressSetting(onBackClick = {}, onAddressAddClick = {})
 }
 
 @Composable
 fun ShippingAddressSetting(
-    viewModel: ShippingAddressViewModel,
     onBackClick: () -> Unit,
-    onAddressAddClick: () -> Unit
+    onAddressAddClick: () -> Unit,
+    viewModel: ShippingAddressViewModel = hiltViewModel()
 ) {
 
     val shippingAddresses by viewModel.shippingAddresses.collectAsStateWithLifecycle()
@@ -50,20 +50,20 @@ fun ShippingAddressSetting(
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.size(52.dp),
-                containerColor = Color.White,
+                containerColor = colorResource(id = R.color.color_white),
                 contentColor = colorResource(id = R.color.bg_fab_content),
                 shape = CircleShape,
                 onClick = onAddressAddClick,
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = ""
+                    contentDescription = stringResource(id = R.string.label_add_shipping_address)
                 )
             }
         },
@@ -71,7 +71,7 @@ fun ShippingAddressSetting(
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(paddingValues),
             contentPadding = PaddingValues(vertical = 20.dp, horizontal = 20.dp)
@@ -88,7 +88,7 @@ fun ShippingAddressSetting(
                 )
                 ShippingAddress(
                     shippingInfo = address,
-                    onEditClick = viewModel::onEditClick,
+                    onShippingInfoChange = viewModel::onEditClick,
                     modifier = Modifier.padding(bottom = 20.dp),
                     hasHeader = false
                 )

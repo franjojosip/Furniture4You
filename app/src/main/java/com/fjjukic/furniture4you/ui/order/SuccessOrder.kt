@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
@@ -40,13 +39,13 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun SuccessOrderPreview() {
-    SuccessOrder(onTrackOrdersClicked = {}, onBackToHomeClicked = {})
+    SuccessOrder(onTrackOrdersClick = {}, onBackToHomeClick = {})
 }
 
 @Composable
 fun SuccessOrder(
-    onTrackOrdersClicked: () -> Unit,
-    onBackToHomeClicked: () -> Unit
+    onTrackOrdersClick: () -> Unit,
+    onBackToHomeClick: () -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val onBackPressedDispatcher =
@@ -59,15 +58,15 @@ fun SuccessOrder(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(colorResource(id = R.color.color_white))
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             modifier = Modifier.padding(top = 80.dp),
-            text = stringResource(R.string.order_success_title).uppercase(),
+            text = stringResource(R.string.title_order_success).uppercase(),
             style = GelatioTypography.titleLarge,
-            color = colorResource(id = R.color.medium_gray),
+            color = colorResource(id = R.color.color_medium_gray),
         )
         Box(
             modifier = Modifier.padding(top = 30.dp),
@@ -96,47 +95,47 @@ fun SuccessOrder(
             modifier = Modifier
                 .padding(top = offset + 24.dp)
                 .padding(horizontal = 45.dp),
-            text = stringResource(R.string.order_success_subtitle),
+            text = stringResource(R.string.subtitle_order_success),
             textAlign = TextAlign.Center,
             fontFamily = nunitoSansFamily,
             fontSize = 18.sp,
-            color = colorResource(id = R.color.gray),
+            color = colorResource(id = R.color.color_gray),
         )
         Button(
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
             modifier = Modifier
                 .padding(top = 40.dp)
                 .padding(horizontal = 20.dp)
                 .height(60.dp)
                 .fillMaxWidth(),
-            onClick = onTrackOrdersClicked
+            onClick = onTrackOrdersClick
         ) {
             Text(
-                text = stringResource(id = R.string.order_success_btn_track_orders),
+                text = stringResource(id = R.string.btn_track_orders),
                 fontFamily = nunitoSansFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp,
-                color = Color.White
+                color = colorResource(id = R.color.color_white)
             )
         }
         Button(
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(Color.White),
-            border = BorderStroke(1.dp, colorResource(id = R.color.medium_gray)),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_white)),
+            border = BorderStroke(1.dp, colorResource(id = R.color.color_medium_gray)),
             modifier = Modifier
                 .padding(top = 24.dp)
                 .padding(horizontal = 20.dp)
                 .height(60.dp)
                 .fillMaxWidth(),
-            onClick = onBackToHomeClicked
+            onClick = onBackToHomeClick
         ) {
             Text(
-                text = stringResource(id = R.string.order_success_btn_back_to_home).uppercase(),
+                text = stringResource(id = R.string.btn_back_to_home).uppercase(),
                 fontFamily = nunitoSansFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp,
-                color = colorResource(id = R.color.dark_gray)
+                color = colorResource(id = R.color.color_dark_gray)
             )
         }
     }

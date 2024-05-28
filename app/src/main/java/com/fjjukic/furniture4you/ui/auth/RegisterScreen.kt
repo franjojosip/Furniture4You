@@ -40,7 +40,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen({})
+    RegisterScreen(onLoginClick = {})
 }
 
 @Composable
@@ -51,17 +51,17 @@ fun RegisterScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white))
+            .background(colorResource(id = R.color.color_white))
             .verticalScroll(rememberScrollState())
     ) {
-        Header(subtitle = stringResource(R.string.register_title))
+        Header(subtitle = stringResource(R.string.title_register))
         RegisterForm(onLoginClick)
     }
 }
 
 @Composable
 fun RegisterForm(
-    onLoginClicked: () -> Unit,
+    onLoginClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -72,7 +72,7 @@ fun RegisterForm(
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.white),
+            containerColor = colorResource(id = R.color.color_white),
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 12.dp
@@ -117,7 +117,7 @@ fun RegisterForm(
 
         Button(
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
             onClick = { showFeatureNotAvailable(context) },
             modifier = modifier
                 .padding(top = 40.dp)
@@ -125,18 +125,18 @@ fun RegisterForm(
                 .align(Alignment.CenterHorizontally)
         ) {
             Text(
-                text = stringResource(R.string.login_button_sign_up).uppercase(),
+                text = stringResource(R.string.btn_sign_up).uppercase(),
                 fontSize = 18.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Medium,
-                color = colorResource(id = R.color.white),
+                color = colorResource(id = R.color.color_white),
                 modifier = Modifier.padding(6.dp)
             )
         }
         CombinedClickableText(
-            startTextResId = R.string.register_have_account,
-            endTextResId = R.string.register_button_sign_in,
-            onClick = { onLoginClicked() },
+            startTextResId = R.string.label_register_have_account,
+            endTextResId = R.string.btn_sign_up,
+            onClick = { onLoginClick() },
             modifier = Modifier
                 .padding(vertical = 30.dp)
                 .align(Alignment.CenterHorizontally)

@@ -38,7 +38,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -47,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
@@ -57,16 +57,15 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun PaymentMethodPreview() {
-    PaymentMethod(PaymentMethodViewModel(), {}, {})
+    PaymentMethod(onBackClick = {}, onCardAddClick = {})
 }
 
 @Composable
 fun PaymentMethod(
-    viewModel: PaymentMethodViewModel,
     onBackClick: () -> Unit,
-    onCardAddClick: () -> Unit
+    onCardAddClick: () -> Unit,
+    viewModel: PaymentMethodViewModel = hiltViewModel(),
 ) {
-
     val cards by viewModel.cards.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -76,20 +75,20 @@ fun PaymentMethod(
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.size(52.dp),
-                containerColor = Color.White,
+                containerColor = colorResource(id = R.color.color_white),
                 contentColor = colorResource(id = R.color.bg_fab_content),
                 shape = CircleShape,
                 onClick = onCardAddClick,
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = ""
+                    contentDescription = stringResource(id = R.string.label_add_payment_method)
                 )
             }
         },
@@ -97,7 +96,7 @@ fun PaymentMethod(
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(paddingValues),
             contentPadding = PaddingValues(vertical = 20.dp, horizontal = 20.dp)
@@ -124,7 +123,7 @@ fun PaymentMethod(
 @Preview
 @Composable
 fun PaymentCardItemPreview() {
-    PaymentCardItem(MockRepository.getPaymentCards().first())
+    PaymentCardItem(card = MockRepository.getPaymentCards().first())
 }
 
 @Composable
@@ -138,7 +137,7 @@ fun PaymentCardItem(
             .alpha(containerAlpha)
             .defaultMinSize(minHeight = 190.dp),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.dark_gray)
+            containerColor = colorResource(id = R.color.color_dark_gray)
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
@@ -156,7 +155,7 @@ fun PaymentCardItem(
                         .padding(bottom = 20.dp)
                         .height(25.dp),
                     painter = painterResource(id = card.vendorLogoResId),
-                    contentDescription = ""
+                    contentDescription = stringResource(id = R.string.content_desc_vendor)
                 )
                 Text(
                     modifier = Modifier
@@ -168,7 +167,7 @@ fun PaymentCardItem(
                     fontSize = 20.sp,
                     letterSpacing = 4.sp,
                     maxLines = 1,
-                    color = colorResource(id = R.color.white),
+                    color = colorResource(id = R.color.color_white),
                 )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -178,7 +177,7 @@ fun PaymentCardItem(
                     ) {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
-                            text = stringResource(R.string.card_holder_name),
+                            text = stringResource(R.string.label_card_holder_name),
                             fontFamily = nunitoSansFamily,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 12.sp,
@@ -195,7 +194,7 @@ fun PaymentCardItem(
                             fontSize = 14.sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            color = colorResource(id = R.color.white)
+                            color = colorResource(id = R.color.color_white)
                         )
                     }
 
@@ -205,7 +204,7 @@ fun PaymentCardItem(
                             .padding(end = 20.dp),
                     ) {
                         Text(
-                            text = stringResource(R.string.expiry_date),
+                            text = stringResource(R.string.label_expiry_date),
                             fontFamily = nunitoSansFamily,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 12.sp,
@@ -221,7 +220,7 @@ fun PaymentCardItem(
                             fontSize = 14.sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            color = colorResource(id = R.color.white)
+                            color = colorResource(id = R.color.color_white)
                         )
                     }
                 }
@@ -231,7 +230,7 @@ fun PaymentCardItem(
                     .align(Alignment.BottomEnd)
                     .offset(x = 10.dp),
                 painter = painterResource(id = R.drawable.ic_card_overlay),
-                contentDescription = ""
+                contentDescription = null
             )
         }
     }
@@ -240,7 +239,7 @@ fun PaymentCardItem(
 @Preview(showBackground = true)
 @Composable
 fun DefaultPaymentCheckboxPreview() {
-    DefaultPaymentCheckbox({})
+    DefaultPaymentCheckbox(onCheckChange = {})
 }
 
 @Composable
@@ -271,13 +270,13 @@ fun DefaultPaymentCheckbox(
                 }
             },
             colors = CheckboxDefaults.colors(
-                checkedColor = colorResource(id = R.color.checkbox_checked),
-                uncheckedColor = colorResource(id = R.color.checkbox_unchecked)
+                checkedColor = colorResource(id = R.color.bg_checkbox_checked),
+                uncheckedColor = colorResource(id = R.color.bg_checkbox_unchecked)
             )
         )
         Text(
             modifier = Modifier.padding(horizontal = 10.dp),
-            text = stringResource(R.string.default_payment_method),
+            text = stringResource(R.string.label_default_payment_method),
             fontFamily = nunitoSansFamily,
             fontSize = 14.sp,
             maxLines = 1,

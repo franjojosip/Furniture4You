@@ -54,6 +54,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.mock.MockRepository
@@ -63,15 +64,15 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun NotificationPreview() {
-    Notification(NotificationViewModel(), {})
+    Notification(onSearchClick = {})
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Notification(
-    viewModel: NotificationViewModel,
-    onSearchClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    onSearchClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: NotificationViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val notifications by viewModel.notifications.collectAsStateWithLifecycle()
@@ -90,15 +91,15 @@ fun Notification(
             Toolbar(
                 title = stringResource(id = R.string.nav_notification),
                 startIconResId = R.drawable.ic_search,
-                onStartActionClick = onSearchClicked,
+                onStartActionClick = onSearchClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         }
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
@@ -108,7 +109,7 @@ fun Notification(
                     .weight(1f)
                     .fillMaxWidth()
                     .padding(top = 14.dp)
-                    .background(Color.White),
+                    .background(colorResource(id = R.color.color_white)),
                 contentPadding = PaddingValues(
                     bottom = paddingValues.calculateBottomPadding()
                 )
@@ -126,7 +127,7 @@ fun Notification(
                             )
                             if ((index != notifications.size - 1) && notification.tag == null) {
                                 HorizontalDivider(
-                                    color = colorResource(id = R.color.tinted_white),
+                                    color = colorResource(id = R.color.color_tinted_white),
                                     thickness = 1.dp,
                                     modifier = Modifier
                                         .padding(horizontal = 20.dp)
@@ -211,16 +212,10 @@ private fun SwipeBox(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun NotificationItemPreviewNew() {
-    NotificationItem(MockRepository.getNotifications().first())
-}
-
-@Preview(showBackground = true)
-@Composable
-fun NotificationItemPreview() {
-    NotificationItem(MockRepository.getNotifications().first())
+    NotificationItem(notification = MockRepository.getNotifications().first())
 }
 
 @Composable
@@ -264,7 +259,7 @@ fun NotificationItem(
                     maxLines = 2,
                     lineHeight = 13.sp,
                     overflow = TextOverflow.Ellipsis,
-                    color = colorResource(id = R.color.medium_gray),
+                    color = colorResource(id = R.color.color_medium_gray),
                     modifier = Modifier.wrapContentHeight()
                 )
                 Text(
@@ -274,7 +269,7 @@ fun NotificationItem(
                     lineHeight = 13.sp,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Start,
-                    color = colorResource(id = R.color.medium_gray),
+                    color = colorResource(id = R.color.color_medium_gray),
                     modifier = Modifier.weight(1f)
                 )
             }

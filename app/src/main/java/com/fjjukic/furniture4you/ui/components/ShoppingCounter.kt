@@ -23,61 +23,62 @@ import androidx.compose.ui.unit.sp
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 import ht.ferit.fjjukic.foodlovers.R
 
-@Preview
+@Preview()
 @Composable
 fun ShoppingCounterPreview() {
-    ShoppingCounter(1, {}, {})
-}
-
-@Preview
-@Composable
-fun ShoppingCounterItemPreview() {
-    ShoppingCounterItem {}
+    ShoppingCounter(value = 1, onIncrementClick = {}, onDecrementClick = {})
 }
 
 @Composable
 fun ShoppingCounter(
     value: Int,
-    onIncrementClick: (() -> Unit),
-    onDecrementClick: (() -> Unit),
+    onIncrementClick: () -> Unit,
+    onDecrementClick: () -> Unit,
     modifier: Modifier = Modifier,
-    counterTextColor: Color = colorResource(id = R.color.dark_gray),
-    counterIconTint: Color = colorResource(id = R.color.dark_gray),
-    counterIconBackground: Color = colorResource(id = R.color.tinted_white),
+    textColor: Color = colorResource(id = R.color.color_dark_gray),
+    startIconTint: Color = colorResource(id = R.color.color_dark_gray),
+    startIconBackground: Color = colorResource(id = R.color.color_tinted_white),
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ShoppingCounterItem(R.drawable.ic_plus, counterIconTint, counterIconBackground) {
-            onIncrementClick.invoke()
-        }
+        ShoppingCounterItem(
+            resourceId = R.drawable.ic_plus,
+            onItemClick = { onIncrementClick() },
+            startIconTint = startIconTint,
+            startIconBackground = startIconBackground
+        )
         Text(
-            text = stringResource(id = R.string.counter_label, value),
+            text = stringResource(id = R.string.label_counter, value),
             fontSize = 18.sp,
             fontFamily = nunitoSansFamily,
             fontWeight = FontWeight.SemiBold,
-            color = counterTextColor,
+            color = textColor,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
-        ShoppingCounterItem(R.drawable.ic_minus, counterIconTint, counterIconBackground) {
-            onDecrementClick.invoke()
-        }
+        ShoppingCounterItem(
+            resourceId = R.drawable.ic_minus,
+            onItemClick = { onDecrementClick() },
+            startIconTint = startIconTint,
+            startIconBackground = startIconBackground
+        )
     }
 }
 
 @Composable
 fun ShoppingCounterItem(
-    resourceId: Int = R.drawable.ic_plus,
-    startIconTint: Color = colorResource(id = R.color.dark_gray),
-    startIconBackground: Color = colorResource(id = R.color.tinted_white),
-    onItemClicked: (() -> Unit) = {}
+    resourceId: Int,
+    onItemClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    startIconTint: Color = colorResource(id = R.color.color_dark_gray),
+    startIconBackground: Color = colorResource(id = R.color.color_tinted_white)
 ) {
     IconButton(
         onClick = {
-            onItemClicked.invoke()
+            onItemClick()
         },
-        modifier = Modifier
+        modifier = modifier
             .clip(RoundedCornerShape(6.dp))
             .size(30.dp)
             .background(startIconBackground)
@@ -85,7 +86,7 @@ fun ShoppingCounterItem(
         Icon(
             painter = painterResource(id = resourceId),
             tint = startIconTint,
-            contentDescription = ""
+            contentDescription = null
         )
     }
 }

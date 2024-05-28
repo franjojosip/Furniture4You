@@ -38,7 +38,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ForgotPasswordScreenPreview() {
-    ForgotPasswordScreen({})
+    ForgotPasswordScreen(onLoginClick = {})
 }
 
 @Composable
@@ -49,10 +49,10 @@ fun ForgotPasswordScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white))
+            .background(colorResource(id = R.color.color_white))
             .verticalScroll(rememberScrollState())
     ) {
-        Header(subtitle = stringResource(R.string.reset_password_title))
+        Header(subtitle = stringResource(R.string.title_reset_password))
         ForgotPasswordForm(onLoginClick = onLoginClick)
     }
 }
@@ -67,7 +67,7 @@ fun ForgotPasswordForm(
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.white),
+            containerColor = colorResource(id = R.color.color_white),
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 12.dp
@@ -85,7 +85,7 @@ fun ForgotPasswordForm(
 
         Button(
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
             modifier = modifier
                 .padding(top = 40.dp)
                 .width(260.dp)
@@ -93,18 +93,18 @@ fun ForgotPasswordForm(
             onClick = { showFeatureNotAvailable(context) }
         ) {
             Text(
-                text = stringResource(R.string.reset_password_button),
+                text = stringResource(R.string.btn_send_email),
                 fontSize = 18.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Medium,
-                color = colorResource(id = R.color.white),
+                color = colorResource(id = R.color.color_white),
                 modifier = Modifier.padding(6.dp)
             )
         }
 
         CombinedClickableText(
-            startTextResId = R.string.reset_button_remember_password,
-            endTextResId = R.string.login_button,
+            startTextResId = R.string.btn_remember_your_password,
+            endTextResId = R.string.btn_login,
             onClick = { onLoginClick() },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)

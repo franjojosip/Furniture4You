@@ -18,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -59,7 +58,7 @@ fun ShippingInformationDialogPreview() {
     ShippingInformationDialog(
         shippingInfo = MockRepository.getShippingInfo(),
         onDismissClicked = {},
-        onContinueClicked = {}
+        onContinueClick = {}
     )
 }
 
@@ -67,7 +66,7 @@ fun ShippingInformationDialogPreview() {
 fun ShippingInformationDialog(
     shippingInfo: ShippingInfo,
     onDismissClicked: () -> Unit,
-    onContinueClicked: (ShippingInfo) -> Unit,
+    onContinueClick: (ShippingInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var fullName by remember { mutableStateOf(shippingInfo.fullName) }
@@ -80,15 +79,15 @@ fun ShippingInformationDialog(
         )
     ) {
         Column(
-            modifier = modifier.background(colorResource(id = R.color.white))
+            modifier = modifier.background(colorResource(id = R.color.color_white))
         ) {
             Text(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = 20.dp),
-                text = stringResource(R.string.shipping_information),
+                text = stringResource(R.string.title_shipping_information),
                 style = GelatioTypography.titleMedium,
-                color = colorResource(id = R.color.medium_gray),
+                color = colorResource(id = R.color.color_medium_gray),
             )
 
             OutlinedInputField(
@@ -122,7 +121,7 @@ fun ShippingInformationDialog(
                     it.isNotBlank()
                 },
                 keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
+                    imeAction = ImeAction.Done,
                     keyboardType = KeyboardType.Text
                 ),
             )
@@ -135,15 +134,15 @@ fun ShippingInformationDialog(
             ) {
                 TextButton(onClick = onDismissClicked) {
                     Text(
-                        stringResource(id = R.string.delivery_choice_btn_cancel),
+                        stringResource(id = R.string.btn_cancel),
                         fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.gray),
+                        color = colorResource(id = R.color.color_gray),
                         modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
                     )
                 }
                 TextButton(onClick = {
                     if (fullName.isNotEmpty() && address.isNotEmpty()) {
-                        onContinueClicked(
+                        onContinueClick(
                             shippingInfo.copy(
                                 fullName = fullName,
                                 address = address
@@ -152,9 +151,9 @@ fun ShippingInformationDialog(
                     }
                 }) {
                     Text(
-                        stringResource(id = R.string.delivery_choice_btn_confirm),
+                        stringResource(id = R.string.btn_confirm),
                         fontWeight = FontWeight.ExtraBold,
-                        color = Color.Black,
+                        color = colorResource(id = R.color.color_black),
                         modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
                     )
                 }

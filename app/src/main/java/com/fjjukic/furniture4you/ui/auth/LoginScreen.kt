@@ -53,12 +53,12 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white))
+            .background(colorResource(id = R.color.color_white))
             .verticalScroll(scrollState)
     ) {
         Header(
-            title = stringResource(R.string.login_title),
-            subtitle = stringResource(R.string.login_subtitle)
+            title = stringResource(R.string.title_login),
+            subtitle = stringResource(R.string.subtitle_login)
         )
         LoginForm(onForgotPasswordClick, onRegisterClick, onLoginClick)
     }
@@ -76,7 +76,7 @@ fun LoginForm(
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.white),
+            containerColor = colorResource(id = R.color.color_white),
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 12.dp
@@ -100,12 +100,12 @@ fun LoginForm(
         )
 
         ClickableText(
-            text = AnnotatedString(stringResource(R.string.login_button_forgot_password)),
+            text = AnnotatedString(stringResource(R.string.btn_forgot_password)),
             style = TextStyle(
                 fontSize = 18.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.SemiBold,
-                color = colorResource(id = R.color.medium_gray),
+                color = colorResource(id = R.color.color_medium_gray),
             ),
             onClick = { onForgotPasswordClick() },
             modifier = Modifier
@@ -115,7 +115,7 @@ fun LoginForm(
 
         Button(
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
             modifier = modifier
                 .padding(top = 40.dp)
                 .width(260.dp)
@@ -123,22 +123,22 @@ fun LoginForm(
             onClick = onLoginClick
         ) {
             Text(
-                text = stringResource(R.string.login_button),
+                text = stringResource(R.string.btn_login),
                 fontSize = 18.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Medium,
-                color = colorResource(id = R.color.white),
+                color = colorResource(id = R.color.color_white),
                 modifier = Modifier.padding(6.dp)
             )
         }
 
         ClickableText(
-            text = AnnotatedString(stringResource(R.string.login_button_sign_up).uppercase()),
+            text = AnnotatedString(stringResource(R.string.btn_sign_up).uppercase()),
             style = TextStyle(
                 fontSize = 18.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Medium,
-                color = colorResource(id = R.color.dark_gray),
+                color = colorResource(id = R.color.color_dark_gray),
             ),
             onClick = { onRegisterClick() },
             modifier = Modifier

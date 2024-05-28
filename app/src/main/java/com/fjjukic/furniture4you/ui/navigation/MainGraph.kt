@@ -4,18 +4,13 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fjjukic.furniture4you.ui.home.Home
-import com.fjjukic.furniture4you.ui.home.HomeViewModel
 import com.fjjukic.furniture4you.ui.main.favorite.Favorite
-import com.fjjukic.furniture4you.ui.main.favorite.FavoriteViewModel
 import com.fjjukic.furniture4you.ui.main.notification.Notification
-import com.fjjukic.furniture4you.ui.main.notification.NotificationViewModel
 import com.fjjukic.furniture4you.ui.main.profile.Profile
-import com.fjjukic.furniture4you.ui.main.profile.ProfileViewModel
 
 @Composable
 fun MainGraph(
@@ -37,29 +32,22 @@ fun MainGraph(
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
         composable(Screens.MainScreen.Home.route) {
-            val viewModel = hiltViewModel<HomeViewModel>()
-            Home(viewModel, onProductClick, onCartClick, onSearchClick)
+            Home(onProductClick, onCartClick, onSearchClick)
         }
         composable(Screens.MainScreen.Favorites.route) {
-            val viewModel = hiltViewModel<FavoriteViewModel>()
             Favorite(
-                viewModel,
-                onProductClicked = onProductClick,
-                onSearchClicked = onSearchClick,
-                onCartClicked = onCartClick
+                onProductClick = onProductClick,
+                onSearchClick = onSearchClick,
+                onCartClick = onCartClick
             )
         }
         composable(Screens.MainScreen.Notification.route) {
-            val viewModel = hiltViewModel<NotificationViewModel>()
             Notification(
-                viewModel,
-                onSearchClicked = onSearchClick
+                onSearchClick = onSearchClick
             )
         }
         composable(Screens.MainScreen.Profile.route) {
-            val viewModel = hiltViewModel<ProfileViewModel>()
             Profile(
-                viewModel,
                 onSearchClick = {},
                 onLogoutClick = {},
                 onPaymentMethodClick = onPaymentMethodClick,

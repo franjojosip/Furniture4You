@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,9 +30,9 @@ import ht.ferit.fjjukic.foodlovers.R
 @Composable
 fun ClickableFieldPreview() {
     ClickableField(
-        stringResource(id = R.string.label_sales),
-        stringResource(id = R.string.label_sales),
-        {}
+        title = stringResource(id = R.string.label_sales),
+        subtitle = stringResource(id = R.string.label_sales),
+        onClick = {}
     )
 }
 
@@ -53,7 +52,7 @@ fun ClickableField(
                 onClick()
             },
         shape = RoundedCornerShape(4.dp),
-        color = Color.White,
+        color = colorResource(id = R.color.color_white),
         shadowElevation = 2.dp
     ) {
         Row(
@@ -71,7 +70,7 @@ fun ClickableField(
                         fontSize = 16.sp,
                         fontFamily = nunitoSansFamily,
                         fontWeight = FontWeight.SemiBold,
-                        color = colorResource(id = R.color.dark_gray)
+                        color = colorResource(id = R.color.color_dark_gray)
                     )
                 )
                 if (subtitle != null) {
@@ -82,7 +81,7 @@ fun ClickableField(
                             fontSize = 12.sp,
                             fontFamily = nunitoSansFamily,
                             fontWeight = FontWeight.SemiBold,
-                            color = colorResource(id = R.color.light_gray)
+                            color = colorResource(id = R.color.color_light_gray)
                         )
                     )
                 }
@@ -91,7 +90,7 @@ fun ClickableField(
                 Icon(
                     modifier = Modifier.size(14.dp),
                     painter = painterResource(id = R.drawable.ic_next),
-                    tint = colorResource(id = R.color.dark_gray),
+                    tint = colorResource(id = R.color.color_dark_gray),
                     contentDescription = stringResource(R.string.content_desc_action_start_icon)
                 )
             }

@@ -16,14 +16,16 @@ fun NavGraphBuilder.authNavigationGraph(navHostController: NavHostController) {
     ) {
 
         composable(Screens.AuthScreen.Prelogin.route) {
-            PreloginScreen {
-                navHostController.navigate(Screens.AuthScreen.Login.route) {
-                    popUpTo(Screens.AuthScreen.Prelogin.route) {
-                        inclusive = true
-                        saveState = true
+            PreloginScreen(
+                onContinueClick = {
+                    navHostController.navigate(Screens.AuthScreen.Login.route) {
+                        popUpTo(Screens.AuthScreen.Prelogin.route) {
+                            inclusive = true
+                            saveState = true
+                        }
                     }
                 }
-            }
+            )
         }
         composable(Screens.AuthScreen.Login.route) {
             LoginScreen(

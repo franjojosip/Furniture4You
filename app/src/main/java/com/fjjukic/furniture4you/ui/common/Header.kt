@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,8 +26,8 @@ import ht.ferit.fjjukic.foodlovers.R
 @Composable
 fun HeaderPreview() {
     Header(
-        title = stringResource(R.string.header_title_mock),
-        subtitle = stringResource(R.string.header_subtitle_mock)
+        title = stringResource(R.string.mock_title_header),
+        subtitle = stringResource(R.string.mock_subtitle_header)
     )
 }
 
@@ -45,7 +44,7 @@ fun Header(
                 .padding(top = 16.dp)
         ) {
             HorizontalDivider(
-                color = Color.Gray,
+                color = colorResource(id = R.color.color_light_gray),
                 thickness = 1.dp,
                 modifier = Modifier
                     .weight(1f)
@@ -60,7 +59,7 @@ fun Header(
                     .size(64.dp)
             )
             HorizontalDivider(
-                color = Color.Gray,
+                color = colorResource(id = R.color.color_light_gray),
                 thickness = 1.dp,
                 modifier = Modifier
                     .weight(1f)
@@ -76,10 +75,11 @@ fun Header(
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.SemiBold,
                 letterSpacing = 1.2.sp,
-                color = colorResource(id = R.color.gray),
+                color = colorResource(id = R.color.color_gray),
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(start = 24.dp, end = 24.dp, top = 16.dp)
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 16.dp)
             )
         }
         if (subtitle != null) {
@@ -88,10 +88,11 @@ fun Header(
                 fontSize = 24.sp,
                 fontFamily = gelatioFamily,
                 fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.medium_gray),
+                color = colorResource(id = R.color.color_medium_gray),
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(top = 12.dp, start = 24.dp, end = 24.dp)
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 12.dp)
             )
         }
 

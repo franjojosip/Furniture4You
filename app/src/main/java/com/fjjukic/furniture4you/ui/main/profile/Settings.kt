@@ -26,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -35,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.checkout.CheckoutItemHeader
 import com.fjjukic.furniture4you.ui.common.Toolbar
@@ -46,11 +46,11 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun SettingsPreview() {
-    Settings(SettingsViewModel()) {}
+    Settings(onBackClick = {})
 }
 
 @Composable
-fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
+fun Settings(onBackClick: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
     val context = LocalContext.current
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -60,11 +60,11 @@ fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
     if (openPersonalInformationDialog) {
         PersonalInformationChangeDialog(
             uiState.personalInformation,
-            onContinueClicked = {
+            onContinueClick = {
                 openPersonalInformationDialog = false
                 viewModel.onEditClick(it)
             },
-            onDismissClicked = {
+            onDismissClick = {
                 openPersonalInformationDialog = false
             }
         )
@@ -73,11 +73,11 @@ fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
     if (passwordDialog) {
         PasswordChangeDialog(
             uiState.password,
-            onContinueClicked = {
+            onContinueClick = {
                 passwordDialog = false
                 viewModel.onPasswordChange(it)
             },
-            onDismissClicked = {
+            onDismissClick = {
                 passwordDialog = false
             }
         )
@@ -88,21 +88,21 @@ fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
             Toolbar(
                 title = stringResource(id = R.string.nav_settings),
                 startIconResId = R.drawable.ic_back,
-                onStartActionClick = onBackClicked,
+                onStartActionClick = onBackClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         }
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(top = paddingValues.calculateTopPadding())
                 .verticalScroll(rememberScrollState())
         ) {
             CheckoutItemHeader(
-                label = stringResource(R.string.personal_information),
+                label = stringResource(R.string.title_personal_information),
                 onEditClick = {
                     openPersonalInformationDialog = true
                 },
@@ -184,7 +184,7 @@ fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
                 onClick = {
                     Toast.makeText(
                         context,
-                        context.getString(R.string.new_feature_message),
+                        context.getString(R.string.label_new_feature),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -195,7 +195,7 @@ fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
                 onClick = {
                     Toast.makeText(
                         context,
-                        context.getString(R.string.new_feature_message),
+                        context.getString(R.string.label_new_feature),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -206,7 +206,7 @@ fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
                 onClick = {
                     Toast.makeText(
                         context,
-                        context.getString(R.string.new_feature_message),
+                        context.getString(R.string.label_new_feature),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -217,7 +217,7 @@ fun Settings(viewModel: SettingsViewModel, onBackClicked: () -> Unit) {
                 onClick = {
                     Toast.makeText(
                         context,
-                        context.getString(R.string.new_feature_message),
+                        context.getString(R.string.label_new_feature),
                         Toast.LENGTH_SHORT
                     ).show()
                 },
@@ -247,7 +247,7 @@ fun PersonalInformationCard(title: String, subtitle: String, modifier: Modifier 
             .fillMaxWidth(),
         shape = RoundedCornerShape(4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = colorResource(id = R.color.color_white)
         ),
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
@@ -260,7 +260,7 @@ fun PersonalInformationCard(title: String, subtitle: String, modifier: Modifier 
             style = TextStyle(
                 fontSize = 12.sp,
                 fontFamily = nunitoSansFamily,
-                color = colorResource(id = R.color.light_gray)
+                color = colorResource(id = R.color.color_light_gray)
             )
         )
         Text(
@@ -273,7 +273,7 @@ fun PersonalInformationCard(title: String, subtitle: String, modifier: Modifier 
                 fontSize = 14.sp,
                 fontFamily = nunitoSansFamily,
                 fontWeight = FontWeight.SemiBold,
-                color = colorResource(id = R.color.dark_gray)
+                color = colorResource(id = R.color.color_dark_gray)
             )
         )
     }
@@ -282,7 +282,7 @@ fun PersonalInformationCard(title: String, subtitle: String, modifier: Modifier 
 @Preview
 @Composable
 fun SwitchFieldPreview() {
-    SwitchField(stringResource(id = R.string.label_sales), {})
+    SwitchField(label = stringResource(id = R.string.label_sales), onCheckedChange = {})
 }
 
 @Composable
@@ -298,7 +298,7 @@ fun SwitchField(
         modifier = modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(4.dp),
-        color = Color.White,
+        color = colorResource(id = R.color.color_white),
         shadowElevation = 2.dp
     ) {
         Row(
@@ -313,7 +313,7 @@ fun SwitchField(
                     fontSize = 16.sp,
                     fontFamily = nunitoSansFamily,
                     fontWeight = FontWeight.SemiBold,
-                    color = colorResource(id = R.color.dark_gray)
+                    color = colorResource(id = R.color.color_dark_gray)
                 )
             )
 
@@ -324,11 +324,11 @@ fun SwitchField(
                 checked = checked,
                 enabled = isSwitchEnabled,
                 colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White,
-                    uncheckedThumbColor = Color.White,
-                    checkedTrackColor = colorResource(id = R.color.switch_enabled),
-                    checkedBorderColor = colorResource(id = R.color.switch_enabled),
-                    uncheckedBorderColor = colorResource(id = R.color.switch_disabled),
+                    checkedThumbColor = colorResource(id = R.color.color_white),
+                    uncheckedThumbColor = colorResource(id = R.color.color_white),
+                    checkedTrackColor = colorResource(id = R.color.bg_switch_enabled),
+                    checkedBorderColor = colorResource(id = R.color.bg_switch_enabled),
+                    uncheckedBorderColor = colorResource(id = R.color.bg_switch_disabled),
                 ),
                 onCheckedChange = {
                     checked = it

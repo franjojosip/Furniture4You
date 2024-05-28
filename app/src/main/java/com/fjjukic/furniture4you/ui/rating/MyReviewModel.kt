@@ -3,7 +3,6 @@ package com.fjjukic.furniture4you.ui.rating
 import androidx.annotation.DrawableRes
 import java.util.UUID
 
-
 data class MyReviewModel(
     val id: String = UUID.randomUUID().toString(),
     val title: String,

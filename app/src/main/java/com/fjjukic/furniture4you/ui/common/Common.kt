@@ -28,7 +28,7 @@ import ht.ferit.fjjukic.foodlovers.R
 fun showFeatureNotAvailable(context: Context) {
     Toast.makeText(
         context,
-        context.getString(R.string.new_feature_message),
+        context.getString(R.string.label_new_feature),
         Toast.LENGTH_SHORT
     ).show()
 }
@@ -48,7 +48,7 @@ fun ColumnScope.CombinedClickableText(
                     fontSize = 14.sp,
                     fontFamily = gelatioFamily,
                     fontWeight = FontWeight.Medium,
-                    color = colorResource(id = R.color.light_gray),
+                    color = colorResource(id = R.color.color_light_gray),
                 )
             ) {
                 append(stringResource(id = startTextResId))
@@ -59,7 +59,7 @@ fun ColumnScope.CombinedClickableText(
                     fontSize = 14.sp,
                     fontFamily = gelatioFamily,
                     fontWeight = FontWeight.SemiBold,
-                    color = colorResource(id = R.color.medium_gray),
+                    color = colorResource(id = R.color.color_medium_gray),
                 )
             ) {
                 append(stringResource(id = endTextResId).uppercase())

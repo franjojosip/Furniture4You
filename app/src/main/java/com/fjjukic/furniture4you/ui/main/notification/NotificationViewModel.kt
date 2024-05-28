@@ -26,7 +26,7 @@ class NotificationViewModel @Inject constructor() : ViewModel() {
             }
         }
         _showMessage.value = Message(
-            toastResId = R.string.notification_deleted
+            toastResId = R.string.title_notification_deleted
         )
     }
 
@@ -37,7 +37,7 @@ class NotificationViewModel @Inject constructor() : ViewModel() {
             }
         }
         _showMessage.value = Message(
-            toastResId = R.string.notification_archived
+            toastResId = R.string.title_notification_archived
         )
     }
 

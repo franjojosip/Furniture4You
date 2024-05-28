@@ -6,7 +6,7 @@ import com.fjjukic.furniture4you.ui.checkout.DeliveryOption
 import com.fjjukic.furniture4you.ui.checkout.PaymentInfo
 import com.fjjukic.furniture4you.ui.checkout.PriceInfo
 import com.fjjukic.furniture4you.ui.checkout.ShippingInfo
-import com.fjjukic.furniture4you.ui.common.model.Product
+import com.fjjukic.furniture4you.ui.components.Product
 import com.fjjukic.furniture4you.ui.home.HomeViewState
 import com.fjjukic.furniture4you.ui.home.model.CategoryItem
 import com.fjjukic.furniture4you.ui.main.notification.NotificationModel
@@ -223,7 +223,7 @@ object MockRepository {
                 "12.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.black_simple_lamp
+                R.drawable.img_black_simple_lamp
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -231,7 +231,7 @@ object MockRepository {
                 "36.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.babylon_torrentno_marble_table
+                R.drawable.img_babylon_torrentno_marble_table
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -239,7 +239,7 @@ object MockRepository {
                 "21.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.coffee_chair
+                R.drawable.img_coffee_chair
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -247,7 +247,7 @@ object MockRepository {
                 "16.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.makali_lounge_chair
+                R.drawable.img_makali_lounge_chair
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -255,7 +255,7 @@ object MockRepository {
                 "18.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.minimal_stand
+                R.drawable.img_white_minimal_stand
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -263,7 +263,7 @@ object MockRepository {
                 "34.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.office_chair
+                R.drawable.img_office_chair
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -271,7 +271,7 @@ object MockRepository {
                 "17.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.orine_table_lamp
+                R.drawable.img_orine_table_lamp
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -279,7 +279,7 @@ object MockRepository {
                 "15.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.the_day_bed
+                R.drawable.img_the_day_bed
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -287,7 +287,7 @@ object MockRepository {
                 "18.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.utility_stool
+                R.drawable.img_utility_stool
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -295,7 +295,7 @@ object MockRepository {
                 "34.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.wide_rolling_kitchen_island
+                R.drawable.img_wide_rolling_kitchen_island
             ),
             Product(
                 UUID.randomUUID().toString(),
@@ -303,7 +303,7 @@ object MockRepository {
                 "50.00",
                 "Let your room shine with the addition of this lavish 28-inch abstract table lamp. It has a Linen Drum shade that delivers bright ambient lighting. Adds a vibrant flair to any room with its black ceramic & wood finish. It has a 15-inch wide, ivory linen, drum lampshade that delivers soft lighting.",
                 "",
-                R.drawable.simple_desk
+                R.drawable.img_simple_desk
             )
         )
     }
@@ -340,16 +340,16 @@ object MockRepository {
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.minimal_stand,
+                imageResId = R.drawable.img_white_minimal_stand,
                 tag = NotificationTag(
                     "New",
-                    R.color.tag_new
+                    R.color.color_tag_new
                 )
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.black_simple_lamp
+                imageResId = R.drawable.img_black_simple_lamp
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
@@ -357,38 +357,38 @@ object MockRepository {
                 hideImage = true,
                 tag = NotificationTag(
                     "HOT!",
-                    R.color.tag_hot
+                    R.color.color_tag_hot
                 )
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.coffee_chair
+                imageResId = R.drawable.img_coffee_chair
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.cypress_stool
+                imageResId = R.drawable.img_cypress_stool
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.coffee_chair
+                imageResId = R.drawable.img_coffee_chair
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.ellington_side_table
+                imageResId = R.drawable.img_ellington_side_table
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.black_simple_lamp
+                imageResId = R.drawable.img_black_simple_lamp
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.corchet_pouf_ottoman
+                imageResId = R.drawable.img_corchet_pouf_ottoman
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
@@ -396,23 +396,23 @@ object MockRepository {
                 hideImage = true,
                 tag = NotificationTag(
                     "New",
-                    R.color.tag_new
+                    R.color.color_tag_new
                 )
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.black_simple_lamp
+                imageResId = R.drawable.img_black_simple_lamp
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.babylon_torrentno_marble_table
+                imageResId = R.drawable.img_babylon_torrentno_marble_table
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.darien_pouf
+                imageResId = R.drawable.img_darien_pouf
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
@@ -420,13 +420,13 @@ object MockRepository {
                 hideImage = true,
                 tag = NotificationTag(
                     "HOT!",
-                    R.color.tag_hot
+                    R.color.color_tag_hot
                 )
             ),
             NotificationModel(
                 title = "Your order #123456789 has been confirmed",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis pretium et in arcu adipiscing nec. Turpis pretium et in arcu adipiscing nec.",
-                imageResId = R.drawable.coffee_chair
+                imageResId = R.drawable.img_coffee_chair
             ),
         )
     }

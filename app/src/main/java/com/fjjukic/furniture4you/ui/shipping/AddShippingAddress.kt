@@ -25,7 +25,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,6 +33,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
@@ -46,13 +46,13 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun AddShippingAddressPreview() {
-    AddShippingAddress(ShippingAddressViewModel(), {})
+    AddShippingAddress(onBackClick = {})
 }
 
 @Composable
 fun AddShippingAddress(
-    viewModel: ShippingAddressViewModel,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: ShippingAddressViewModel = hiltViewModel()
 ) {
 
     val countries by viewModel.countries.collectAsStateWithLifecycle()
@@ -67,7 +67,7 @@ fun AddShippingAddress(
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         },
         bottomBar = {
@@ -76,7 +76,7 @@ fun AddShippingAddress(
             ) {
                 Button(
                     shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
                     modifier = Modifier
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
                         .height(60.dp)
@@ -88,7 +88,7 @@ fun AddShippingAddress(
                     Text(
                         text = stringResource(id = R.string.btn_save_address).uppercase(),
                         style = GelatioTypography.bodyMedium,
-                        color = Color.White
+                        color = colorResource(id = R.color.color_white)
                     )
                 }
             }
@@ -97,7 +97,7 @@ fun AddShippingAddress(
 
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
@@ -161,8 +161,8 @@ fun AddShippingAddress(
                 selectedValue = newAddress.country?.name ?: "",
                 label = stringResource(R.string.field_country),
                 placeholder = stringResource(R.string.placeholder_country),
-                onValueChangedEvent = {
-                    viewModel.onCountrySelected(it as MenuItem.Country)
+                onItemSelect = {
+                    viewModel.onCountrySelect(it as MenuItem.Country)
                 },
                 options = countries
             )
@@ -174,8 +174,8 @@ fun AddShippingAddress(
                 selectedValue = newAddress.city?.name ?: "",
                 label = stringResource(R.string.field_city),
                 placeholder = stringResource(R.string.placeholder_city),
-                onValueChangedEvent = {
-                    viewModel.onCitySelected(it as MenuItem.City)
+                onItemSelect = {
+                    viewModel.onCitySelect(it as MenuItem.City)
                 },
                 options = availableCities
             )
@@ -190,7 +190,7 @@ fun DynamicSelectTextField(
     options: List<MenuItem>,
     label: String,
     placeholder: String,
-    onValueChangedEvent: (MenuItem) -> Unit,
+    onItemSelect: (MenuItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -218,7 +218,7 @@ fun DynamicSelectTextField(
                 value = selectedValue,
                 onValueChange = {},
                 placeholder = {
-                    Text(placeholder, color = colorResource(id = R.color.placeholder))
+                    Text(placeholder, color = colorResource(id = R.color.color_placeholder))
                 },
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
@@ -231,17 +231,17 @@ fun DynamicSelectTextField(
             ExposedDropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier.background(Color.White),
+                modifier = Modifier.background(colorResource(id = R.color.color_white)),
             ) {
                 options.forEach { item ->
                     DropdownMenuItem(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.White),
+                            .background(colorResource(id = R.color.color_white)),
                         text = { Text(text = item.name) },
                         onClick = {
                             expanded = false
-                            onValueChangedEvent(item)
+                            onItemSelect(item)
                         }
                     )
                 }

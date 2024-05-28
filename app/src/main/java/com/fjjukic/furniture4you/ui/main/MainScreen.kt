@@ -47,7 +47,7 @@ fun MainScreen(
         bottomBar = {
             Surface(shadowElevation = 8.dp) {
                 NavigationBar(
-                    containerColor = colorResource(id = R.color.white),
+                    containerColor = colorResource(id = R.color.color_white),
                 ) {
                     BottomNavigationItem().bottomNavigationItems()
                         .forEachIndexed { index, navigationItem ->
@@ -73,7 +73,7 @@ fun MainScreen(
                                     }
                                 },
                                 colors = NavigationBarItemDefaults.colors(
-                                    indicatorColor = colorResource(id = R.color.white)
+                                    indicatorColor = colorResource(id = R.color.color_white)
                                 ),
                                 onClick = {
                                     navigationSelectedItem = index

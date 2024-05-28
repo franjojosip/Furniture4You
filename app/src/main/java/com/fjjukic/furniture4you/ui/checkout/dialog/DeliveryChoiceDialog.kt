@@ -25,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -85,24 +84,23 @@ fun DeliveryChoiceMenu(
         )
     ) {
         Column(
-            modifier = modifier.background(colorResource(id = R.color.white))
+            modifier = modifier.background(colorResource(id = R.color.color_white))
         ) {
             Text(
+                text = stringResource(R.string.label_choose_delivery_method),
+                style = GelatioTypography.titleMedium,
+                color = colorResource(id = R.color.color_medium_gray),
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = 20.dp, bottom = 12.dp),
-                text = stringResource(R.string.choose_delivery_method),
-                style = GelatioTypography.titleMedium,
-                color = colorResource(id = R.color.medium_gray),
             )
             deliveryOptions.forEachIndexed { index, option ->
-                ChoiceItem(
-                    option.description,
-                    option.price,
-                    isSelected = index == selectedIndex
-                ) {
-                    selectedIndex = index
-                }
+                DeliveryChoice(
+                    description = option.description,
+                    price = option.price,
+                    isSelected = index == selectedIndex,
+                    onSelected = { selectedIndex = index }
+                )
             }
 
             Row(
@@ -113,19 +111,19 @@ fun DeliveryChoiceMenu(
             ) {
                 TextButton(onClick = onDismissClick) {
                     Text(
-                        stringResource(id = R.string.delivery_choice_btn_cancel),
+                        text = stringResource(id = R.string.btn_cancel),
                         fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.gray),
+                        color = colorResource(id = R.color.color_gray),
                         modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
                     )
                 }
-                TextButton(onClick = {
-                    onContinueClick(deliveryOptions[selectedIndex].id)
-                }) {
+                TextButton(
+                    onClick = { onContinueClick(deliveryOptions[selectedIndex].id) }
+                ) {
                     Text(
-                        stringResource(id = R.string.delivery_choice_btn_confirm),
+                        text = stringResource(id = R.string.btn_confirm),
                         fontWeight = FontWeight.ExtraBold,
-                        color = Color.Black,
+                        color = colorResource(id = R.color.color_black),
                         modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
                     )
                 }
@@ -138,11 +136,23 @@ fun DeliveryChoiceMenu(
 @Preview
 @Composable
 fun DeliveryChoicePreview() {
-    DeliveryChoiceMenu("", MockRepository.getDeliveryOptions(), {}, {})
+    DeliveryChoiceMenu(
+        selectedOptionId = "",
+        deliveryOptions = MockRepository.getDeliveryOptions(),
+        onDismissClick = {},
+        onContinueClick = {})
 }
 
 @Composable
-fun ChoiceItem(label: String, price: Double, isSelected: Boolean, onSelected: () -> Unit) {
+fun DeliveryChoice(
+    description: String,
+    price: Double,
+    isSelected: Boolean,
+    onSelected: () -> Unit
+) {
+    val textColor =
+        if (isSelected) colorResource(id = R.color.color_dark_gray) else colorResource(id = R.color.color_medium_gray)
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -159,30 +169,29 @@ fun ChoiceItem(label: String, price: Double, isSelected: Boolean, onSelected: ()
             selected = isSelected,
             onClick = onSelected,
             colors = RadioButtonDefaults.colors(
-                selectedColor = colorResource(id = R.color.dark_gray),
-                unselectedColor = colorResource(id = R.color.gray)
+                selectedColor = colorResource(id = R.color.color_dark_gray),
+                unselectedColor = colorResource(id = R.color.color_gray)
             ),
         )
         Text(
             text = stringResource(
-                id = R.string.product_price_title,
+                id = R.string.title_product_price,
                 PaymentUtils.formatPrice(price)
             ),
             fontFamily = nunitoSansFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
-            color = if (isSelected) colorResource(id = R.color.dark_gray) else colorResource(id = R.color.medium_gray)
+            color = textColor
         )
         VerticalDivider(
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 12.dp),
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 12.dp),
         )
         Text(
-            text = label,
+            text = description,
             fontFamily = nunitoSansFamily,
-            fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
-            color = if (isSelected) colorResource(id = R.color.dark_gray) else colorResource(id = R.color.medium_gray)
+            fontWeight = FontWeight.Normal,
+            color = textColor
         )
     }
 }
@@ -190,9 +199,10 @@ fun ChoiceItem(label: String, price: Double, isSelected: Boolean, onSelected: ()
 @Preview(showBackground = true)
 @Composable
 fun PreviewChoiceItemSelected() {
-    ChoiceItem(
-        label = stringResource(id = R.string.payment_method_mock),
-        price = 3.99,
+    val option = MockRepository.getDeliveryOptions().first()
+    DeliveryChoice(
+        description = option.description,
+        price = option.price,
         isSelected = true,
         onSelected = {}
     )
@@ -201,9 +211,10 @@ fun PreviewChoiceItemSelected() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewChoiceItemUnselected() {
-    ChoiceItem(
-        label = stringResource(id = R.string.payment_method_mock),
-        price = 3.99,
+    val option = MockRepository.getDeliveryOptions().first()
+    DeliveryChoice(
+        description = option.description,
+        price = option.price,
         isSelected = false,
         onSelected = {}
     )

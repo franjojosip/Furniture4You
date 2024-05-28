@@ -67,9 +67,11 @@ fun PasswordInputField(
             },
             placeholder = { Text(stringResource(placeholderResId)) },
             trailingIcon = {
-                IconButton(onClick = {
-                    passwordVisibility = !passwordVisibility
-                }) {
+                IconButton(
+                    onClick = {
+                        passwordVisibility = !passwordVisibility
+                    }
+                ) {
                     Icon(
                         painter = icon,
                         contentDescription = stringResource(R.string.content_desc_visibility_icon)
@@ -85,9 +87,7 @@ fun PasswordInputField(
         )
 
         if (isError) {
-            ErrorField(
-                errorMessage = stringResource(R.string.error_invalid_password)
-            )
+            ErrorField(errorMessage = stringResource(R.string.error_invalid_password))
         }
     }
 }

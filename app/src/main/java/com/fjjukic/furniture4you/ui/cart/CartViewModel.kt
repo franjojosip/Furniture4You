@@ -30,7 +30,7 @@ class CartViewModel @Inject constructor() : ViewModel() {
         updatePrice()
     }
 
-    fun onPromoCodeEntered(newPromoCode: String) {
+    fun onPromoCodeEnter(newPromoCode: String) {
         val isNewPromoCode = promoCode != newPromoCode
         if (isNewPromoCode) {
             promoCode = newPromoCode
@@ -38,8 +38,8 @@ class CartViewModel @Inject constructor() : ViewModel() {
             updatePrice()
         }
         _showMessage.value = Message(
-            snackbarResId = if (isNewPromoCode) R.string.promo_code_activated else R.string.promo_code_already_activated,
-            snackbarActionResId = R.string.dismiss
+            snackbarResId = if (isNewPromoCode) R.string.label_promo_code_activated else R.string.error_promo_code_already_activated,
+            snackbarActionResId = R.string.btn_dismiss
         )
     }
 

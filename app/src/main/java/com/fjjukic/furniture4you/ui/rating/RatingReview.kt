@@ -33,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -44,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.mock.MockRepository
@@ -55,56 +55,57 @@ import java.util.Locale
 @Preview
 @Composable
 fun RatingReviewPreview() {
-    RatingReview(RatingReviewViewModel(), {}, {})
+    RatingReview(onBackClick = {}, onSubmitClick = {})
 }
 
 @Composable
 fun RatingReview(
-    viewModel: RatingReviewViewModel,
-    onBackClicked: () -> Unit,
-    onSubmitClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    onBackClick: () -> Unit,
+    onSubmitClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: RatingReviewViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier,
-        containerColor = Color.Transparent,
+        containerColor = colorResource(id = R.color.color_transparent),
         topBar = {
             Toolbar(
                 title = stringResource(id = R.string.nav_rating_review),
                 startIconResId = R.drawable.ic_back,
-                onStartActionClick = onBackClicked,
+                onStartActionClick = onBackClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         },
         bottomBar = {
             BottomAppBar(
-                containerColor = Color.Transparent
+                containerColor = colorResource(id = R.color.color_transparent)
             ) {
                 Button(
                     shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
                     modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
+                        .padding(horizontal = 20.dp)
+                        .padding(bottom = 20.dp)
                         .height(60.dp)
                         .fillMaxWidth()
-                        .background(Color.Transparent),
+                        .background(colorResource(id = R.color.color_transparent)),
                     onClick = {
                         Toast.makeText(
                             context,
-                            context.getString(R.string.new_feature_message),
+                            context.getString(R.string.label_new_feature),
                             Toast.LENGTH_SHORT
                         ).show()
-                        onSubmitClicked()
+                        onSubmitClick()
                     }
                 ) {
                     Text(
                         text = stringResource(id = R.string.btn_write_review),
                         style = GelatioTypography.bodyMedium,
-                        color = Color.White
+                        color = colorResource(id = R.color.color_white)
                     )
                 }
             }
@@ -112,7 +113,7 @@ fun RatingReview(
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(top = paddingValues.calculateTopPadding())
                 .verticalScroll(rememberScrollState())
@@ -126,7 +127,7 @@ fun RatingReview(
 
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 12.dp, horizontal = 20.dp),
-                color = colorResource(id = R.color.tinted_white),
+                color = colorResource(id = R.color.color_tinted_white),
                 thickness = 1.dp
             )
 
@@ -134,7 +135,7 @@ fun RatingReview(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .background(Color.White),
+                    .background(colorResource(id = R.color.color_white)),
                 contentPadding = PaddingValues(
                     top = 24.dp,
                     bottom = paddingValues.calculateBottomPadding()
@@ -156,9 +157,9 @@ fun RatingReview(
 fun ProductHeaderPreview() {
     val product = MockRepository.getProductDetail()
     ProductHeader(
-        product.title,
-        product.rating,
-        product.reviews
+        title = product.title,
+        rating = product.rating,
+        reviews = product.reviews
     )
 }
 
@@ -171,7 +172,7 @@ fun ProductHeader(
 ) {
     val resources = LocalContext.current.resources
     val reviewCountFormattedString = remember(reviews, resources) {
-        resources.getQuantityString(R.plurals.review_count, reviews, reviews)
+        resources.getQuantityString(R.plurals.label_review_count, reviews, reviews)
     }
 
     Row(
@@ -198,7 +199,7 @@ fun ProductHeader(
                 text = title,
                 fontFamily = nunitoSansFamily,
                 fontSize = 14.sp,
-                color = colorResource(id = R.color.medium_gray)
+                color = colorResource(id = R.color.color_medium_gray)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -206,7 +207,7 @@ fun ProductHeader(
                 Image(
                     painter = painterResource(R.drawable.ic_star),
                     contentDescription = stringResource(R.string.content_desc_rating),
-                    colorFilter = ColorFilter.tint(colorResource(id = R.color.star)),
+                    colorFilter = ColorFilter.tint(colorResource(id = R.color.color_star)),
                     modifier = Modifier.size(20.dp)
                 )
                 Text(
@@ -218,7 +219,7 @@ fun ProductHeader(
                     fontFamily = nunitoSansFamily,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
-                    color = colorResource(id = R.color.medium_gray),
+                    color = colorResource(id = R.color.color_medium_gray),
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }
@@ -227,7 +228,7 @@ fun ProductHeader(
                 fontFamily = nunitoSansFamily,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = colorResource(id = R.color.medium_gray)
+                color = colorResource(id = R.color.color_medium_gray)
             )
         }
     }
@@ -236,7 +237,7 @@ fun ProductHeader(
 @Preview
 @Composable
 fun ReviewPreview() {
-    Review(MockRepository.getReviews().first())
+    Review(review = MockRepository.getReviews().first())
 }
 
 @Composable
@@ -246,7 +247,7 @@ fun Review(review: Review, modifier: Modifier = Modifier) {
             modifier = modifier
                 .padding(horizontal = 20.dp),
             colors = CardDefaults.cardColors(
-                containerColor = Color.White
+                containerColor = colorResource(id = R.color.color_white)
             ),
             elevation = CardDefaults.cardElevation(4.dp)
         ) {
@@ -260,14 +261,14 @@ fun Review(review: Review, modifier: Modifier = Modifier) {
                     fontFamily = nunitoSansFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = colorResource(id = R.color.dark_gray),
+                    color = colorResource(id = R.color.color_dark_gray),
                     modifier = Modifier.weight(1f)
                 )
                 Text(
                     text = review.date,
                     fontFamily = nunitoSansFamily,
                     fontSize = 12.sp,
-                    color = colorResource(id = R.color.light_gray)
+                    color = colorResource(id = R.color.color_light_gray)
                 )
             }
             Row(
@@ -280,7 +281,7 @@ fun Review(review: Review, modifier: Modifier = Modifier) {
                         painter = painterResource(id = R.drawable.ic_star),
                         contentDescription = stringResource(R.string.content_desc_rating),
                         contentScale = ContentScale.None,
-                        colorFilter = ColorFilter.tint(color = colorResource(id = R.color.star)),
+                        colorFilter = ColorFilter.tint(color = colorResource(id = R.color.color_star)),
                         modifier = Modifier.padding(end = 2.dp)
                     )
                 }
@@ -289,7 +290,7 @@ fun Review(review: Review, modifier: Modifier = Modifier) {
                 text = review.description,
                 fontFamily = nunitoSansFamily,
                 fontSize = 14.sp,
-                color = colorResource(id = R.color.dark_gray),
+                color = colorResource(id = R.color.color_dark_gray),
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = 16.dp, bottom = 20.dp)

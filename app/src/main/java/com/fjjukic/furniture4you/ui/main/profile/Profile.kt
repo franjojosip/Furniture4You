@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -27,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
@@ -35,19 +35,26 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ProfilePreview() {
-    Profile(ProfileViewModel(), {}, {}, {}, {}, {}, {}, {})
+    Profile(
+        onSearchClick = {},
+        onLogoutClick = {},
+        onPaymentMethodClick = {},
+        onMyReviewsClick = {},
+        onSettingsClick = {},
+        onShippingClick = {},
+        onMyOrderClick = {})
 }
 
 @Composable
 fun Profile(
-    viewModel: ProfileViewModel,
     onSearchClick: () -> Unit,
     onLogoutClick: () -> Unit,
     onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onShippingClick: () -> Unit,
-    onMyOrderClick: () -> Unit
+    onMyOrderClick: () -> Unit,
+    viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -59,13 +66,13 @@ fun Profile(
                 endIconResId = R.drawable.ic_logout,
                 onStartActionClick = onSearchClick,
                 onEndActionClick = onLogoutClick,
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         }
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(top = paddingValues.calculateTopPadding())
                 .verticalScroll(rememberScrollState())
@@ -74,14 +81,13 @@ fun Profile(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
-                    .padding(top = 18.dp)
-                    .padding(bottom = 16.dp)
+                    .padding(vertical = 18.dp)
             ) {
                 Image(
                     modifier = Modifier
                         .size(80.dp)
                         .clip(RoundedCornerShape(100)),
-                    painter = painterResource(id = R.drawable.coffee_chair),
+                    painter = painterResource(id = R.drawable.img_coffee_chair),
                     contentDescription = stringResource(R.string.content_desc_rating),
                     contentScale = ContentScale.Crop
                 )
@@ -99,7 +105,7 @@ fun Profile(
                         fontSize = 20.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        color = colorResource(id = R.color.medium_gray),
+                        color = colorResource(id = R.color.color_medium_gray),
                     )
                     Text(
                         modifier = Modifier.fillMaxWidth(),
@@ -108,33 +114,33 @@ fun Profile(
                         fontSize = 14.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        color = colorResource(id = R.color.light_gray)
+                        color = colorResource(id = R.color.color_light_gray)
                     )
                 }
             }
             ClickableField(
                 title = stringResource(id = R.string.label_my_orders),
-                subtitle = stringResource(R.string.desc_my_orders),
+                subtitle = stringResource(R.string.mock_my_orders),
                 onClick = onMyOrderClick
             )
             ClickableField(
                 title = stringResource(id = R.string.label_shipping_addresses),
-                subtitle = stringResource(R.string.desc_shipping_addresses),
+                subtitle = stringResource(R.string.mock_shipping_addresses),
                 onClick = onShippingClick
             )
             ClickableField(
-                title = stringResource(id = R.string.payment_method),
-                subtitle = stringResource(R.string.desc_payment_method),
+                title = stringResource(id = R.string.title_payment_method),
+                subtitle = stringResource(R.string.mock_payment_method),
                 onClick = onPaymentMethodClick
             )
             ClickableField(
                 title = stringResource(id = R.string.nav_my_reviews),
-                subtitle = stringResource(R.string.desc_my_reviews),
+                subtitle = stringResource(R.string.mock_my_reviews),
                 onClick = onMyReviewsClick
             )
             ClickableField(
                 title = stringResource(id = R.string.nav_settings),
-                subtitle = stringResource(R.string.desc_settings),
+                subtitle = stringResource(R.string.label_settings),
                 onClick = onSettingsClick
             )
         }

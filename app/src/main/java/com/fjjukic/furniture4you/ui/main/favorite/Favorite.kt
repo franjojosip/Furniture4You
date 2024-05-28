@@ -1,6 +1,5 @@
 package com.fjjukic.furniture4you.ui.main.favorite
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -43,9 +41,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fjjukic.furniture4you.ui.common.model.Product
-import com.fjjukic.furniture4you.ui.components.CartItem
+import com.fjjukic.furniture4you.ui.cart.CartItem
+import com.fjjukic.furniture4you.ui.common.showFeatureNotAvailable
+import com.fjjukic.furniture4you.ui.components.Product
+import com.fjjukic.furniture4you.ui.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import ht.ferit.fjjukic.foodlovers.R
@@ -53,66 +54,63 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun FavoritePreview() {
-    Favorite(FavoriteViewModel(), {}, {}, {})
+    Favorite(onProductClick = {}, onSearchClick = {}, onCartClick = {})
 }
 
 @Composable
 fun Favorite(
-    viewModel: FavoriteViewModel,
-    onProductClicked: (String) -> Unit,
-    onSearchClicked: () -> Unit,
-    onCartClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    onProductClick: (String) -> Unit,
+    onSearchClick: () -> Unit,
+    onCartClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: FavoriteViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val products by viewModel.products.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier,
-        containerColor = Color.Transparent,
+        containerColor = colorResource(id = R.color.color_transparent),
         topBar = {
             Header(
                 title = stringResource(id = R.string.nav_favorites),
                 startIconResId = R.drawable.ic_search,
                 endIconResId = R.drawable.ic_cart,
-                onStartActionClick = onSearchClicked,
-                onEndActionClick = onCartClicked,
-                modifier = Modifier.background(Color.White)
+                onStartActionClick = onSearchClick,
+                onEndActionClick = onCartClick,
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         },
         bottomBar = {
             BottomAppBar(
-                containerColor = Color.Transparent
+                containerColor = colorResource(id = R.color.color_transparent)
             ) {
                 Button(
                     shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
                     modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
+                        .padding(horizontal = 20.dp)
+                        .padding(bottom = 20.dp)
                         .height(60.dp)
                         .fillMaxWidth()
-                        .background(Color.Transparent),
+                        .background(colorResource(id = R.color.color_transparent)),
                     onClick = {
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.new_feature_message),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        showFeatureNotAvailable(context)
                     }
                 ) {
                     Text(
                         text = stringResource(id = R.string.btn_add_all_to_my_cart),
                         style = GelatioTypography.bodyMedium,
-                        color = Color.White
+                        color = colorResource(id = R.color.color_white)
                     )
                 }
             }
         }
     ) { paddingValues ->
         FavoriteScreenContent(
-            onProductClicked = onProductClicked,
-            onCartClicked = onCartClicked,
-            onRemoveClicked = viewModel::onRemoveClicked,
+            onProductClick = onProductClick,
+            onCartClick = onCartClick,
+            onRemoveClick = viewModel::onRemoveClick,
             products = products,
             bottomPaddingValue = paddingValues.calculateBottomPadding(),
             modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
@@ -122,16 +120,16 @@ fun Favorite(
 
 @Composable
 fun FavoriteScreenContent(
-    onProductClicked: (String) -> Unit,
-    onCartClicked: () -> Unit,
-    onRemoveClicked: (String) -> Unit,
+    onProductClick: (String) -> Unit,
+    onCartClick: () -> Unit,
+    onRemoveClick: (String) -> Unit,
     products: List<Product>,
     bottomPaddingValue: Dp,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
         modifier = modifier
-            .background(Color.White),
+            .background(colorResource(id = R.color.color_white)),
         contentPadding = PaddingValues(
             start = 20.dp,
             end = 20.dp,
@@ -142,20 +140,21 @@ fun FavoriteScreenContent(
         itemsIndexed(products) { index, product ->
             key(product.id) {
                 FavoriteItem(
-                    onProductClicked = {
-                        onProductClicked(product.id)
+                    title = product.title,
+                    price = product.price,
+                    imageResId = product.imageResId,
+                    onProductClick = {
+                        onProductClick(product.id)
                     },
-                    onCartClicked = onCartClicked,
-                    onRemoveClicked = {
-                        onRemoveClicked(product.id)
-                    },
-                    product.imageResId,
-                    product.price
+                    onCartClick = onCartClick,
+                    onRemoveClick = {
+                        onRemoveClick(product.id)
+                    }
                 )
                 if (index != products.size - 1) {
                     HorizontalDivider(
                         modifier = Modifier.padding(vertical = 12.dp),
-                        color = colorResource(id = R.color.tinted_white),
+                        color = colorResource(id = R.color.color_tinted_white),
                         thickness = 1.dp
                     )
                 }
@@ -169,7 +168,7 @@ fun FavoriteScreenContent(
 @Composable
 fun HeaderPreview() {
     Header(
-        title = "My cart",
+        title = stringResource(id = R.string.placeholder_name),
         startIconResId = R.drawable.ic_search,
         endIconResId = R.drawable.ic_favorite,
         onStartActionClick = {},
@@ -193,14 +192,14 @@ fun Header(
         IconButton(onClick = onStartActionClick) {
             Icon(
                 painter = painterResource(id = startIconResId),
-                tint = colorResource(id = R.color.dark_gray),
+                tint = colorResource(id = R.color.color_dark_gray),
                 contentDescription = stringResource(R.string.content_desc_action_start_icon)
             )
         }
         Text(
             text = title,
             style = NunitoSansTypography.titleSmall,
-            color = colorResource(id = R.color.medium_gray),
+            color = colorResource(id = R.color.color_medium_gray),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .weight(1f)
@@ -209,7 +208,7 @@ fun Header(
         IconButton(onClick = onEndActionClick) {
             Icon(
                 painter = painterResource(id = endIconResId),
-                tint = colorResource(id = R.color.dark_gray),
+                tint = colorResource(id = R.color.color_dark_gray),
                 contentDescription = stringResource(R.string.content_desc_action_end_icon)
             )
         }
@@ -219,21 +218,26 @@ fun Header(
 @Preview
 @Composable
 fun FavoriteItemPreview() {
+    val product = MockRepository.getProducts().first()
     FavoriteItem(
-        onProductClicked = {},
-        onCartClicked = {},
-        onRemoveClicked = {},
-        R.drawable.img_minimal_stand,
-        "24.99"
+        title = product.title,
+        price = product.price,
+        imageResId = R.drawable.img_minimal_stand,
+        onProductClick = {},
+        onCartClick = {},
+        onRemoveClick = {},
     )
 }
 
 @Composable
 fun FavoriteItem(
-    onProductClicked: () -> Unit,
-    onCartClicked: () -> Unit,
-    onRemoveClicked: () -> Unit,
-    imageResId: Int, price: String, modifier: Modifier = Modifier
+    title: String,
+    price: String,
+    imageResId: Int,
+    onProductClick: () -> Unit,
+    onCartClick: () -> Unit,
+    onRemoveClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
@@ -242,7 +246,7 @@ fun FavoriteItem(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-                onClick = onProductClicked
+                onClick = onProductClick
             )
     ) {
         Image(
@@ -260,13 +264,13 @@ fun FavoriteItem(
                 .weight(1f)
         ) {
             Text(
-                text = "Coffee Table",
-                color = colorResource(id = R.color.light_gray),
+                text = title,
+                color = colorResource(id = R.color.color_light_gray),
                 style = NunitoSansTypography.labelSmall,
             )
             Text(
-                text = stringResource(id = R.string.product_price_title, price),
-                color = colorResource(id = R.color.dark_gray),
+                text = stringResource(id = R.string.title_product_price, price),
+                color = colorResource(id = R.color.color_dark_gray),
                 style = NunitoSansTypography.titleSmall,
                 modifier = Modifier.padding(top = 6.dp)
             )
@@ -279,7 +283,7 @@ fun FavoriteItem(
         ) {
             IconButton(
                 modifier = Modifier.size(24.dp),
-                onClick = onRemoveClicked
+                onClick = onRemoveClick
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_close),
@@ -287,11 +291,11 @@ fun FavoriteItem(
                 )
             }
             CartItem(
-                onItemSelected = onCartClicked,
+                onItemSelect = onCartClick,
                 modifier = Modifier
                     .wrapContentSize(),
-                itemColor = colorResource(id = R.color.medium_gray),
-                itemBackground = colorResource(id = R.color.color_favorite_cart_item_background),
+                itemColor = colorResource(id = R.color.color_medium_gray),
+                itemBackground = colorResource(id = R.color.bg_favorite_cart_item),
                 itemRadius = 12.dp
             )
         }

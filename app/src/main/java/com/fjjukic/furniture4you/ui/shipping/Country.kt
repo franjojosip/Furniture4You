@@ -4,7 +4,6 @@ import java.util.UUID
 
 
 sealed class MenuItem(val name: String) {
-
     class Country(
         name: String,
         val id: String = UUID.randomUUID().toString()

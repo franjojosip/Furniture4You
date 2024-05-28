@@ -32,7 +32,8 @@ fun CategoryFilterItemSelectedPreview() {
         title = stringResource(R.string.nav_home),
         isSelected = true,
         imageResId = R.drawable.ic_star,
-        {})
+        onCategorySelect = {}
+    )
 }
 
 @Preview
@@ -42,7 +43,8 @@ fun CategoryFilterItemUnselectedPreview() {
         title = stringResource(R.string.nav_home),
         isSelected = false,
         imageResId = R.drawable.ic_star,
-        {})
+        onCategorySelect = {}
+    )
 }
 
 @Composable
@@ -50,7 +52,7 @@ fun CategoryFilterItem(
     title: String,
     isSelected: Boolean,
     @DrawableRes imageResId: Int,
-    onCategorySelected: () -> Unit,
+    onCategorySelect: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val backgroundColor =
@@ -58,7 +60,7 @@ fun CategoryFilterItem(
         else colorResource(id = R.color.color_category_filter_bg_unselected)
 
     val imageColor =
-        if (isSelected) colorResource(id = R.color.white)
+        if (isSelected) colorResource(id = R.color.color_white)
         else colorResource(id = R.color.color_category_filter_img_unselected)
 
     val textColor =
@@ -76,7 +78,7 @@ fun CategoryFilterItem(
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null
-                ) { onCategorySelected() }
+                ) { onCategorySelect() }
         ) {
             Image(
                 modifier = Modifier.align(Alignment.Center),

@@ -45,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.ui.common.Toolbar
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.mock.MockRepository
@@ -55,14 +56,15 @@ import kotlinx.coroutines.launch
 @Preview
 @Composable
 fun MyOrderPreview() {
-    MyOrder(MyOrderViewModel()) {}
+    MyOrder(onBackClick = {})
 }
-
-private const val TAB_SWITCH_ANIM_DURATION = 300
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MyOrder(viewModel: MyOrderViewModel, onBackClick: () -> Unit) {
+fun MyOrder(
+    onBackClick: () -> Unit,
+    viewModel: MyOrderViewModel = hiltViewModel()
+) {
     val pagerState =
         rememberPagerState(initialPage = 0) { viewModel.tabs.size }
     val coroutineScope = rememberCoroutineScope()
@@ -74,7 +76,7 @@ fun MyOrder(viewModel: MyOrderViewModel, onBackClick: () -> Unit) {
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(Color.White)
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         }
     ) { paddingValues ->
@@ -82,7 +84,7 @@ fun MyOrder(viewModel: MyOrderViewModel, onBackClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(paddingValues)
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
         ) {
             TabRow(
                 selectedTabIndex = pagerState.currentPage,
@@ -113,21 +115,19 @@ fun MyOrder(viewModel: MyOrderViewModel, onBackClick: () -> Unit) {
                             )
                         },
                         modifier = Modifier
-                            .background(Color.White)
+                            .background(colorResource(id = R.color.color_white))
                             .fillMaxWidth(),
                         selected = pagerState.currentPage == index,
                         onClick = {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(
                                     index,
-                                    animationSpec = tween(
-                                        TAB_SWITCH_ANIM_DURATION
-                                    )
+                                    animationSpec = tween(300)
                                 )
                             }
                         },
-                        selectedContentColor = colorResource(id = R.color.tab_selected),
-                        unselectedContentColor = colorResource(id = R.color.tab_unselected)
+                        selectedContentColor = colorResource(id = R.color.color_tab_selected),
+                        unselectedContentColor = colorResource(id = R.color.color_tab_unselected)
                     )
                 }
             }
@@ -155,7 +155,7 @@ fun MyOrder(viewModel: MyOrderViewModel, onBackClick: () -> Unit) {
 fun OrderList(orders: List<Order>) {
     LazyColumn(
         modifier = Modifier
-            .background(Color.White)
+            .background(colorResource(id = R.color.color_white))
             .fillMaxSize(),
         contentPadding = PaddingValues(vertical = 20.dp, horizontal = 16.dp)
     ) {
@@ -171,9 +171,9 @@ fun OrderList(orders: List<Order>) {
 @Composable
 fun OrderCard(order: Order, modifier: Modifier = Modifier) {
     val statusColor: Color = when (order.status) {
-        MyOrderViewModel.OrderStatus.Delivered -> colorResource(id = R.color.status_delivered)
-        MyOrderViewModel.OrderStatus.Processing -> colorResource(id = R.color.status_processing)
-        MyOrderViewModel.OrderStatus.Canceled -> colorResource(id = R.color.status_canceled)
+        MyOrderViewModel.OrderStatus.Delivered -> colorResource(id = R.color.color_status_delivered)
+        MyOrderViewModel.OrderStatus.Processing -> colorResource(id = R.color.color_status_processing)
+        MyOrderViewModel.OrderStatus.Canceled -> colorResource(id = R.color.color_status_canceled)
     }
 
     Card(
@@ -186,7 +186,7 @@ fun OrderCard(order: Order, modifier: Modifier = Modifier) {
     ) {
         Column(
             modifier = Modifier
-                .background(Color.White)
+                .background(colorResource(id = R.color.color_white))
         ) {
             Row(
                 modifier = Modifier
@@ -195,21 +195,21 @@ fun OrderCard(order: Order, modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Order No${order.number}",
-                    color = colorResource(id = R.color.dark_gray),
+                    text = stringResource(R.string.label_order_number, order.number),
+                    color = colorResource(id = R.color.color_dark_gray),
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = nunitoSansFamily,
                     fontSize = 16.sp
                 )
                 Text(
                     text = order.date,
-                    color = colorResource(id = R.color.light_gray),
+                    color = colorResource(id = R.color.color_light_gray),
                     fontFamily = nunitoSansFamily,
                     fontSize = 14.sp
                 )
             }
             HorizontalDivider(
-                color = colorResource(id = R.color.tinted_white),
+                color = colorResource(id = R.color.color_tinted_white),
                 thickness = 2.dp
             )
             Row(
@@ -218,11 +218,11 @@ fun OrderCard(order: Order, modifier: Modifier = Modifier) {
                     .padding(start = 20.dp, end = 16.dp, top = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                DoubleColorText(stringResource(R.string.quantity), order.quantity.toString())
+                DoubleColorText(stringResource(R.string.label_quantity), order.quantity.toString())
                 DoubleColorText(
-                    stringResource(R.string.total_amount),
+                    stringResource(R.string.label_total_amount),
                     stringResource(
-                        id = R.string.order_price_title,
+                        id = R.string.title_order_price,
                         PaymentUtils.formatPrice(order.amount)
                     )
                 )
@@ -237,12 +237,12 @@ fun OrderCard(order: Order, modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(topEnd = 4.dp, bottomEnd = 4.dp))
-                        .background(color = colorResource(id = R.color.dark_gray))
+                        .background(color = colorResource(id = R.color.color_dark_gray))
                 ) {
                     Text(
                         modifier = Modifier.padding(horizontal = 30.dp, vertical = 8.dp),
-                        text = stringResource(R.string.detail),
-                        color = colorResource(id = R.color.white),
+                        text = stringResource(R.string.label_detail),
+                        color = colorResource(id = R.color.color_white),
                         fontFamily = nunitoSansFamily,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp
@@ -264,24 +264,27 @@ fun OrderCard(order: Order, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun DoubleColorTextPreview() {
-    DoubleColorText("Quantity", "03")
+    DoubleColorText(
+        startText = stringResource(id = R.string.placeholder_name),
+        endText = stringResource(id = R.string.placeholder_name)
+    )
 }
 
 
 @Composable
-fun DoubleColorText(start: String, end: String) {
+fun DoubleColorText(startText: String, endText: String) {
     Row(modifier = Modifier.wrapContentWidth()) {
         Text(
-            text = start,
-            color = colorResource(id = R.color.light_gray),
+            text = startText,
+            color = colorResource(id = R.color.color_light_gray),
             fontFamily = nunitoSansFamily,
             fontWeight = FontWeight.SemiBold,
             fontSize = 16.sp
         )
         Text(
             modifier = Modifier.padding(start = 4.dp),
-            text = end,
-            color = colorResource(id = R.color.dark_gray),
+            text = endText,
+            color = colorResource(id = R.color.color_dark_gray),
             fontFamily = nunitoSansFamily,
             fontWeight = FontWeight.SemiBold,
             fontSize = 16.sp
@@ -293,7 +296,7 @@ fun DoubleColorText(start: String, end: String) {
 @Preview
 @Composable
 fun PreviewOrderCard() {
-    OrderCard(MockRepository.getOrders().first())
+    OrderCard(order = MockRepository.getOrders().first())
 }
 
 
@@ -315,7 +318,7 @@ fun Modifier.customTabIndicatorOffset(currentTabPosition: TabPosition): Modifier
         .offset(x = tabOffset)
         .width(indicatorWidth)
         .background(
-            color = colorResource(id = R.color.tab_selected),
+            color = colorResource(id = R.color.color_tab_selected),
             shape = RoundedCornerShape(2.dp)
         )
 }

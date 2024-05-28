@@ -60,7 +60,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.Toolbar
-import com.fjjukic.furniture4you.ui.common.fields.CustomTextField
+import com.fjjukic.furniture4you.ui.common.fields.PromoCodeField
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.components.ShoppingCounter
 import com.fjjukic.furniture4you.ui.mock.MockRepository
@@ -73,7 +73,7 @@ import kotlinx.coroutines.launch
 @Preview
 @Composable
 fun CartPreview() {
-    CartScreen({}, {}, {})
+    CartScreen(onProductClick = {}, onBackClick = {}, onCheckoutClick = {})
 }
 
 @Composable
@@ -121,7 +121,7 @@ fun CartScreen(
                 title = stringResource(id = R.string.nav_my_cart),
                 startIconResId = R.drawable.ic_back,
                 onStartActionClick = onBackClick,
-                modifier = Modifier.background(colorResource(id = R.color.white))
+                modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         },
         bottomBar = {
@@ -129,7 +129,7 @@ fun CartScreen(
                 modifier = Modifier.padding(top = 6.dp)
             ) {
                 PromoCodeField(
-                    viewModel::onPromoCodeEntered,
+                    viewModel::onPromoCodeEnter,
                     Modifier.padding(horizontal = 20.dp)
                 )
                 TotalPriceItem(
@@ -141,7 +141,7 @@ fun CartScreen(
                 )
                 Button(
                     shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray)),
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
                     modifier = Modifier
                         .padding(bottom = 20.dp)
                         .padding(horizontal = 20.dp)
@@ -152,7 +152,7 @@ fun CartScreen(
                     Text(
                         text = stringResource(id = R.string.btn_checkout),
                         style = GelatioTypography.bodyMedium,
-                        color = colorResource(id = R.color.white)
+                        color = colorResource(id = R.color.color_white)
                     )
                 }
             }
@@ -165,7 +165,7 @@ fun CartScreen(
             onIncrementClick = viewModel::onIncrementClick,
             onDecrementClick = viewModel::onDecrementClick,
             modifier = Modifier
-                .background(colorResource(id = R.color.white))
+                .background(colorResource(id = R.color.color_white))
                 .fillMaxSize()
                 .padding(paddingValues)
         )
@@ -175,13 +175,12 @@ fun CartScreen(
 @Preview(showBackground = true)
 @Composable
 fun TotalPriceItemPreview() {
-    TotalPriceItem(price = 130.00, 0.10)
+    val cartPrice = CartPrice()
+    TotalPriceItem(price = cartPrice.price, discount = cartPrice.discount)
 }
 
 @Composable
 fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-
     Column(
         modifier = modifier
             .wrapContentHeight()
@@ -191,7 +190,7 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
         if (discount != 0.00) {
             Row {
                 Text(
-                    text = stringResource(R.string.cart_price),
+                    text = stringResource(R.string.label_cart_price),
                     color = colorResource(id = R.color.color_discount_price),
                     fontFamily = nunitoSansFamily,
                     fontWeight = FontWeight.Medium,
@@ -200,7 +199,7 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
                 )
                 Text(
                     text = stringResource(
-                        id = R.string.product_price_title,
+                        id = R.string.title_product_price,
                         PaymentUtils.formatPrice(price)
                     ),
                     color = colorResource(id = R.color.color_discount_price),
@@ -211,7 +210,7 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
             }
             Row {
                 Text(
-                    text = stringResource(R.string.cart_discount, (discount * 100).toInt()),
+                    text = stringResource(R.string.label_cart_discount, (discount * 100).toInt()),
                     color = colorResource(id = R.color.color_discount_price),
                     fontFamily = nunitoSansFamily,
                     fontWeight = FontWeight.Medium,
@@ -220,7 +219,7 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
                 )
                 Text(
                     text = stringResource(
-                        id = R.string.product_discount_price_title,
+                        id = R.string.title_product_discount,
                         PaymentUtils.formatPrice(price * discount)
                     ),
                     color = colorResource(id = R.color.color_discount_price),
@@ -231,17 +230,17 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
         }
         Row {
             Text(
-                text = stringResource(id = R.string.total_label),
+                text = stringResource(id = R.string.title_checkout_total),
                 color = colorResource(id = R.color.color_discount_price),
                 style = NunitoSansTypography.bodyMedium,
                 modifier = Modifier.weight(1f)
             )
             Text(
                 text = stringResource(
-                    id = R.string.product_price_title,
+                    id = R.string.title_product_price,
                     PaymentUtils.formatPrice(price - (price * discount))
                 ),
-                color = colorResource(id = R.color.medium_gray),
+                color = colorResource(id = R.color.color_medium_gray),
                 style = NunitoSansTypography.bodyMedium
             )
         }
@@ -250,7 +249,7 @@ fun TotalPriceItem(price: Double, discount: Double, modifier: Modifier = Modifie
 
 @Composable
 fun PromoCodeField(
-    onPromoCodeEntered: (String) -> Unit,
+    onPromoCodeEnter: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -264,20 +263,20 @@ fun PromoCodeField(
         modifier = modifier
             .fillMaxWidth()
             .height(44.dp)
-            .background(colorResource(id = R.color.white)),
+            .background(colorResource(id = R.color.color_white)),
         elevation = CardDefaults.elevatedCardElevation(3.dp)
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.CenterEnd
         ) {
-            CustomTextField(
+            PromoCodeField(
                 fieldValue = promoCode,
-                onTextChanged = {
+                onTextChange = {
                     promoCode = it
                 },
                 isEnabled = !promoCodeEntered,
-                placeholder = stringResource(id = R.string.enter_promo_code),
+                placeholder = stringResource(id = R.string.placeholder_enter_promo_code),
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
@@ -289,18 +288,18 @@ fun PromoCodeField(
                         promoCode = ""
                         promoCodeEntered = false
                     } else if (promoCode.isNotBlank()) {
-                        onPromoCodeEntered(promoCode)
+                        onPromoCodeEnter(promoCode)
                         promoCodeEntered = true
                     }
                 },
                 modifier = Modifier
                     .clip(RoundedCornerShape(10.dp))
                     .size(44.dp)
-                    .background(colorResource(id = R.color.medium_gray))
+                    .background(colorResource(id = R.color.color_medium_gray))
             ) {
                 Icon(
                     painter = painterResource(id = promoFieldIconResId),
-                    tint = colorResource(id = R.color.white),
+                    tint = colorResource(id = R.color.color_white),
                     contentDescription = stringResource(id = R.string.content_desc_enter_promo)
                 )
             }
@@ -319,7 +318,7 @@ fun CartScreenContent(
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 16.dp)
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 14.dp)
     ) {
         itemsIndexed(products) { index, item ->
             key(item.product.id) {
@@ -333,7 +332,7 @@ fun CartScreenContent(
                 if (index != products.size - 1) {
                     HorizontalDivider(
                         modifier = Modifier.padding(vertical = 12.dp),
-                        color = colorResource(id = R.color.tinted_white),
+                        color = colorResource(id = R.color.color_tinted_white),
                         thickness = 1.dp
                     )
                 }
@@ -347,7 +346,7 @@ fun CartScreenContent(
 @Composable
 fun CartProductItemPreview() {
     CartProductItem(
-        MockRepository.getCartProduct(),
+        cartProduct = MockRepository.getCartProduct(),
         onProductClick = {},
         onRemoveClick = {},
         onIncrementClick = {},
@@ -391,13 +390,13 @@ fun CartProductItem(
         ) {
             Text(
                 text = cartProduct.product.title,
-                color = colorResource(id = R.color.light_gray),
+                color = colorResource(id = R.color.color_light_gray),
                 style = NunitoSansTypography.labelSmall,
                 maxLines = 2
             )
             Text(
-                text = stringResource(id = R.string.product_price_title, cartProduct.product.price),
-                color = colorResource(id = R.color.dark_gray),
+                text = stringResource(id = R.string.title_product_price, cartProduct.product.price),
+                color = colorResource(id = R.color.color_dark_gray),
                 style = NunitoSansTypography.titleSmall,
                 modifier = Modifier.padding(top = 6.dp)
             )
@@ -410,9 +409,9 @@ fun CartProductItem(
                     value = cartProduct.count,
                     onIncrementClick = { onIncrementClick(cartProduct.product.id) },
                     onDecrementClick = { onDecrementClick(cartProduct.product.id) },
-                    counterTextColor = colorResource(id = R.color.dark_gray),
-                    counterIconTint = colorResource(id = R.color.light_gray),
-                    counterIconBackground = colorResource(id = R.color.tinted_white)
+                    textColor = colorResource(id = R.color.color_dark_gray),
+                    startIconTint = colorResource(id = R.color.color_light_gray),
+                    startIconBackground = colorResource(id = R.color.color_tinted_white)
                 )
             }
         }
