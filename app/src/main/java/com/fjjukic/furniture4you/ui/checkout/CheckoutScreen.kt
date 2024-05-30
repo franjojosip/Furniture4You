@@ -39,12 +39,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fjjukic.furniture4you.ui.checkout.dialog.DeliveryChoiceMenuDialog
-import com.fjjukic.furniture4you.ui.checkout.dialog.PaymentInfoDialog
-import com.fjjukic.furniture4you.ui.checkout.dialog.ShippingInfoDialog
-import com.fjjukic.furniture4you.ui.common.Toolbar
+import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
-import com.fjjukic.furniture4you.ui.mock.MockRepository
+import com.fjjukic.furniture4you.ui.components.Toolbar
+import com.fjjukic.furniture4you.ui.dialog.DeliveryChoiceMenuDialog
+import com.fjjukic.furniture4you.ui.dialog.PaymentInfoDialog
+import com.fjjukic.furniture4you.ui.dialog.ShippingInfoDialog
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 import ht.ferit.fjjukic.foodlovers.R

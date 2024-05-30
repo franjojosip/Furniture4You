@@ -7,7 +7,7 @@ import androidx.navigation.compose.navigation
 import com.fjjukic.furniture4you.ui.auth.ForgotPasswordScreen
 import com.fjjukic.furniture4you.ui.auth.LoginScreen
 import com.fjjukic.furniture4you.ui.auth.RegisterScreen
-import com.fjjukic.furniture4you.ui.common.PreloginScreen
+import com.fjjukic.furniture4you.ui.main.PreloginScreen
 
 fun NavGraphBuilder.authNavigationGraph(navHostController: NavHostController) {
     navigation(
@@ -34,7 +34,12 @@ fun NavGraphBuilder.authNavigationGraph(navHostController: NavHostController) {
                 }, onRegisterClick = {
                     navHostController.navigate(Screens.AuthScreen.Register.route)
                 }, onLoginClick = {
-                    navHostController.navigate(Graph.MAIN)
+                    navHostController.navigate(Graph.MAIN) {
+                        popUpTo(Graph.AUTH) {
+                            inclusive = true
+                            saveState = true
+                        }
+                    }
                 }
             )
         }

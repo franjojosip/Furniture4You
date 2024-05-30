@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 import ht.ferit.fjjukic.foodlovers.R
 
-@Preview()
+@Preview
 @Composable
 fun ShoppingCounterPreview() {
     ShoppingCounter(value = 1, onIncrementClick = {}, onDecrementClick = {})

@@ -22,7 +22,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.fjjukic.furniture4you.ui.components.BottomNavigationItem
+import com.fjjukic.furniture4you.ui.common.model.BottomNavigationItem
 import com.fjjukic.furniture4you.ui.navigation.MainGraph
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import ht.ferit.fjjukic.foodlovers.R
@@ -31,6 +31,7 @@ import ht.ferit.fjjukic.foodlovers.R
 fun MainScreen(
     onProductClick: (String) -> Unit,
     onSearchClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     onCartClick: () -> Unit,
     onPaymentMethodClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
@@ -94,6 +95,7 @@ fun MainScreen(
         MainGraph(
             onProductClick,
             onSearchClick,
+            onLogoutClick,
             onCartClick,
             onPaymentMethodClick,
             onMyReviewsClick,

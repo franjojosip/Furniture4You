@@ -1,7 +1,8 @@
 package com.fjjukic.furniture4you.ui.payment
 
 import androidx.lifecycle.ViewModel
-import com.fjjukic.furniture4you.ui.mock.MockRepository
+import com.fjjukic.furniture4you.ui.common.mock.MockRepository
+import com.fjjukic.furniture4you.ui.common.model.PaymentCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

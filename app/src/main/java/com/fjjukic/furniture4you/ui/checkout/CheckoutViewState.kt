@@ -1,6 +1,6 @@
 package com.fjjukic.furniture4you.ui.checkout
 
-import com.fjjukic.furniture4you.ui.shipping.MenuItem
+import com.fjjukic.furniture4you.ui.components.MenuItem
 import java.util.UUID
 
 data class CheckoutViewState(

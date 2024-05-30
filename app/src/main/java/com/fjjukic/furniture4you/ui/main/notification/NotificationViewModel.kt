@@ -1,8 +1,9 @@
 package com.fjjukic.furniture4you.ui.main.notification
 
 import androidx.lifecycle.ViewModel
-import com.fjjukic.furniture4you.ui.components.Message
-import com.fjjukic.furniture4you.ui.mock.MockRepository
+import com.fjjukic.furniture4you.ui.common.mock.MockRepository
+import com.fjjukic.furniture4you.ui.common.model.Message
+import com.fjjukic.furniture4you.ui.common.model.NotificationModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ht.ferit.fjjukic.foodlovers.R
 import kotlinx.coroutines.flow.MutableStateFlow

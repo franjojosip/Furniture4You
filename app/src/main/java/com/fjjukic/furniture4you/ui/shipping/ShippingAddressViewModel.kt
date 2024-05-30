@@ -3,7 +3,8 @@ package com.fjjukic.furniture4you.ui.shipping
 
 import androidx.lifecycle.ViewModel
 import com.fjjukic.furniture4you.ui.checkout.ShippingInfo
-import com.fjjukic.furniture4you.ui.mock.MockRepository
+import com.fjjukic.furniture4you.ui.common.mock.MockRepository
+import com.fjjukic.furniture4you.ui.components.MenuItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

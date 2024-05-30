@@ -28,15 +28,15 @@ sealed class Screens(val route: String) {
 
     data object Cart : Screens("cart_route")
     data object Checkout : Screens("checkout_route")
-    data object SuccessOrder : Screens("success_order_route")
 
     data object MyOrder : Screens("my_order_route")
+    data object SuccessOrder : Screens("success_order_route")
 
-    data object ShippingAddressSetting : Screens("shipping_address_setting_route")
-    data object AddShippingAddress : Screens("add_shipping_address_route")
+    data object ShippingAddress : Screens("shipping_address_route")
+    data object ShippingAddressAdd : Screens("shipping_address_add_route")
 
     data object PaymentMethod : Screens("payment_method_route")
-    data object AddPaymentMethod : Screens("add_payment_method_route")
+    data object PaymentMethodAdd : Screens("payment_method_add_route")
 
     data object RatingReview : Screens("rating_review_route")
     data object MyReview : Screens("my_review_route")

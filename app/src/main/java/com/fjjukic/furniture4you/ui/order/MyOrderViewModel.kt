@@ -1,7 +1,7 @@
 package com.fjjukic.furniture4you.ui.order
 
 import androidx.lifecycle.ViewModel
-import com.fjjukic.furniture4you.ui.mock.MockRepository
+import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

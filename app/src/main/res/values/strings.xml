@@ -2,19 +2,20 @@
     <string name="app_name">Furniture4You</string>
 
     <!--    Nav routes    -->
-    <string name="nav_home">Home</string>
-    <string name="nav_favorites">Favorites</string>
-    <string name="nav_notification">Notification</string>
-    <string name="nav_profile">Profile</string>
-    <string name="nav_my_cart">My cart</string>
-    <string name="nav_checkout">Check out</string>
-    <string name="nav_rating_review">Rating &amp; Review</string>
-    <string name="nav_my_reviews">My reviews</string>
-    <string name="nav_settings">Settings</string>
-    <string name="nav_payment_method">Payment method</string>
-    <string name="nav_shipping_address">Shipping address</string>
     <string name="nav_add_shipping_address">Add shipping address</string>
+    <string name="nav_checkout">Check out</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_my_cart">My cart</string>
     <string name="nav_my_order">My order</string>
+    <string name="nav_my_reviews">My reviews</string>
+    <string name="nav_notification">Notification</string>
+    <string name="nav_payment_method">Payment method</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_rating_review">Rating &amp; Review</string>
+    <string name="nav_search">My order</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_shipping_address">Shipping address</string>
+    <string name="nav_home">Home</string>
 
     <!--    Content description labels  -->
     <string name="content_desc_action_start_icon">Action start icon</string>
@@ -22,6 +23,7 @@
     <string name="content_desc_archive">Archive Icon</string>
     <string name="content_desc_back_btn">Back Button Icon</string>
     <string name="content_desc_cart">Cart Icon</string>
+    <string name="content_desc_clear_search">Clear search</string>
     <string name="content_desc_delivery_icon">Favorite icon</string>
     <string name="content_desc_edit">Edit Icon</string>
     <string name="content_desc_enter_promo">Enter Promo Button Icon</string>
@@ -168,6 +170,7 @@
     <string name="label_register_have_account">Already have account?</string>
     <string name="label_return">Return information</string>
     <string name="label_sales">Sales</string>
+    <string name="label_search">Search Furniture</string>
     <string name="label_settings">Notification, Password, FAQ, Contact us</string>
     <string name="label_shipping_addresses">Shipping Addresses</string>
     <string name="label_successfully_added_to_cart">Successfully added to cart!</string>
