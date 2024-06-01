@@ -14,15 +14,7 @@ import com.fjjukic.furniture4you.ui.main.profile.ProfileScreen
 
 @Composable
 fun MainGraph(
-    onProductClick: (String) -> Unit,
-    onSearchClick: () -> Unit,
-    onLogoutClick: () -> Unit,
-    onCartClick: () -> Unit,
-    onPaymentMethodClick: () -> Unit,
-    onMyReviewsClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onShippingClick: () -> Unit,
-    onMyOrderClick: () -> Unit,
+    rootNavController: NavHostController,
     navHostController: NavHostController,
     paddingValues: PaddingValues
 ) {
@@ -33,29 +25,65 @@ fun MainGraph(
         modifier = Modifier.padding(paddingValues = paddingValues)
     ) {
         composable(Screens.MainScreen.Home.route) {
-            HomeScreen(onProductClick, onCartClick, onSearchClick)
+            HomeScreen(
+                onProductClick = {
+                    rootNavController.navigate(
+                        Screens.ProductDetail.getRouteWithArg(it)
+                    )
+                },
+                onCartClick = {
+                    rootNavController.navigate(Screens.Cart.route)
+                },
+                onSearchClick = {
+                    rootNavController.navigate(Screens.Search.route)
+                }
+            )
         }
         composable(Screens.MainScreen.Favorites.route) {
             FavoriteScreen(
-                onProductClick = onProductClick,
-                onSearchClick = onSearchClick,
-                onCartClick = onCartClick
+                onProductClick = {
+                    rootNavController.navigate(
+                        Screens.ProductDetail.getRouteWithArg(it)
+                    )
+                },
+                onSearchClick = {
+                    rootNavController.navigate(Screens.Search.route)
+                },
+                onCartClick = {
+                    rootNavController.navigate(Screens.Cart.route)
+                }
             )
         }
         composable(Screens.MainScreen.Notification.route) {
             NotificationScreen(
-                onSearchClick = onSearchClick
+                onSearchClick = {
+                    rootNavController.navigate(Screens.Search.route)
+                }
             )
         }
         composable(Screens.MainScreen.Profile.route) {
             ProfileScreen(
-                onSearchClick = onSearchClick,
-                onLogoutClick = onLogoutClick,
-                onPaymentMethodClick = onPaymentMethodClick,
-                onMyReviewsClick = onMyReviewsClick,
-                onSettingsClick = onSettingsClick,
-                onShippingClick = onShippingClick,
-                onMyOrderClick = onMyOrderClick,
+                onSearchClick = {
+                    rootNavController.navigate(Screens.Search.route)
+                },
+                onLogoutClick = {
+                    /* TODO */
+                },
+                onPaymentMethodClick = {
+                    rootNavController.navigate(Screens.PaymentMethod.route)
+                },
+                onMyReviewsClick = {
+                    rootNavController.navigate(Screens.MyReview.route)
+                },
+                onSettingsClick = {
+                    rootNavController.navigate(Screens.Settings.route)
+                },
+                onShippingClick = {
+                    rootNavController.navigate(Screens.ShippingAddress.route)
+                },
+                onMyOrderClick = {
+                    rootNavController.navigate(Screens.MyOrder.route)
+                },
             )
         }
     }

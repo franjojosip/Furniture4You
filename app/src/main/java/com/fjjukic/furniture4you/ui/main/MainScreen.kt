@@ -10,6 +10,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -28,82 +30,72 @@ import com.fjjukic.furniture4you.ui.navigation.Screens
 import ht.ferit.fjjukic.foodlovers.R
 
 @Composable
-fun MainScreen(
-    onProductClick: (String) -> Unit,
-    onSearchClick: () -> Unit,
-    onLogoutClick: () -> Unit,
-    onCartClick: () -> Unit,
-    onPaymentMethodClick: () -> Unit,
-    onMyReviewsClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onShippingClick: () -> Unit,
-    onMyOrderClick: () -> Unit
-) {
+fun MainScreen(rootNavController: NavHostController) {
     val navHostController: NavHostController = rememberNavController()
-    var navigationSelectedItem by rememberSaveable { mutableIntStateOf(0) }
     val backStackEntry = navHostController.currentBackStackEntryAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            Surface(shadowElevation = 8.dp) {
-                NavigationBar(
-                    containerColor = colorResource(id = R.color.color_white),
-                ) {
-                    BottomNavigationItem().bottomNavigationItems()
-                        .forEachIndexed { index, navigationItem ->
-                            val selected =
-                                navigationItem.route == backStackEntry.value?.destination?.route
-                            val icon =
-                                if (selected) navigationItem.selectedIcon else navigationItem.unselectedIcon
-                            NavigationBarItem(
-                                selected = selected,
-                                icon = {
-                                    if (!selected && navigationItem.route == Screens.MainScreen.Notification.route) {
-                                        BadgedBox(badge = { Badge() }) {
-                                            Icon(
-                                                painterResource(icon),
-                                                contentDescription = navigationItem.label
-                                            )
-                                        }
-                                    } else {
-                                        Icon(
-                                            painterResource(icon),
-                                            contentDescription = navigationItem.label
-                                        )
-                                    }
-                                },
-                                colors = NavigationBarItemDefaults.colors(
-                                    indicatorColor = colorResource(id = R.color.color_white)
-                                ),
-                                onClick = {
-                                    navigationSelectedItem = index
-                                    navHostController.navigate(navigationItem.route) {
-                                        popUpTo(navHostController.graph.findStartDestination().id) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                            )
-                        }
-                }
-            }
+            NavigationBottomBar(navHostController, backStackEntry)
         }
     ) { paddingValues ->
         MainGraph(
-            onProductClick,
-            onSearchClick,
-            onLogoutClick,
-            onCartClick,
-            onPaymentMethodClick,
-            onMyReviewsClick,
-            onSettingsClick,
-            onShippingClick,
-            onMyOrderClick,
+            rootNavController,
             navHostController,
             paddingValues
         )
+    }
+}
+
+@Composable
+fun NavigationBottomBar(
+    navHostController: NavHostController,
+    backStackEntry: State<NavBackStackEntry?>,
+) {
+    var navigationSelectedItem by rememberSaveable { mutableIntStateOf(0) }
+    Surface(shadowElevation = 8.dp) {
+        NavigationBar(
+            containerColor = colorResource(id = R.color.color_white),
+        ) {
+            BottomNavigationItem().bottomNavigationItems()
+                .forEachIndexed { index, navigationItem ->
+                    val selected =
+                        navigationItem.route == backStackEntry.value?.destination?.route
+                    val icon =
+                        if (selected) navigationItem.selectedIcon else navigationItem.unselectedIcon
+                    NavigationBarItem(
+                        selected = selected,
+                        icon = {
+                            if (!selected && navigationItem.route == Screens.MainScreen.Notification.route) {
+                                BadgedBox(badge = { Badge() }) {
+                                    Icon(
+                                        painterResource(icon),
+                                        contentDescription = navigationItem.label
+                                    )
+                                }
+                            } else {
+                                Icon(
+                                    painterResource(icon),
+                                    contentDescription = navigationItem.label
+                                )
+                            }
+                        },
+                        colors = NavigationBarItemDefaults.colors(
+                            indicatorColor = colorResource(id = R.color.color_white)
+                        ),
+                        onClick = {
+                            navigationSelectedItem = index
+                            navHostController.navigate(navigationItem.route) {
+                                popUpTo(navHostController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    )
+                }
+        }
     }
 }

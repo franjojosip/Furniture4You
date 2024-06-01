@@ -43,7 +43,6 @@ sealed class Screens(val route: String) {
 
     data object Settings : Screens("settings_route")
 
-
     data object ProductDetail : Screens("product_detail_route") {
         val productDetailArg = "product_id"
         val routeWithArgs = "${route}/{${productDetailArg}}"

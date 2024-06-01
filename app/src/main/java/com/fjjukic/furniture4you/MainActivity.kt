@@ -11,9 +11,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.fjjukic.furniture4you.ui.cart.CartScreen
 import com.fjjukic.furniture4you.ui.checkout.CheckoutScreen
 import com.fjjukic.furniture4you.ui.main.MainScreen
+import com.fjjukic.furniture4you.ui.main.profile.ProfileScreen
 import com.fjjukic.furniture4you.ui.main.setting.SettingsScreen
 import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.Screens
@@ -47,188 +49,172 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Graph.MAIN //CHANGE TO AUTH
+                        startDestination = Graph.AUTH//CHANGE TO AUTH
                     ) {
-                        composable(route = Graph.MAIN) {
-                            MainScreen(
-                                onProductClick = {
-                                    navHostController.navigate(
-                                        Screens.ProductDetail.getRouteWithArg(it)
-                                    )
-                                },
-                                onSearchClick = {
-                                    navHostController.navigate(Screens.Search.route)
-                                },
-                                onLogoutClick = {
-                                    /* TODO */
-                                },
-                                onCartClick = {
-                                    navHostController.navigate(Screens.Cart.route)
-                                },
-                                onPaymentMethodClick = {
-                                    navHostController.navigate(Screens.PaymentMethod.route)
-                                },
-                                onMyReviewsClick = {
-                                    navHostController.navigate(Screens.MyReview.route)
-                                },
-                                onSettingsClick = {
-                                    navHostController.navigate(Screens.Settings.route)
-                                },
-                                onShippingClick = {
-                                    navHostController.navigate(Screens.ShippingAddress.route)
-                                },
-                                onMyOrderClick = {
-                                    navHostController.navigate(Screens.MyOrder.route)
-                                }
-                            )
-                        }
-                        composable(
-                            route = Screens.ProductDetail.routeWithArgs,
-                            arguments = Screens.ProductDetail.arguments
-                        ) {
-                            ProductDetailScreen(
-                                viewModel = ProductDetailViewModel(),
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                },
-                                onNavigateToCartClick = {
-                                    navHostController.navigate(
-                                        Screens.Cart.route
-                                    )
-                                },
-                                onReviewClick = {
-                                    navHostController.navigate(
-                                        Screens.RatingReview.route
-                                    )
-                                }
-                            )
-                        }
-                        composable(route = Screens.Cart.route) {
-                            CartScreen(
-                                onProductClick = {
-                                    navHostController.navigate(
-                                        Screens.ProductDetail.getRouteWithArg(it)
-                                    )
-                                },
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                },
-                                onCheckoutClick = {
-                                    navHostController.navigate(
-                                        Screens.Checkout.route
-                                    )
-                                }
-                            )
-                        }
-                        composable(route = Screens.Checkout.route) {
-                            CheckoutScreen(
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                },
-                                onSubmitClick = {
-                                    navHostController.navigate(
-                                        Screens.SuccessOrder.route
-                                    )
-                                }
-                            )
-                        }
-                        composable(route = Screens.SuccessOrder.route) {
-                            SuccessOrderScreen(
-                                onTrackOrdersClick = {
-                                    /* TODO */
-                                },
-                                onBackToHomeClick = {
-                                    navHostController.navigate(
-                                        Graph.MAIN
-                                    ) {
-                                        popUpTo(Graph.MAIN) {
-                                            inclusive = true
+                        authNavigationGraph(navHostController)
+
+                        navigation(route = Graph.MAIN, startDestination = "main_screen") {
+                            composable(route = "main_screen") {
+                                MainScreen(navHostController)
+                            }
+
+                            composable(
+                                route = Screens.ProductDetail.routeWithArgs,
+                                arguments = Screens.ProductDetail.arguments
+                            ) {
+                                ProductDetailScreen(
+                                    viewModel = ProductDetailViewModel(),
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    },
+                                    onNavigateToCartClick = {
+                                        navHostController.navigate(
+                                            Screens.Cart.route
+                                        )
+                                    },
+                                    onReviewClick = {
+                                        navHostController.navigate(
+                                            Screens.RatingReview.route
+                                        )
+                                    }
+                                )
+                            }
+                            composable(route = Screens.Cart.route) {
+                                CartScreen(
+                                    onProductClick = {
+                                        navHostController.navigate(
+                                            Screens.ProductDetail.getRouteWithArg(it)
+                                        )
+                                    },
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    },
+                                    onCheckoutClick = {
+                                        navHostController.navigate(
+                                            Screens.Checkout.route
+                                        )
+                                    }
+                                )
+                            }
+                            composable(Screens.MainScreen.Profile.route) {
+                                ProfileScreen(
+                                    onSearchClick = { /*TODO*/ },
+                                    onLogoutClick = { /*TODO*/ },
+                                    onPaymentMethodClick = { /*TODO*/ },
+                                    onMyReviewsClick = { /*TODO*/ },
+                                    onSettingsClick = { /*TODO*/ },
+                                    onShippingClick = { /*TODO*/ },
+                                    onMyOrderClick = { /*TODO*/ })
+                            }
+                            composable(route = Screens.Checkout.route) {
+                                CheckoutScreen(
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    },
+                                    onSubmitClick = {
+                                        navHostController.navigate(
+                                            Screens.SuccessOrder.route
+                                        )
+                                    }
+                                )
+                            }
+                            composable(route = Screens.SuccessOrder.route) {
+                                SuccessOrderScreen(
+                                    onTrackOrdersClick = {
+                                        /* TODO */
+                                    },
+                                    onBackToHomeClick = {
+                                        navHostController.navigate(
+                                            Graph.MAIN
+                                        ) {
+                                            popUpTo(Graph.MAIN) {
+                                                inclusive = true
+                                            }
                                         }
                                     }
-                                }
-                            )
+                                )
+                            }
+                            composable(route = Screens.RatingReview.route) {
+                                RatingReviewScreen(
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    },
+                                    onSubmitClick = {
+                                        navHostController.popBackStack()
+                                    }
+                                )
+                            }
+                            composable(route = Screens.MyReview.route) {
+                                MyReviewScreen(
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    },
+                                    onSubmitClick = {
+                                        navHostController.navigate(Screens.Cart.route)
+                                    }
+                                )
+                            }
+                            composable(route = Screens.Settings.route) {
+                                SettingsScreen(
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    }
+                                )
+                            }
+                            composable(route = Screens.PaymentMethod.route) {
+                                PaymentMethodScreen(
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    },
+                                    onCardAddClick = {
+                                        navHostController.navigate(Screens.PaymentMethodAdd.route)
+                                    }
+                                )
+                            }
+                            composable(route = Screens.PaymentMethodAdd.route) {
+                                PaymentMethodAddScreen(
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    }
+                                )
+                            }
+                            composable(route = Screens.ShippingAddress.route) {
+                                ShippingAddressScreen(
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    },
+                                    onAddressAddClick = {
+                                        navHostController.navigate(Screens.ShippingAddressAdd.route)
+                                    }
+                                )
+                            }
+                            composable(route = Screens.ShippingAddressAdd.route) {
+                                AddShippingAddressScreen(
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    }
+                                )
+                            }
+                            composable(route = Screens.MyOrder.route) {
+                                MyOrderScreen(
+                                    onBackClick = {
+                                        navHostController.popBackStack()
+                                    }
+                                )
+                            }
+                            composable(route = Screens.Search.route) {
+                                SearchScreen(
+                                    onProductClick = {
+                                        navHostController.navigate(
+                                            Screens.ProductDetail.getRouteWithArg(it)
+                                        )
+                                    },
+                                    onCartClick = {
+                                        navHostController.navigate(Screens.Cart.route)
+                                    },
+                                )
+                            }
                         }
-                        composable(route = Screens.RatingReview.route) {
-                            RatingReviewScreen(
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                },
-                                onSubmitClick = {
-                                    navHostController.popBackStack()
-                                }
-                            )
-                        }
-                        composable(route = Screens.MyReview.route) {
-                            MyReviewScreen(
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                },
-                                onSubmitClick = {
-                                    navHostController.navigate(Screens.Cart.route)
-                                }
-                            )
-                        }
-                        composable(route = Screens.Settings.route) {
-                            SettingsScreen(
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                }
-                            )
-                        }
-                        composable(route = Screens.PaymentMethod.route) {
-                            PaymentMethodScreen(
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                },
-                                onCardAddClick = {
-                                    navHostController.navigate(Screens.PaymentMethodAdd.route)
-                                }
-                            )
-                        }
-                        composable(route = Screens.PaymentMethodAdd.route) {
-                            PaymentMethodAddScreen(
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                }
-                            )
-                        }
-                        composable(route = Screens.ShippingAddress.route) {
-                            ShippingAddressScreen(
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                },
-                                onAddressAddClick = {
-                                    navHostController.navigate(Screens.ShippingAddressAdd.route)
-                                }
-                            )
-                        }
-                        composable(route = Screens.ShippingAddressAdd.route) {
-                            AddShippingAddressScreen(
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                }
-                            )
-                        }
-                        composable(route = Screens.MyOrder.route) {
-                            MyOrderScreen(
-                                onBackClick = {
-                                    navHostController.popBackStack()
-                                }
-                            )
-                        }
-                        composable(route = Screens.Search.route) {
-                            SearchScreen(
-                                onProductClick = {
-                                    navHostController.navigate(
-                                        Screens.ProductDetail.getRouteWithArg(it)
-                                    )
-                                },
-                                onCartClick = {
-                                    navHostController.navigate(Screens.Cart.route)
-                                },
-                            )
-                        }
-                        authNavigationGraph(navHostController)
                     }
                 }
             }
