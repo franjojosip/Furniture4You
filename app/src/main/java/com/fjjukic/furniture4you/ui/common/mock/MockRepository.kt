@@ -13,6 +13,9 @@ import com.fjjukic.furniture4you.ui.common.model.NotificationTag
 import com.fjjukic.furniture4you.ui.common.model.Order
 import com.fjjukic.furniture4you.ui.common.model.PaymentCard
 import com.fjjukic.furniture4you.ui.common.model.Product
+import com.fjjukic.furniture4you.ui.common.model.SearchCategory
+import com.fjjukic.furniture4you.ui.common.model.SearchCategoryCollection
+import com.fjjukic.furniture4you.ui.common.model.SearchSuggestionGroup
 import com.fjjukic.furniture4you.ui.components.MenuItem
 import com.fjjukic.furniture4you.ui.home.HomeViewState
 import com.fjjukic.furniture4you.ui.main.setting.PersonalInformation
@@ -201,6 +204,92 @@ object MockRepository {
             CategoryItem(
                 title = "Lamp",
                 imageResId = R.drawable.ic_lamp
+            )
+        )
+    }
+
+    fun getSearchSuggestions(): List<SearchSuggestionGroup> {
+        return listOf(
+            SearchSuggestionGroup(
+                id = 0L,
+                name = "Recent searches",
+                suggestions = listOf(
+                    "Black Simple",
+                    "Makali Lounge"
+                )
+            ),
+            SearchSuggestionGroup(
+                id = 1L,
+                name = "Popular searches",
+                suggestions = listOf(
+                    "Minimal Stand",
+                    "Gluten Free",
+                    "Paleo",
+                    "Vegan",
+                    "Vegitarian",
+                    "Whole30"
+                )
+            )
+        )
+    }
+
+    fun getSearchCategoryCollections(): List<SearchCategoryCollection> {
+        return listOf(
+            SearchCategoryCollection(
+                id = 0L,
+                name = "Categories",
+                categories = listOf(
+                    SearchCategory(
+                        name = "Table",
+                        imageUrl = "https://assets.nickscali.com/media/wysiwyg/pages/category_imgs/Bedside-Table.jpg"
+                    ),
+                    SearchCategory(
+                        name = "Beds",
+                        imageUrl = "https://www.familyhandyman.com/wp-content/uploads/2023/09/GettyImages-1393799248.jpg?fit=700%2C467"
+                    ),
+                    SearchCategory(
+                        name = "Dining set",
+                        imageUrl = "https://assets.nickscali.com/media/wysiwyg/pages/category_imgs/Dining-Chair.jpg"
+                    ),
+                    SearchCategory(
+                        name = "Accent furniture",
+                        imageUrl = "https://lirp.cdn-website.com/30f0bf8a/dms3rep/multi/opt/Shutterstock_2092406098+%281%29-640w.jpg"
+                    ),
+                    SearchCategory(
+                        name = "Industrial furniture",
+                        imageUrl = "https://lirp.cdn-website.com/30f0bf8a/dms3rep/multi/opt/shutterstock_2045538812-640w.jpg"
+                    )
+                )
+            ),
+            SearchCategoryCollection(
+                id = 1L,
+                name = "Materials",
+                categories = listOf(
+                    SearchCategory(
+                        name = "Wood",
+                        imageUrl = "https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcQAinrw9kPCbeJ27dVKlyh0zk7INFnC_m9HkxUrt39deixLaldvGsnO7-BVaFqQLBt3"
+                    ),
+                    SearchCategory(
+                        name = "Metal",
+                        imageUrl = "https://blog.inspireq.com/wp-content/uploads/2021/09/E569-70_LS3_LS3_16-11-15.jpg"
+                    ),
+                    SearchCategory(
+                        name = "Plastic",
+                        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/b/b2/Plastic_household_items.jpg"
+                    ),
+                    SearchCategory(
+                        name = "Glass",
+                        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Fassade_Wilhelmstrasse_65%2C_Berlin-Mitte%2C_160417%2C_ako.jpg/800px-Fassade_Wilhelmstrasse_65%2C_Berlin-Mitte%2C_160417%2C_ako.jpg"
+                    ),
+                    SearchCategory(
+                        name = "Leather",
+                        imageUrl = "https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcRYlo7fDUDiot9vVLlqNeGCHlJXUe12GL_wCbnOj0ZB5BiR7kKcK8Vwd71T12IJCgip"
+                    ),
+                    SearchCategory(
+                        name = "Fabric",
+                        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/1/17/Flores_y_colores_hechos_a_mano.jpg"
+                    )
+                )
             )
         )
     }

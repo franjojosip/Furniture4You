@@ -2,46 +2,61 @@ package com.fjjukic.furniture4you.ui.search
 
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
+import com.fjjukic.furniture4you.ui.common.model.DisplayType
+import com.fjjukic.furniture4you.ui.common.model.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor() : ViewModel() {
-    enum class DisplayType {
-        Categories, Suggestions, Results, NoResults
-    }
 
     private val products = MockRepository.getProducts()
+    private var searchResults = listOf<Product>()
 
-    var searchResults = MutableStateFlow(products)
+    val query = MutableStateFlow(TextFieldValue(""))
+    val focused = MutableStateFlow(false)
+    val searching = MutableStateFlow(false)
 
-    var query = MutableStateFlow(TextFieldValue(""))
-    var focused = MutableStateFlow(false)
-    var searching = MutableStateFlow(false)
+    private val filters by lazy { MockRepository.getCategories() }
+    private val searchSuggestions by lazy { MockRepository.getSearchSuggestions() }
+    private val searchCategoryCollections by lazy { MockRepository.getSearchCategoryCollections() }
 
-    val displayType = MutableStateFlow(DisplayType.Categories)
+    private val _displayType = MutableStateFlow<DisplayType>(
+        DisplayType.Categories(categories = MockRepository.getSearchCategoryCollections())
+    )
+    val displayType: StateFlow<DisplayType> = _displayType
 
-    fun search(value: String) {
+    suspend fun search(value: String) = withContext(Dispatchers.Default) {
         searching.value = true
-        searchResults.value = products.filter { it.title.contains(value, ignoreCase = true) }
+        searchResults = products.filter { it.title.contains(value, ignoreCase = true) }
+        delay(300L) // simulate an I/O delay
         searching.value = false
+
         refreshDisplayType()
     }
 
     private fun refreshDisplayType() {
-        displayType.value = when {
-            !focused.value && query.value.text.isEmpty() -> DisplayType.Categories
-            focused.value && query.value.text.isEmpty() -> DisplayType.Suggestions
-            searchResults.value.isEmpty() -> DisplayType.NoResults
-            else -> DisplayType.Results
+        _displayType.value = when {
+            !focused.value && query.value.text.isEmpty() -> DisplayType.Categories(categories = searchCategoryCollections)
+            focused.value && query.value.text.isEmpty() -> DisplayType.Suggestions(suggestions = searchSuggestions)
+            searchResults.isEmpty() -> DisplayType.NoResults(query.value.text)
+            else -> DisplayType.Results(filters, searchResults)
         }
     }
 
     fun onQueryChange(value: TextFieldValue) {
-        query.value = value
-        refreshDisplayType()
+        viewModelScope.launch(Dispatchers.IO) {
+            query.value = value
+            search(value.text)
+        }
     }
 
     fun onSearchFocusChange(value: Boolean) {

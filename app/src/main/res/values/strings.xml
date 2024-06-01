@@ -120,6 +120,7 @@
     <string name="title_make_home">Make home</string>
     <string name="title_notification_archived">Notification archived!</string>
     <string name="title_notification_deleted">Notification deleted!</string>
+    <string name="title_no_result">No matches for “%1s”</string>
     <string name="title_order_price">$%1s</string>
     <string name="title_order_success">Success!</string>
     <string name="title_payment">Payment</string>
@@ -171,10 +172,12 @@
     <string name="label_return">Return information</string>
     <string name="label_sales">Sales</string>
     <string name="label_search">Search Furniture</string>
+    <string name="label_search_count">%1d items</string>
     <string name="label_settings">Notification, Password, FAQ, Contact us</string>
     <string name="label_shipping_addresses">Shipping Addresses</string>
     <string name="label_successfully_added_to_cart">Successfully added to cart!</string>
     <string name="label_total_amount">Total Amount:</string>
+    <string name="label_try_different_search">Try different search keywords</string>
 
     <plurals name="label_review_count">
         <item quantity="one">%1d review</item>

@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navHostController,
                         route = Graph.ROOT,
-                        startDestination = Screens.Search.route //CHANGE TO AUTH
+                        startDestination = Graph.MAIN //CHANGE TO AUTH
                     ) {
                         composable(route = Graph.MAIN) {
                             MainScreen(
@@ -217,7 +217,16 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(route = Screens.Search.route) {
-                            SearchScreen()
+                            SearchScreen(
+                                onProductClick = {
+                                    navHostController.navigate(
+                                        Screens.ProductDetail.getRouteWithArg(it)
+                                    )
+                                },
+                                onCartClick = {
+                                    navHostController.navigate(Screens.Cart.route)
+                                },
+                            )
                         }
                         authNavigationGraph(navHostController)
                     }

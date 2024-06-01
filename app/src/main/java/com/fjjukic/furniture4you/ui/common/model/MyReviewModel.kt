@@ -1,8 +1,10 @@
 package com.fjjukic.furniture4you.ui.common.model
 
 import androidx.annotation.DrawableRes
+import androidx.compose.runtime.Immutable
 import java.util.UUID
 
+@Immutable
 data class MyReviewModel(
     val id: String = UUID.randomUUID().toString(),
     val title: String,

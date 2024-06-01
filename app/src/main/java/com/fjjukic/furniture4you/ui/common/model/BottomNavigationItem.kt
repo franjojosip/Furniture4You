@@ -1,10 +1,13 @@
 package com.fjjukic.furniture4you.ui.common.model
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.res.stringResource
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import ht.ferit.fjjukic.foodlovers.R
 
+
+@Immutable
 data class BottomNavigationItem(
     val label: String = "",
     val selectedIcon: Int = R.drawable.ic_home,

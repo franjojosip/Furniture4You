@@ -1,7 +1,9 @@
 package com.fjjukic.furniture4you.ui.common.model
 
 import androidx.annotation.DrawableRes
+import androidx.compose.runtime.Immutable
 
+@Immutable
 data class Product(
     val id: String,
     val title: String,
