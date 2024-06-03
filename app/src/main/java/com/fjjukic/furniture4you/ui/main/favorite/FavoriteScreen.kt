@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,7 +18,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -65,7 +65,6 @@ fun FavoriteScreen(
     modifier: Modifier = Modifier,
     viewModel: FavoriteViewModel = hiltViewModel(),
 ) {
-    val context = LocalContext.current
     val products by viewModel.products.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -80,31 +79,6 @@ fun FavoriteScreen(
                 onEndActionClick = onCartClick,
                 modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
-        },
-        bottomBar = {
-            BottomAppBar(
-                containerColor = colorResource(id = R.color.color_transparent)
-            ) {
-                Button(
-                    shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .padding(bottom = 20.dp)
-                        .height(60.dp)
-                        .fillMaxWidth()
-                        .background(colorResource(id = R.color.color_transparent)),
-                    onClick = {
-                        showFeatureNotAvailable(context)
-                    }
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.btn_add_all_to_my_cart),
-                        style = GelatioTypography.bodyMedium,
-                        color = colorResource(id = R.color.color_white)
-                    )
-                }
-            }
         }
     ) { paddingValues ->
         FavoriteScreenContent(
@@ -127,40 +101,63 @@ fun FavoriteScreenContent(
     bottomPaddingValue: Dp,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
-        modifier = modifier
-            .background(colorResource(id = R.color.color_white)),
-        contentPadding = PaddingValues(
-            start = 20.dp,
-            end = 20.dp,
-            top = 6.dp,
-            bottom = bottomPaddingValue + 12.dp
-        )
-    ) {
-        itemsIndexed(products) { index, product ->
-            key(product.id) {
-                FavoriteItem(
-                    title = product.title,
-                    price = product.price,
-                    imageResId = product.imageResId,
-                    onProductClick = {
-                        onProductClick(product.id)
-                    },
-                    onCartClick = onCartClick,
-                    onRemoveClick = {
-                        onRemoveClick(product.id)
-                    }
-                )
-                if (index != products.size - 1) {
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = 12.dp),
-                        color = colorResource(id = R.color.color_tinted_white),
-                        thickness = 1.dp
+    val context = LocalContext.current
+    Box {
+        LazyColumn(
+            modifier = modifier
+                .background(colorResource(id = R.color.color_white)),
+            contentPadding = PaddingValues(
+                start = 20.dp,
+                end = 20.dp,
+                top = 6.dp,
+                bottom = bottomPaddingValue + 12.dp
+            )
+        ) {
+            itemsIndexed(products) { index, product ->
+                key(product.id) {
+                    FavoriteItem(
+                        title = product.title,
+                        price = product.price,
+                        imageResId = product.imageResId,
+                        onProductClick = {
+                            onProductClick(product.id)
+                        },
+                        onCartClick = onCartClick,
+                        onRemoveClick = {
+                            onRemoveClick(product.id)
+                        }
                     )
+                    if (index != products.size - 1) {
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 12.dp),
+                            color = colorResource(id = R.color.color_tinted_white),
+                            thickness = 1.dp
+                        )
+                    }
                 }
             }
-        }
 
+        }
+        Button(
+            shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 20.dp)
+                .height(60.dp)
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .background(colorResource(id = R.color.color_transparent)),
+            onClick = {
+                showFeatureNotAvailable(context)
+            }
+        ) {
+            Text(
+                text = stringResource(id = R.string.btn_add_all_to_my_cart),
+                style = GelatioTypography.bodyMedium,
+                color = colorResource(id = R.color.color_white)
+            )
+        }
     }
 }
 
