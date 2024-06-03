@@ -39,7 +39,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -47,6 +46,8 @@ import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.model.Product
 import com.fjjukic.furniture4you.ui.common.showFeatureNotAvailable
 import com.fjjukic.furniture4you.ui.components.CartItem
+import com.fjjukic.furniture4you.ui.home.BottomBarNavigation
+import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import ht.ferit.fjjukic.foodlovers.R
@@ -54,7 +55,11 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun FavoritePreview() {
-    FavoriteScreen(onProductClick = {}, onSearchClick = {}, onCartClick = {})
+    FavoriteScreen(
+        onProductClick = {},
+        onSearchClick = {},
+        onCartClick = {},
+        onNavigateToBottomBarRoute = {})
 }
 
 @Composable
@@ -62,6 +67,7 @@ fun FavoriteScreen(
     onProductClick: (String) -> Unit,
     onSearchClick: () -> Unit,
     onCartClick: () -> Unit,
+    onNavigateToBottomBarRoute: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: FavoriteViewModel = hiltViewModel(),
 ) {
@@ -79,6 +85,12 @@ fun FavoriteScreen(
                 onEndActionClick = onCartClick,
                 modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
+        },
+        bottomBar = {
+            BottomBarNavigation(
+                currentRoute = Screens.HomeSections.Favorites.route,
+                onNavigateToBottomBarRoute = onNavigateToBottomBarRoute
+            )
         }
     ) { paddingValues ->
         FavoriteScreenContent(
@@ -86,8 +98,7 @@ fun FavoriteScreen(
             onCartClick = onCartClick,
             onRemoveClick = viewModel::onRemoveClick,
             products = products,
-            bottomPaddingValue = paddingValues.calculateBottomPadding(),
-            modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
+            modifier = Modifier.padding(paddingValues)
         )
     }
 }
@@ -98,19 +109,18 @@ fun FavoriteScreenContent(
     onCartClick: () -> Unit,
     onRemoveClick: (String) -> Unit,
     products: List<Product>,
-    bottomPaddingValue: Dp,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    Box {
+    Box(modifier) {
         LazyColumn(
-            modifier = modifier
+            modifier = Modifier
                 .background(colorResource(id = R.color.color_white)),
             contentPadding = PaddingValues(
                 start = 20.dp,
                 end = 20.dp,
                 top = 6.dp,
-                bottom = bottomPaddingValue + 12.dp
+                bottom = 12.dp
             )
         ) {
             itemsIndexed(products) { index, product ->

@@ -51,15 +51,15 @@ import ht.ferit.fjjukic.foodlovers.R
 @Composable
 fun MyReviewScreenPreview() {
     MyReviewScreen(
-        onBackClick = {},
-        onSubmitClick = {}
+        onSubmitClick = {},
+        onBackClick = {}
     )
 }
 
 @Composable
 fun MyReviewScreen(
-    onBackClick: () -> Unit,
     onSubmitClick: () -> Unit,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MyReviewViewModel = hiltViewModel(),
 ) {

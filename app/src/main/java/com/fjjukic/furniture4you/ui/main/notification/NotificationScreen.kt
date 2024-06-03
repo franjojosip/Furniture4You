@@ -59,19 +59,22 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.model.NotificationModel
 import com.fjjukic.furniture4you.ui.components.Toolbar
+import com.fjjukic.furniture4you.ui.home.BottomBarNavigation
+import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
 fun NotificationScreenPreview() {
-    NotificationScreen(onSearchClick = {})
+    NotificationScreen(onSearchClick = {}, onNavigateToBottomBarRoute = {})
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NotificationScreen(
     onSearchClick: () -> Unit,
+    onNavigateToBottomBarRoute: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: NotificationViewModel = hiltViewModel(),
 ) {
@@ -95,6 +98,12 @@ fun NotificationScreen(
                 onStartActionClick = onSearchClick,
                 onEndActionClick = {},
                 modifier = Modifier.background(colorResource(id = R.color.color_white))
+            )
+        },
+        bottomBar = {
+            BottomBarNavigation(
+                currentRoute = Screens.HomeSections.Notification.route,
+                onNavigateToBottomBarRoute = onNavigateToBottomBarRoute
             )
         }
     ) { paddingValues ->

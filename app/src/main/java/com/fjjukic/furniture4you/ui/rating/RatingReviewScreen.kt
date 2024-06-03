@@ -1,6 +1,5 @@
 package com.fjjukic.furniture4you.ui.rating
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -46,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
+import com.fjjukic.furniture4you.ui.common.showFeatureNotAvailable
 import com.fjjukic.furniture4you.ui.components.Toolbar
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
@@ -55,13 +55,12 @@ import java.util.Locale
 @Preview
 @Composable
 fun RatingReviewScreenPreview() {
-    RatingReviewScreen(onBackClick = {}, onSubmitClick = {})
+    RatingReviewScreen(onBackClick = {})
 }
 
 @Composable
 fun RatingReviewScreen(
     onBackClick: () -> Unit,
-    onSubmitClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RatingReviewViewModel = hiltViewModel(),
 ) {
@@ -94,12 +93,7 @@ fun RatingReviewScreen(
                         .fillMaxWidth()
                         .background(colorResource(id = R.color.color_transparent)),
                     onClick = {
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.label_new_feature),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        onSubmitClick()
+                        showFeatureNotAvailable(context)
                     }
                 ) {
                     Text(

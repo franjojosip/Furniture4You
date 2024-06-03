@@ -14,8 +14,15 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,17 +40,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.ui.common.model.BottomNavigationItem
 import com.fjjukic.furniture4you.ui.common.model.CategoryItem
 import com.fjjukic.furniture4you.ui.common.model.Product
 import com.fjjukic.furniture4you.ui.components.CategoryFilterItem
 import com.fjjukic.furniture4you.ui.components.ProductItem
+import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(onProductClick = {}, onCartClick = {}, onSearchClick = {})
+    HomeScreen(
+        onProductClick = {},
+        onCartClick = {},
+        onSearchClick = {},
+        onNavigateToBottomBarRoute = {})
 }
 
 @Composable
@@ -51,22 +64,80 @@ fun HomeScreen(
     onProductClick: (String) -> Unit,
     onCartClick: () -> Unit,
     onSearchClick: () -> Unit,
+    onNavigateToBottomBarRoute: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeState by viewModel.homeState.collectAsStateWithLifecycle()
     val selectedCategory by viewModel.selectedCategory.collectAsStateWithLifecycle()
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.color_white))
-    ) {
-        HomeHeader(onSearchClick, onCartClick)
-        CategoryFilter(homeState.categories, selectedCategory, { index ->
-            viewModel.setSelectedCategory(index)
-        })
-        ProductList(homeState.products, onProductClick)
+    Scaffold(
+        bottomBar = {
+            BottomBarNavigation(
+                currentRoute = Screens.HomeSections.Home.route,
+                onNavigateToBottomBarRoute = onNavigateToBottomBarRoute
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .background(colorResource(id = R.color.color_white))
+        ) {
+            HomeHeader(onSearchClick, onCartClick)
+            CategoryFilter(homeState.categories, selectedCategory, { index ->
+                viewModel.setSelectedCategory(index)
+            })
+            ProductList(homeState.products, onProductClick)
+        }
+    }
+}
+
+@Composable
+fun BottomBarNavigation(
+    currentRoute: String,
+    onNavigateToBottomBarRoute: (String) -> Unit,
+    tabs: List<String> = BottomNavigationItem().getRoutes()
+) {
+    val currentSection = tabs.first { it == currentRoute }
+
+    Surface(shadowElevation = 8.dp) {
+        NavigationBar(
+            containerColor = colorResource(id = R.color.color_white),
+        ) {
+            BottomNavigationItem().bottomNavigationItems()
+                .forEach { navigationItem ->
+                    val selected =
+                        navigationItem.route == currentSection
+                    val icon =
+                        if (selected) navigationItem.selectedIcon else navigationItem.unselectedIcon
+                    NavigationBarItem(
+                        selected = selected,
+                        icon = {
+                            if (!selected && navigationItem.route == Screens.HomeSections.Notification.route) {
+                                BadgedBox(badge = { Badge() }) {
+                                    Icon(
+                                        painterResource(icon),
+                                        contentDescription = navigationItem.label
+                                    )
+                                }
+                            } else {
+                                Icon(
+                                    painterResource(icon),
+                                    contentDescription = navigationItem.label
+                                )
+                            }
+                        },
+                        colors = NavigationBarItemDefaults.colors(
+                            indicatorColor = colorResource(id = R.color.color_white)
+                        ),
+                        onClick = {
+                            onNavigateToBottomBarRoute(navigationItem.route)
+                        }
+                    )
+                }
+        }
     }
 }
 

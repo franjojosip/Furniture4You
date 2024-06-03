@@ -30,6 +30,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.components.ClickableField
 import com.fjjukic.furniture4you.ui.components.Toolbar
+import com.fjjukic.furniture4you.ui.home.BottomBarNavigation
+import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 import ht.ferit.fjjukic.foodlovers.R
 
@@ -37,24 +39,17 @@ import ht.ferit.fjjukic.foodlovers.R
 @Composable
 fun ProfileScreenPreview() {
     ProfileScreen(
-        onSearchClick = {},
         onLogoutClick = {},
-        onPaymentMethodClick = {},
-        onMyReviewsClick = {},
-        onSettingsClick = {},
-        onShippingClick = {},
-        onMyOrderClick = {})
+        onNavigateToBottomBarRoute = {},
+        onNavigateToRoute = {}
+    )
 }
 
 @Composable
 fun ProfileScreen(
-    onSearchClick: () -> Unit,
     onLogoutClick: () -> Unit,
-    onPaymentMethodClick: () -> Unit,
-    onMyReviewsClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onShippingClick: () -> Unit,
-    onMyOrderClick: () -> Unit,
+    onNavigateToBottomBarRoute: (String) -> Unit,
+    onNavigateToRoute: (String) -> Unit,
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -65,9 +60,17 @@ fun ProfileScreen(
                 title = stringResource(id = R.string.nav_profile),
                 startIconResId = R.drawable.ic_search,
                 endIconResId = R.drawable.ic_logout,
-                onStartActionClick = onSearchClick,
+                onStartActionClick = {
+                    onNavigateToRoute(Screens.Search.route)
+                },
                 onEndActionClick = onLogoutClick,
                 modifier = Modifier.background(colorResource(id = R.color.color_white))
+            )
+        },
+        bottomBar = {
+            BottomBarNavigation(
+                currentRoute = Screens.HomeSections.Profile.route,
+                onNavigateToBottomBarRoute = onNavigateToBottomBarRoute
             )
         }
     ) { paddingValues ->
@@ -122,27 +125,37 @@ fun ProfileScreen(
             ClickableField(
                 title = stringResource(id = R.string.label_my_orders),
                 subtitle = stringResource(R.string.mock_my_orders),
-                onClick = onMyOrderClick
+                onClick = {
+                    onNavigateToRoute(Screens.ProfileSections.MyOrders.route)
+                }
             )
             ClickableField(
                 title = stringResource(id = R.string.label_shipping_addresses),
                 subtitle = stringResource(R.string.mock_shipping_addresses),
-                onClick = onShippingClick
+                onClick = {
+                    onNavigateToRoute(Screens.ProfileSections.ShippingAddress.route)
+                }
             )
             ClickableField(
                 title = stringResource(id = R.string.title_payment_method),
                 subtitle = stringResource(R.string.mock_payment_method),
-                onClick = onPaymentMethodClick
+                onClick = {
+                    onNavigateToRoute(Screens.ProfileSections.PaymentMethod.route)
+                }
             )
             ClickableField(
                 title = stringResource(id = R.string.nav_my_reviews),
                 subtitle = stringResource(R.string.mock_my_reviews),
-                onClick = onMyReviewsClick
+                onClick = {
+                    onNavigateToRoute(Screens.ProfileSections.MyReviews.route)
+                }
             )
             ClickableField(
                 title = stringResource(id = R.string.nav_settings),
                 subtitle = stringResource(R.string.label_settings),
-                onClick = onSettingsClick
+                onClick = {
+                    onNavigateToRoute(Screens.ProfileSections.Settings.route)
+                }
             )
         }
     }

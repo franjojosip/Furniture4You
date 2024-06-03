@@ -31,7 +31,7 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun ShippingAddressScreenPreview() {
-    ShippingAddressScreen(onBackClick = {}, onAddressAddClick = {})
+    ShippingAddressScreen(onAddressAddClick = {}, onBackClick = {})
 }
 
 @Composable

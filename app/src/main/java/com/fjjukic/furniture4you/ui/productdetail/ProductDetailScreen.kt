@@ -59,9 +59,9 @@ fun ProductDetailScreenPreview() {
 
 @Composable
 fun ProductDetailScreen(
-    onBackClick: () -> Unit,
     onNavigateToCartClick: () -> Unit,
     onReviewClick: () -> Unit,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ProductDetailViewModel = hiltViewModel(),
 ) {

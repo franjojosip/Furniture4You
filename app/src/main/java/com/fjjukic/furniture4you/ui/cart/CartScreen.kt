@@ -75,14 +75,14 @@ import kotlinx.coroutines.launch
 @Preview
 @Composable
 fun CartPreview() {
-    CartScreen(onProductClick = {}, onBackClick = {}, onCheckoutClick = {})
+    CartScreen(onProductClick = {}, onCheckoutClick = {}, onBackClick = {})
 }
 
 @Composable
 fun CartScreen(
     onProductClick: (String) -> Unit,
-    onBackClick: () -> Unit,
     onCheckoutClick: () -> Unit,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CartViewModel = hiltViewModel()
 ) {

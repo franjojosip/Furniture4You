@@ -58,13 +58,13 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun PaymentMethodScreenPreview() {
-    PaymentMethodScreen(onBackClick = {}, onCardAddClick = {})
+    PaymentMethodScreen(onCardAddClick = {}, onBackClick = {})
 }
 
 @Composable
 fun PaymentMethodScreen(
-    onBackClick: () -> Unit,
     onCardAddClick: () -> Unit,
+    onBackClick: () -> Unit,
     viewModel: PaymentMethodViewModel = hiltViewModel(),
 ) {
     val cards by viewModel.cards.collectAsStateWithLifecycle()

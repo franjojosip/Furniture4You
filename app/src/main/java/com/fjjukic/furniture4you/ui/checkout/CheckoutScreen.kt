@@ -52,13 +52,13 @@ import ht.ferit.fjjukic.foodlovers.R
 @Preview
 @Composable
 fun CheckoutPreview() {
-    CheckoutScreen(onBackClick = {}, onSubmitClick = {})
+    CheckoutScreen(onSubmitClick = {}, onBackClick = {})
 }
 
 @Composable
 fun CheckoutScreen(
-    onBackClick: () -> Unit,
     onSubmitClick: () -> Unit,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CheckoutViewModel = hiltViewModel(),
 ) {
