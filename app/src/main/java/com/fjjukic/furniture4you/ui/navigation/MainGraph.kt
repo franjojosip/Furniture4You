@@ -137,6 +137,7 @@ fun NavGraphBuilder.homeGraph(
     composable(route = Screens.SuccessOrder.route) {
         SuccessOrderScreen(
             onTrackOrdersClick = {
+                navHostController.popBackStack(Screens.HomeSections.Home.route, inclusive = false)
                 onNavigateToBottomBarRoute(Screens.HomeSections.Profile.route)
                 navHostController.navigate(Screens.ProfileSections.MyOrders.route)
             },

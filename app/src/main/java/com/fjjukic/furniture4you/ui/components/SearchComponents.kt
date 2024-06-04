@@ -296,7 +296,6 @@ fun NoResults(
     }
 }
 
-
 @Composable
 fun SearchCategories(
     categories: List<SearchCategoryCollection>

@@ -123,6 +123,7 @@
     <string name="title_make_home">Make home</string>
     <string name="title_notification_archived">Notification archived!</string>
     <string name="title_notification_deleted">Notification deleted!</string>
+    <string name="title_no_favorites">No favorite items</string>
     <string name="title_no_result">No matches for “%1s”</string>
     <string name="title_order_price">$%1s</string>
     <string name="title_order_success">Success!</string>
@@ -150,6 +151,7 @@
     <string name="label_card_information">Card information</string>
     <string name="label_cart_discount">Discount(%1$s%%):</string>
     <string name="label_cart_price">Price:</string>
+    <string name="label_check_products">Check our products on home screen</string>
     <string name="label_choose_delivery_method">Choose delivery method</string>
     <string name="label_contact_us">Contact us</string>
     <string name="label_counter">%02d</string>

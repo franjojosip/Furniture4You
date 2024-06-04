@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,9 +39,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
@@ -50,6 +54,7 @@ import com.fjjukic.furniture4you.ui.home.BottomBarNavigation
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
+import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
@@ -112,61 +117,65 @@ fun FavoriteScreenContent(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    Box(modifier) {
-        LazyColumn(
-            modifier = Modifier
-                .background(colorResource(id = R.color.color_white)),
-            contentPadding = PaddingValues(
-                start = 20.dp,
-                end = 20.dp,
-                top = 6.dp,
-                bottom = 12.dp
-            )
-        ) {
-            itemsIndexed(products) { index, product ->
-                key(product.id) {
-                    FavoriteItem(
-                        title = product.title,
-                        price = product.price,
-                        imageResId = product.imageResId,
-                        onProductClick = {
-                            onProductClick(product.id)
-                        },
-                        onCartClick = onCartClick,
-                        onRemoveClick = {
-                            onRemoveClick(product.id)
-                        }
-                    )
-                    if (index != products.size - 1) {
-                        HorizontalDivider(
-                            modifier = Modifier.padding(vertical = 12.dp),
-                            color = colorResource(id = R.color.color_tinted_white),
-                            thickness = 1.dp
+    Box(modifier.background(colorResource(id = R.color.color_white))) {
+        if (products.isEmpty()) {
+            NoFavorites()
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentPadding = PaddingValues(
+                    start = 20.dp,
+                    end = 20.dp,
+                    top = 6.dp,
+                    bottom = 12.dp
+                )
+            ) {
+                itemsIndexed(products) { index, product ->
+                    key(product.id) {
+                        FavoriteItem(
+                            title = product.title,
+                            price = product.price,
+                            imageResId = product.imageResId,
+                            onProductClick = {
+                                onProductClick(product.id)
+                            },
+                            onCartClick = onCartClick,
+                            onRemoveClick = {
+                                onRemoveClick(product.id)
+                            }
                         )
+                        if (index != products.size - 1) {
+                            HorizontalDivider(
+                                modifier = Modifier.padding(vertical = 12.dp),
+                                color = colorResource(id = R.color.color_tinted_white),
+                                thickness = 1.dp
+                            )
+                        }
                     }
                 }
-            }
 
-        }
-        Button(
-            shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
-            modifier = Modifier
-                .padding(horizontal = 20.dp)
-                .padding(bottom = 20.dp)
-                .height(60.dp)
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .background(colorResource(id = R.color.color_transparent)),
-            onClick = {
-                showFeatureNotAvailable(context)
             }
-        ) {
-            Text(
-                text = stringResource(id = R.string.btn_add_all_to_my_cart),
-                style = GelatioTypography.bodyMedium,
-                color = colorResource(id = R.color.color_white)
-            )
+            Button(
+                shape = RoundedCornerShape(8.dp),
+                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .padding(bottom = 20.dp)
+                    .height(60.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .background(colorResource(id = R.color.color_transparent)),
+                onClick = {
+                    showFeatureNotAvailable(context)
+                }
+            ) {
+                Text(
+                    text = stringResource(id = R.string.btn_add_all_to_my_cart),
+                    style = GelatioTypography.bodyMedium,
+                    color = colorResource(id = R.color.color_white)
+                )
+            }
         }
     }
 }
@@ -306,5 +315,46 @@ fun FavoriteItem(
                 itemRadius = 12.dp
             )
         }
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun NoFavoritesPreview() {
+    NoFavorites()
+}
+
+@Composable
+fun NoFavorites(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .fillMaxSize()
+            .wrapContentSize()
+            .padding(24.dp)
+    ) {
+        Image(
+            painterResource(R.drawable.img_no_result),
+            contentDescription = null
+        )
+        Spacer(Modifier.height(24.dp))
+        Text(
+            text = stringResource(id = R.string.title_no_favorites),
+            fontSize = 16.sp,
+            fontFamily = gelatioFamily,
+            fontWeight = FontWeight.SemiBold,
+            color = colorResource(id = R.color.color_dark_gray),
+        )
+        Spacer(Modifier.height(6.dp))
+        Text(
+            text = stringResource(id = R.string.label_check_products),
+            fontSize = 16.sp,
+            fontFamily = gelatioFamily,
+            fontWeight = FontWeight.Thin,
+            color = colorResource(id = R.color.color_gray),
+        )
     }
 }
