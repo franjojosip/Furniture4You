@@ -8,16 +8,32 @@ import javax.inject.Singleton
 
 @Singleton
 class SharedPreferenceManager @Inject constructor(@ApplicationContext context: Context) {
+
+    companion object {
+        const val USER = "USER"
+        const val SHOW_PRELOGIN = "SHOW_PRELOGIN"
+    }
+
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("FurniturePrefs", Context.MODE_PRIVATE)
 
-    fun saveData(key: String, value: String) {
+    fun setUser(value: String) {
         val editor = sharedPreferences.edit()
-        editor.putString(key, value)
+        editor.putString(USER, value)
         editor.apply()
     }
 
-    fun getData(key: String, defaultValue: String): String {
-        return sharedPreferences.getString(key, defaultValue) ?: defaultValue
+    fun getUser(): String {
+        return sharedPreferences.getString(USER, "") ?: ""
+    }
+
+    fun setShowPrelogin(value: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(SHOW_PRELOGIN, value)
+        editor.apply()
+    }
+
+    fun getShowPrelogin(): Boolean {
+        return sharedPreferences.getBoolean(SHOW_PRELOGIN, true)
     }
 }

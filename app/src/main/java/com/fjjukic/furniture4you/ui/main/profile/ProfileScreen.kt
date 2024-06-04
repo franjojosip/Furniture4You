@@ -15,6 +15,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -30,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.ui.components.ClickableField
 import com.fjjukic.furniture4you.ui.components.Toolbar
+import com.fjjukic.furniture4you.ui.dialog.LogoutDialog
 import com.fjjukic.furniture4you.ui.home.BottomBarNavigation
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
@@ -53,6 +57,18 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var openLogoutDialog by remember { mutableStateOf(false) }
+
+    if (openLogoutDialog) {
+        LogoutDialog(
+            onConfirmClick = {
+                openLogoutDialog = false
+                onLogoutClick()
+            }, onDismissClick = {
+                openLogoutDialog = false
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -63,7 +79,9 @@ fun ProfileScreen(
                 onStartActionClick = {
                     onNavigateToRoute(Screens.Search.route)
                 },
-                onEndActionClick = onLogoutClick,
+                onEndActionClick = {
+                    openLogoutDialog = true
+                },
                 modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
         },

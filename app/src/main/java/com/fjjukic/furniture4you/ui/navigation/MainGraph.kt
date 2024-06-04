@@ -1,11 +1,13 @@
 package com.fjjukic.furniture4you.ui.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.fjjukic.furniture4you.ui.cart.CartScreen
 import com.fjjukic.furniture4you.ui.checkout.CheckoutScreen
+import com.fjjukic.furniture4you.ui.common.viewmodel.MainViewModel
 import com.fjjukic.furniture4you.ui.home.HomeScreen
 import com.fjjukic.furniture4you.ui.main.favorite.FavoriteScreen
 import com.fjjukic.furniture4you.ui.main.notification.NotificationScreen
@@ -72,9 +74,14 @@ fun NavGraphBuilder.homeGraph(
             )
         }
         composable(Screens.HomeSections.Profile.route) {
+            val viewModel = hiltViewModel<MainViewModel>()
             ProfileScreen(
                 onLogoutClick = {
-                    /* TODO */
+                    viewModel.logout().also {
+                        navHostController.navigate(Graph.AUTH) {
+                            popUpTo(navHostController.graph.id)
+                        }
+                    }
                 },
                 onNavigateToBottomBarRoute = onNavigateToBottomBarRoute,
                 onNavigateToRoute = navHostController::navigate
@@ -134,7 +141,7 @@ fun NavGraphBuilder.homeGraph(
                 navHostController.navigate(Screens.ProfileSections.MyOrders.route)
             },
             onBackToHomeClick = {
-                onNavigateToBottomBarRoute(Screens.HomeSections.Home.route)
+                navHostController.popBackStack(Screens.HomeSections.Home.route, inclusive = false)
             }
         )
     }

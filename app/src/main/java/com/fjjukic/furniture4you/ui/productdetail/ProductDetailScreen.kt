@@ -189,6 +189,7 @@ private fun ImageSlider(
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(currentImage)
+                .crossfade(true)
                 .fallback(R.drawable.img_white_table)
                 .placeholder(R.drawable.img_white_table)
                 .build(),

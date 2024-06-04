@@ -92,6 +92,7 @@
     <string name="btn_forgot_password">Forgot Password</string>
     <string name="btn_get_started">Get Started</string>
     <string name="btn_login">Log in</string>
+    <string name="btn_no">No</string>
     <string name="btn_open_cart">Open cart</string>
     <string name="btn_remember_your_password">Remember your password?</string>
     <string name="btn_save_address">Save address</string>
@@ -100,6 +101,7 @@
     <string name="btn_submit_order">Submit order</string>
     <string name="btn_track_orders">Track your orders</string>
     <string name="btn_write_review">Write a review</string>
+    <string name="btn_yes">Yes</string>
 
     <!--    Mock labels   -->
     <string name="mock_my_orders">Already have 10 orders</string>
@@ -117,6 +119,7 @@
     <string name="title_checkout_total">Total:</string>
     <string name="title_delivery_method">Delivery method</string>
     <string name="title_login">Hello!</string>
+    <string name="title_logout">Confirm logout</string>
     <string name="title_make_home">Make home</string>
     <string name="title_notification_archived">Notification archived!</string>
     <string name="title_notification_deleted">Notification deleted!</string>
@@ -158,6 +161,7 @@
     <string name="label_expiry_date">Expiry Date</string>
     <string name="label_faq">FAQ</string>
     <string name="label_help_center">Help Center</string>
+    <string name="label_logout">Are you sure you want to logout?</string>
     <string name="label_my_orders">My orders</string>
     <string name="label_name">Name</string>
     <string name="label_new_arrivals">New arrivals</string>
