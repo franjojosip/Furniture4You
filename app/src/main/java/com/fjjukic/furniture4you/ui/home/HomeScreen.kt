@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.model.BottomNavigationItem
 import com.fjjukic.furniture4you.ui.common.model.CategoryItem
 import com.fjjukic.furniture4you.ui.common.model.Product
@@ -47,7 +48,6 @@ import com.fjjukic.furniture4you.ui.components.CategoryFilterItem
 import com.fjjukic.furniture4you.ui.components.ProductItem
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable

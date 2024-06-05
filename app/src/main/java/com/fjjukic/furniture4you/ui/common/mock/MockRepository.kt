@@ -1,5 +1,6 @@
 package com.fjjukic.furniture4you.ui.common.mock
 
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.checkout.CheckoutViewState
 import com.fjjukic.furniture4you.ui.checkout.DeliveryOption
 import com.fjjukic.furniture4you.ui.checkout.PaymentInfo
@@ -26,7 +27,6 @@ import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewState
 import com.fjjukic.furniture4you.ui.rating.RatingReviewViewState
 import com.fjjukic.furniture4you.ui.rating.Review
-import ht.ferit.fjjukic.foodlovers.R
 import java.util.UUID
 import kotlin.random.Random
 

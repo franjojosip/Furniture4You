@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.model.CategoryItem
 import com.fjjukic.furniture4you.ui.common.model.Product
@@ -60,7 +61,6 @@ import com.fjjukic.furniture4you.ui.home.CategoryFilter
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
-import ht.ferit.fjjukic.foodlovers.R
 import kotlin.math.max
 
 @Preview(showBackground = true)

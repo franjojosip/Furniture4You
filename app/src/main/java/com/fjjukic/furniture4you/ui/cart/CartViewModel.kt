@@ -1,12 +1,12 @@
 package com.fjjukic.furniture4you.ui.cart
 
 import androidx.lifecycle.ViewModel
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.model.CartPrice
 import com.fjjukic.furniture4you.ui.common.model.CartProduct
 import com.fjjukic.furniture4you.ui.common.model.Message
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ht.ferit.fjjukic.foodlovers.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

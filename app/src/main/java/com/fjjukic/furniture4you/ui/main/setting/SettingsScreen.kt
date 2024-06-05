@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.checkout.CheckoutItemHeader
 import com.fjjukic.furniture4you.ui.common.showFeatureNotAvailable
 import com.fjjukic.furniture4you.ui.components.ClickableField
@@ -42,7 +43,6 @@ import com.fjjukic.furniture4you.ui.components.Toolbar
 import com.fjjukic.furniture4you.ui.dialog.PasswordChangeDialog
 import com.fjjukic.furniture4you.ui.dialog.PersonalInformationChangeDialog
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable

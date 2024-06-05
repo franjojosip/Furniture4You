@@ -23,10 +23,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import com.fjjukic.furniture4you.ui.theme.FieldTextColor
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Composable
 fun PasswordInputField(

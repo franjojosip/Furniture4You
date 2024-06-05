@@ -14,13 +14,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.model.DisplayType
 import com.fjjukic.furniture4you.ui.components.FurnitureSearchBar
 import com.fjjukic.furniture4you.ui.components.NoResults
 import com.fjjukic.furniture4you.ui.components.SearchCategories
 import com.fjjukic.furniture4you.ui.components.SearchResults
 import com.fjjukic.furniture4you.ui.components.SearchSuggestions
-import ht.ferit.fjjukic.foodlovers.R
 
 @Preview("default", showBackground = true)
 @Composable

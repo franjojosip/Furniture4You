@@ -27,11 +27,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.checkout.ShippingInfo
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
-import ht.ferit.fjjukic.foodlovers.R
 
 @Composable
 fun ShippingInfoDialog(

@@ -8,7 +8,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ht.ferit.fjjukic.foodlovers.R
+import com.fjjukic.furniture4you.R
 
 @Composable
 fun ErrorField(errorMessage: String?, modifier: Modifier = Modifier) {

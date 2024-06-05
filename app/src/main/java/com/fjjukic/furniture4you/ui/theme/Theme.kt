@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.core.view.WindowCompat
-import ht.ferit.fjjukic.foodlovers.R
+import com.fjjukic.furniture4you.R
 
 private val DarkColorScheme = darkColorScheme(
     primary = PrimaryDark,
