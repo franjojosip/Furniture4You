@@ -12,14 +12,14 @@ All the required information for the user can be found on Profile tab. All the i
 - Each screen (represented with MVVM - Screen + ViewModel and usually State class)
     
 ## Stack
-- Jetpack Compose [Compose](https://developer.android.com/jetpack/compose)
-- Jetpack Navigation [Navigation](https://developer.android.com/jetpack/compose/navigation)
-- Jetpack Security [Security](https://developer.android.com/jetpack/androidx/releases/security)
-- Biometrics [Biometrics](https://developer.android.com/jetpack/androidx/releases/biometric)
-- DI [Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack)
-- Coil [Coil](https://coil-kt.github.io/coil/compose/)
+- [Jetpack Compose](https://developer.android.com/jetpack/compose)
+- [Jetpack Navigation](https://developer.android.com/jetpack/compose/navigation)
+- [Jetpack Security](https://developer.android.com/jetpack/androidx/releases/security)
+- [Biometrics](https://developer.android.com/jetpack/androidx/releases/biometric)
+- [Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack)
+- [Coil](https://coil-kt.github.io/coil/compose/)
+- [Material](https://m3.material.io/)
 - MVVM architecture
-- Material3 [Material](https://m3.material.io/)
 - State and StateFlow
 - Edge To Edge Configuration
 
@@ -62,6 +62,48 @@ All the required information for the user can be found on Profile tab. All the i
 - [X] Checkout
 - [X] Success order
 
+## App Design
+### Prelogin and Auth screens
+<p align="left">
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/704b8043-d161-4cb5-86dd-91c4ebea276f" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/baa77dd5-29aa-4bdc-8385-c85a296d3981" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/ae52ba51-c3c9-4a0c-98db-9230be91603d" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/8c2edb72-a239-4bd9-9c47-af6ec4a6a6ca" width="15%"/>
+</p>
+
+### Home screen with bottom bar
+<p align="left">
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/4a33b83a-b90e-4b65-b686-2f4bd9e97c36" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/03d52826-c3ca-48ad-b8f5-987d7ef0383e" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/3fac7058-636f-4c88-bab7-b5e6cf2d9015" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/56cdbfc6-7f49-43fb-9480-4b2af5334051" width="15%"/>
+</p>
+
+### Search products
+<p align="left">
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/48ca3372-a11e-4553-9f12-e9d852473154" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/64efb0c3-307a-46a3-b4d4-5a8ca738b092" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/87c36e96-a0e9-4916-8bcd-e7571118c600" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/12d5312b-ea28-4aa5-aaba-6685cc81bdf6" width="15%"/>
+</p>
+
+### Checkout process
+<p align="left">
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/3c3dbc39-3447-445c-9bdb-5ce334910401" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/8aef1aa9-f849-4a38-9be4-78cae9a19834" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/bcc3cd57-c27f-4de0-ba2b-2de8828bb13c" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/6818bde6-0b9b-477a-b731-380477d22003" width="15%"/>
+</p>
+
+### Profile menu
+<p align="left">
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/450c54d6-e988-45c4-b92a-908c7a8f3386" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/8833f7ae-9958-4554-a27b-959635d1c551" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/92cff6cc-da13-4789-8410-5f2425516f03" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/52c2176f-a328-4d21-ad20-874b786055b7" width="15%"/>
+<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/f59228e4-4061-40bc-989f-c9fefe72d230" width="15%"/>
+</p>
+
 ## Getting started
 
 1. Download this repository extract and open the template folder on Android Studio
@@ -75,17 +117,7 @@ All the required information for the user can be found on Profile tab. All the i
 10. Run `./gradlew dependencyUpdates` and check for dependencies
 11. Ready to Use
 
-And you're app is ready to test.
-
-## App Design (WORK IN PROGRESS)
-<p align="left">
-
-<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/0f2973f9-f809-47e6-a32b-0ba344c5534e" width="15%"/>
-<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/d3816fa8-1dc9-4813-a719-a084d64f1420" width="15%"/>
-<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/aa4d128f-7424-400a-a10d-ac0a7934807f" width="15%"/>
-<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/9bd22682-a422-48ce-9bc9-dc005bd32129" width="15%"/>
-<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/946ae794-9568-4601-bbaa-b6179f1395d9" width="15%"/>
-</p>
+And you're app is ready to use.
 
 ## Notes
 - Registration is currently not required, just use LOGIN button without entering any information
