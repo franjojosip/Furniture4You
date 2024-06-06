@@ -24,8 +24,8 @@ fun NavGraphBuilder.authNavigationGraph(
                     navHostController.navigate(Screens.AuthScreen.ForgotPassword.route)
                 }, onRegisterClick = {
                     navHostController.navigate(Screens.AuthScreen.Register.route)
-                }, onLoginClick = {
-                    viewModel.login().also {
+                }, onLoginClick = { email, password ->
+                    viewModel.login(email, password).also {
                         navHostController.navigate(Graph.HOME) {
                             popUpTo(Screens.AuthScreen.Login.route) {
                                 inclusive = true

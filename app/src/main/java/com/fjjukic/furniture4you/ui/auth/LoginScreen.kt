@@ -39,14 +39,14 @@ import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(onForgotPasswordClick = {}, onRegisterClick = {}, onLoginClick = {})
+    LoginScreen(onForgotPasswordClick = {}, onRegisterClick = {}, onLoginClick = { _, _ -> })
 }
 
 @Composable
 fun LoginScreen(
     onForgotPasswordClick: () -> Unit,
     onRegisterClick: () -> Unit,
-    onLoginClick: () -> Unit
+    onLoginClick: (String, String) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -68,7 +68,7 @@ fun LoginScreen(
 fun LoginForm(
     onForgotPasswordClick: () -> Unit,
     onRegisterClick: () -> Unit,
-    onLoginClick: () -> Unit,
+    onLoginClick: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var password by remember { mutableStateOf("") }
@@ -120,7 +120,9 @@ fun LoginForm(
                 .padding(top = 40.dp)
                 .width(260.dp)
                 .align(Alignment.CenterHorizontally),
-            onClick = onLoginClick
+            onClick = {
+                onLoginClick(email, password)
+            }
         ) {
             Text(
                 text = stringResource(R.string.btn_login),
