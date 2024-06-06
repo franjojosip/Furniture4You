@@ -95,7 +95,7 @@ All the required information for the user can be found on Profile tab. All the i
 <img src="https://github.com/franjojosip/Furniture4You/assets/52075105/6818bde6-0b9b-477a-b731-380477d22003" width="20%"/>
 </p>
 
-### Profile menu
+### Profile and Settings
 <p align="left">
 <img src="https://github.com/franjojosip/Furniture4You/assets/52075105/450c54d6-e988-45c4-b92a-908c7a8f3386" width="20%"/>
 <img src="https://github.com/franjojosip/Furniture4You/assets/52075105/8833f7ae-9958-4554-a27b-959635d1c551" width="20%"/>
