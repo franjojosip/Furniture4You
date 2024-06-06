@@ -51,7 +51,12 @@ fun EmailInputField(
                 onValueChange(it)
                 isError = !ValidationUtils.isEmailValid(value)
             },
-            placeholder = { Text(stringResource(R.string.field_email)) },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.field_email),
+                    color = colorResource(id = R.color.color_placeholder)
+                )
+            },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
