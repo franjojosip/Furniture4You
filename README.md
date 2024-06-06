@@ -34,17 +34,17 @@ All the required information for the user can be found on Profile tab. All the i
     - [ ] App lock (PIN)
     - [ ] App lock (biometrics)
     - [ ] Data encryption
-- [ ] Home screen:
+- [X] Home screen:
     - [X] Home
     - [X] Favorites
     - [X] Notifications
     - [X] Profile
-- [ ] Profile
+- [X] Profile
     - [X] My orders
     - [X] Shipping Addresses
     - [X] Payment Method
     - [X] My reviews
-    - [ ] Settings
+    - [X] Settings
 - [X] My orders
     - [X] Tabs
 - [X] Shipping Addresses
@@ -78,6 +78,14 @@ All the required information for the user can be found on Profile tab. All the i
 And you're app is ready to test.
 
 ## App Design (WORK IN PROGRESS)
+<p align="left">
+
+<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/0f2973f9-f809-47e6-a32b-0ba344c5534e" width="15%"/>
+<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/d3816fa8-1dc9-4813-a719-a084d64f1420" width="15%"/>
+<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/aa4d128f-7424-400a-a10d-ac0a7934807f" width="15%"/>
+<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/9bd22682-a422-48ce-9bc9-dc005bd32129" width="15%"/>
+<img src="https://github.com/alexandr7035/Banking-App-Mock-Compose/assets/22574399/946ae794-9568-4601-bbaa-b6179f1395d9" width="15%"/>
+</p>
 
 ## Notes
 - Registration is currently not required, just use LOGIN button without entering any information
