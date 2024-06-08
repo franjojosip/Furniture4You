@@ -21,19 +21,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.CombinedClickableText
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
-import com.fjjukic.furniture4you.ui.common.showFeatureNotAvailable
+import com.fjjukic.furniture4you.ui.common.viewmodel.MainViewModel
 import com.fjjukic.furniture4you.ui.components.Header
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 
@@ -62,9 +62,9 @@ fun RegisterScreen(
 @Composable
 fun RegisterForm(
     onLoginClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -118,7 +118,9 @@ fun RegisterForm(
         Button(
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
-            onClick = { showFeatureNotAvailable(context) },
+            onClick = {
+                viewModel.register(name, email, password, confirmPassword)
+            },
             modifier = modifier
                 .padding(top = 40.dp)
                 .width(260.dp)
