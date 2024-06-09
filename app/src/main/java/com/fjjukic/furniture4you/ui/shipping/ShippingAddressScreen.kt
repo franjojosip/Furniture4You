@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +42,9 @@ fun ShippingAddressScreen(
     viewModel: ShippingAddressViewModel = hiltViewModel()
 ) {
 
-    val shippingAddresses by viewModel.shippingAddresses.collectAsStateWithLifecycle()
+    val shippingAddresses by viewModel.shippingAddresses.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
 
     Scaffold(
         topBar = {

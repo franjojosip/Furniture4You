@@ -56,7 +56,9 @@ fun ProfileScreen(
     onNavigateToRoute: (String) -> Unit,
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    )
     var openLogoutDialog by remember { mutableStateOf(false) }
 
     if (openLogoutDialog) {

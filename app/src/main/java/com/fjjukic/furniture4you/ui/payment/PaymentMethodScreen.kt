@@ -38,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -67,7 +68,9 @@ fun PaymentMethodScreen(
     onBackClick: () -> Unit,
     viewModel: PaymentMethodViewModel = hiltViewModel(),
 ) {
-    val cards by viewModel.cards.collectAsStateWithLifecycle()
+    val cards by viewModel.cards.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
 
     Scaffold(
         topBar = {

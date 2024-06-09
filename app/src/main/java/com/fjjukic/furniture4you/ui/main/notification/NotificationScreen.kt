@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -79,7 +80,9 @@ fun NotificationScreen(
     viewModel: NotificationViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    val notifications by viewModel.notifications.collectAsStateWithLifecycle()
+    val notifications by viewModel.notifications.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
     val showMessage by viewModel.showMessage.collectAsState()
 
     LaunchedEffect(showMessage) {

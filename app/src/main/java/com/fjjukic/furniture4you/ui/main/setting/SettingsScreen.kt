@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -54,7 +55,9 @@ fun SettingsScreenPreview() {
 fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
     val context = LocalContext.current
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
     var openPersonalInformationDialog by remember { mutableStateOf(false) }
     var passwordDialog by remember { mutableStateOf(false) }
 

@@ -3,9 +3,9 @@ package com.fjjukic.furniture4you
 import android.app.Application
 import androidx.security.crypto.EncryptedSharedPreferences
 import com.google.crypto.tink.Aead
+import com.google.crypto.tink.KeyTemplates
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.aead.AeadConfig
-import com.google.crypto.tink.aead.AeadKeyTemplates
 import com.google.crypto.tink.integration.android.AndroidKeysetManager
 import dagger.hilt.android.HiltAndroidApp
 
@@ -34,7 +34,7 @@ class FurnitureApplication : Application() {
                 keysetName,
                 prefFileName
             )
-            .withKeyTemplate(AeadKeyTemplates.AES256_GCM)
+            .withKeyTemplate(KeyTemplates.get("AES256_GCM"))
             .withMasterKeyUri(masterKeyUri)
             .build()
             .keysetHandle

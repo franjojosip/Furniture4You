@@ -25,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -56,10 +57,16 @@ fun AddShippingAddressScreen(
     viewModel: ShippingAddressViewModel = hiltViewModel()
 ) {
 
-    val countries by viewModel.countries.collectAsStateWithLifecycle()
-    val availableCities by viewModel.cities.collectAsStateWithLifecycle()
+    val countries by viewModel.countries.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+    val availableCities by viewModel.cities.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
 
-    val newAddress by viewModel.newShippingAddress.collectAsStateWithLifecycle()
+    val newAddress by viewModel.newShippingAddress.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
 
     Scaffold(
         topBar = {

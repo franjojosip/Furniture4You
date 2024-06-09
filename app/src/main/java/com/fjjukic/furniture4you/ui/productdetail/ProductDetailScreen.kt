@@ -35,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -65,7 +66,9 @@ fun ProductDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: ProductDetailViewModel = hiltViewModel(),
 ) {
-    val productState by viewModel.productState.collectAsStateWithLifecycle()
+    val productState by viewModel.productState.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
 
     Scaffold(
         modifier,

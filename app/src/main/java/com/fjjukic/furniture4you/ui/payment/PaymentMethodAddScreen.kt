@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -53,7 +54,9 @@ fun PaymentMethodAddScreen(
     viewModel: PaymentMethodViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val mockCard by viewModel.mockCard.collectAsStateWithLifecycle()
+    val mockCard by viewModel.mockCard.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
 
     var cardHolder by remember { mutableStateOf("") }
     var cardNumber by remember { mutableStateOf("") }

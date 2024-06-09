@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -76,7 +77,9 @@ fun FavoriteScreen(
     modifier: Modifier = Modifier,
     viewModel: FavoriteViewModel = hiltViewModel(),
 ) {
-    val products by viewModel.products.collectAsStateWithLifecycle()
+    val products by viewModel.products.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
 
     Scaffold(
         modifier,

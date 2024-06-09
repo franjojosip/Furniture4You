@@ -49,6 +49,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -90,8 +91,12 @@ fun CartScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
-    val products by viewModel.products.collectAsStateWithLifecycle()
-    val price by viewModel.price.collectAsStateWithLifecycle()
+    val products by viewModel.products.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+    val price by viewModel.price.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
     val showMessage by viewModel.showMessage.collectAsState()
 
     LaunchedEffect(showMessage) {

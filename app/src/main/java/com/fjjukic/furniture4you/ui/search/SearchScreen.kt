@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,10 +35,18 @@ fun SearchScreen(
     onCartClick: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val query by viewModel.query.collectAsStateWithLifecycle()
-    val focused by viewModel.focused.collectAsStateWithLifecycle()
-    val searching by viewModel.searching.collectAsStateWithLifecycle()
-    val displayType by viewModel.displayType.collectAsStateWithLifecycle()
+    val query by viewModel.query.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+    val focused by viewModel.focused.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+    val searching by viewModel.searching.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+    val displayType by viewModel.displayType.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
 
     Scaffold { paddingValues ->
         Column(

@@ -27,14 +27,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             val furnitureNavController = rememberFurnitureNavController()
 
-            val viewmodel = hiltViewModel<MainViewModel>()
-            val startDestination = viewmodel.getStartDestination()
-
             Furniture4YouTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
+                    val viewModel = hiltViewModel<MainViewModel>()
+                    val startDestination = viewModel.getStartDestination()
+
                     NavHost(
                         navController = furnitureNavController.navController,
                         route = Graph.ROOT,
@@ -43,12 +44,10 @@ class MainActivity : ComponentActivity() {
                         composable(Screens.Prelogin.route) {
                             PreloginScreen(
                                 onContinueClick = {
-                                    viewmodel.onPreloginShown().also {
-                                        furnitureNavController.navController.navigate(Graph.AUTH) {
-                                            popUpTo(Screens.Prelogin.route) {
-                                                inclusive = true
-                                                saveState = true
-                                            }
+                                    furnitureNavController.navController.navigate(Graph.AUTH) {
+                                        popUpTo(Screens.Prelogin.route) {
+                                            inclusive = true
+                                            saveState = true
                                         }
                                     }
                                 }
