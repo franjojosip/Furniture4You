@@ -50,7 +50,7 @@ fun EmailInputField(
             value = value,
             onValueChange = {
                 onValueChange(it)
-                isError = !ValidationUtils.isEmailValid(value)
+                isError = !ValidationUtils.isEmailValid(it)
             },
             placeholder = {
                 Text(

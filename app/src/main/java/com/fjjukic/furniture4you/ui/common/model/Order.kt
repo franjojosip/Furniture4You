@@ -1,7 +1,7 @@
 package com.fjjukic.furniture4you.ui.common.model
 
 import androidx.compose.runtime.Immutable
-import com.fjjukic.furniture4you.ui.order.MyOrderViewModel
+import com.fjjukic.furniture4you.ui.order.OrderStatus
 import java.util.UUID
 
 @Immutable
@@ -11,5 +11,5 @@ data class Order(
     val date: String,
     val quantity: Int,
     val amount: Double,
-    val status: MyOrderViewModel.OrderStatus
+    val status: OrderStatus
 )

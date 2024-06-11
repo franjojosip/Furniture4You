@@ -7,6 +7,6 @@ object ValidationUtils {
     }
 
     fun isPasswordValid(value: String): Boolean {
-        return value.isNotBlank() && value.length > 4 && value.length < 12
+        return value.isNotBlank() && value.length > 5 && value.length < 12
     }
 }

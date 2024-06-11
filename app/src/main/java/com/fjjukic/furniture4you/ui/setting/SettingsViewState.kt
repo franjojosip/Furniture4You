@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.main.setting
+package com.fjjukic.furniture4you.ui.setting
 
 data class SettingsViewState(
     val password: String,

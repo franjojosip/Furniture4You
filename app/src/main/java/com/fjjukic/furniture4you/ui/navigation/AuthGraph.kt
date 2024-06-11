@@ -4,9 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.fjjukic.furniture4you.ui.auth.ForgotPasswordScreen
-import com.fjjukic.furniture4you.ui.auth.LoginScreen
-import com.fjjukic.furniture4you.ui.auth.RegisterScreen
+import com.fjjukic.furniture4you.ui.auth.forgot_password.ForgotPasswordScreen
+import com.fjjukic.furniture4you.ui.auth.login.LoginScreen
+import com.fjjukic.furniture4you.ui.auth.register.RegisterScreen
 
 fun NavGraphBuilder.authNavigationGraph(
     navHostController: NavHostController
@@ -26,7 +26,6 @@ fun NavGraphBuilder.authNavigationGraph(
                     navHostController.navigate(Graph.HOME) {
                         popUpTo(Screens.AuthScreen.Login.route) {
                             inclusive = true
-                            saveState = true
                         }
                     }
                 }
@@ -37,13 +36,8 @@ fun NavGraphBuilder.authNavigationGraph(
                 onLoginClick = {
                     navHostController.popBackStack(Screens.AuthScreen.Login.route, false)
                 },
-                onAuthenticated = {
-                    navHostController.navigate(Graph.HOME) {
-                        popUpTo(Screens.AuthScreen.Register.route) {
-                            inclusive = true
-                            saveState = true
-                        }
-                    }
+                onRegister = {
+                    navHostController.popBackStack(Screens.AuthScreen.Login.route, false)
                 }
             )
         }

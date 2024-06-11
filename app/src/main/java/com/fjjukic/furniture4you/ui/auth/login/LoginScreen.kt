@@ -1,7 +1,8 @@
-package com.fjjukic.furniture4you.ui.auth
+package com.fjjukic.furniture4you.ui.auth.login
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -35,15 +36,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
+import com.fjjukic.furniture4you.ui.components.FullscreenProgressBar
 import com.fjjukic.furniture4you.ui.components.Header
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-import kotlinx.coroutines.flow.Flow
 
 @Preview
 @Composable
@@ -51,22 +49,8 @@ fun LoginScreenPreview() {
     LoginScreen(
         onForgotPasswordClick = {},
         onRegisterClick = {},
-        onAuthenticated = {})
-}
-
-@Composable
-fun <T : Any> SingleEventEffect(
-    sideEffectFlow: Flow<T>,
-    lifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
-    collector: (T) -> Unit
-) {
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    LaunchedEffect(sideEffectFlow) {
-        lifecycleOwner.repeatOnLifecycle(lifeCycleState) {
-            sideEffectFlow.collect(collector)
-        }
-    }
+        onAuthenticated = {}
+    )
 }
 
 @Composable
@@ -76,46 +60,40 @@ fun LoginScreen(
     onAuthenticated: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
-    val scrollState = rememberScrollState()
     val context = LocalContext.current
+    val state = viewModel.state.collectAsState().value
 
-    val state = viewModel.state.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    ).value
-
-    LaunchedEffect(key1 = state.errorMessage) {
-        state.errorMessage?.let {
-            Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show()
+    LaunchedEffect(state.messageResId) {
+        state.messageResId?.let { resId ->
+            Toast.makeText(context, context.getString(resId), Toast.LENGTH_SHORT).show()
         }
     }
-    LaunchedEffect(key1 = state.isAuthenticated) {
+    LaunchedEffect(state.isAuthenticated) {
         if (state.isAuthenticated) {
             onAuthenticated()
         }
     }
-
-    when {
-//        state.isLoading -> {
-//            FullscreenProgressBar()
-//        }
-
-        else -> {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(colorResource(id = R.color.color_white))
-                    .verticalScroll(scrollState)
-            ) {
-                Header(
-                    title = stringResource(R.string.title_login),
-                    subtitle = stringResource(R.string.subtitle_login)
-                )
-                LoginForm(
-                    onForgotPasswordClick, onRegisterClick, onLoginClick = { email, password ->
-                        viewModel.login(email, password)
-                    }
-                )
-            }
+    Box {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colorResource(id = R.color.color_white))
+                .verticalScroll(rememberScrollState())
+        ) {
+            Header(
+                title = stringResource(R.string.title_login),
+                subtitle = stringResource(R.string.subtitle_login)
+            )
+            LoginForm(
+                onForgotPasswordClick = onForgotPasswordClick,
+                onRegisterClick = onRegisterClick,
+                onLoginClick = { email, password ->
+                    viewModel.login(email, password)
+                }
+            )
+        }
+        if (state.isLoading) {
+            FullscreenProgressBar()
         }
     }
 }

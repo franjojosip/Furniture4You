@@ -8,6 +8,7 @@ import com.fjjukic.furniture4you.ui.checkout.PriceInfo
 import com.fjjukic.furniture4you.ui.checkout.ShippingInfo
 import com.fjjukic.furniture4you.ui.common.model.CartProduct
 import com.fjjukic.furniture4you.ui.common.model.CategoryItem
+import com.fjjukic.furniture4you.ui.common.model.DisplayType
 import com.fjjukic.furniture4you.ui.common.model.MyReviewModel
 import com.fjjukic.furniture4you.ui.common.model.NotificationModel
 import com.fjjukic.furniture4you.ui.common.model.NotificationTag
@@ -18,25 +19,17 @@ import com.fjjukic.furniture4you.ui.common.model.SearchCategory
 import com.fjjukic.furniture4you.ui.common.model.SearchCategoryCollection
 import com.fjjukic.furniture4you.ui.common.model.SearchSuggestionGroup
 import com.fjjukic.furniture4you.ui.components.MenuItem
-import com.fjjukic.furniture4you.ui.home.HomeViewState
-import com.fjjukic.furniture4you.ui.main.setting.PersonalInformation
-import com.fjjukic.furniture4you.ui.main.setting.SettingsViewState
-import com.fjjukic.furniture4you.ui.order.MyOrderViewModel
+import com.fjjukic.furniture4you.ui.order.OrderStatus
 import com.fjjukic.furniture4you.ui.productdetail.ProductColorOption
 import com.fjjukic.furniture4you.ui.productdetail.ProductDetail
-import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewState
-import com.fjjukic.furniture4you.ui.rating.RatingReviewViewState
 import com.fjjukic.furniture4you.ui.rating.Review
+import com.fjjukic.furniture4you.ui.search.SearchScreenState
+import com.fjjukic.furniture4you.ui.setting.PersonalInformation
+import com.fjjukic.furniture4you.ui.setting.SettingsViewState
 import java.util.UUID
 import kotlin.random.Random
 
 object MockRepository {
-    fun getHomeState(): HomeViewState {
-        return HomeViewState(
-            getCategories(),
-            getProducts()
-        )
-    }
 
     fun getCheckoutViewState(): CheckoutViewState {
         val deliveryOptions = getDeliveryOptions()
@@ -149,10 +142,6 @@ object MockRepository {
         )
     }
 
-    fun getProductDetailState(): ProductDetailViewState {
-        return ProductDetailViewState(getProductDetail())
-    }
-
     fun getProductDetail(): ProductDetail {
         return ProductDetail(
             title = "Minimal Stand",
@@ -205,6 +194,16 @@ object MockRepository {
                 title = "Lamp",
                 imageResId = R.drawable.ic_lamp
             )
+        )
+    }
+
+    fun getSearchScreenState(): SearchScreenState {
+        return SearchScreenState(
+            products = getProducts(),
+            filters = getCategories(),
+            searchSuggestions = getSearchSuggestions(),
+            searchCategoryCollections = getSearchCategoryCollections(),
+            displayType = DisplayType.Categories(categories = getSearchCategoryCollections())
         )
     }
 
@@ -417,13 +416,6 @@ object MockRepository {
         )
     }
 
-    fun getRatingReviewViewState(): RatingReviewViewState {
-        return RatingReviewViewState(
-            getProductDetail(),
-            getReviews()
-        )
-    }
-
     fun getNotifications(): List<NotificationModel> {
         return listOf(
             NotificationModel(
@@ -618,7 +610,7 @@ object MockRepository {
                 date = "20/03/2020",
                 quantity = 3,
                 amount = 150.00,
-                status = MyOrderViewModel.OrderStatus.Delivered
+                status = OrderStatus.Delivered
             )
         }
             .plus(
@@ -628,7 +620,7 @@ object MockRepository {
                         date = "20/03/2020",
                         quantity = 3,
                         amount = 150.00,
-                        status = MyOrderViewModel.OrderStatus.Canceled
+                        status = OrderStatus.Canceled
                     )
                 })
             .plus(
@@ -638,7 +630,7 @@ object MockRepository {
                         date = "20/03/2020",
                         quantity = 3,
                         amount = 150.00,
-                        status = MyOrderViewModel.OrderStatus.Processing
+                        status = OrderStatus.Processing
                     )
                 }
             )

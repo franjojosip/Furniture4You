@@ -31,7 +31,7 @@ import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
-import com.fjjukic.furniture4you.ui.main.setting.PersonalInformation
+import com.fjjukic.furniture4you.ui.setting.PersonalInformation
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 
 @Composable

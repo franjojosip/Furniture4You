@@ -1,6 +1,8 @@
-package com.fjjukic.furniture4you.ui.auth
+package com.fjjukic.furniture4you.ui.auth.register
 
+import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,13 +19,14 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,51 +36,60 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.CombinedClickableText
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
-import com.fjjukic.furniture4you.ui.common.viewmodel.MainViewModel
+import com.fjjukic.furniture4you.ui.components.FullscreenProgressBar
 import com.fjjukic.furniture4you.ui.components.Header
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 
 @Preview
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen(onLoginClick = {}, onAuthenticated = {})
+    RegisterScreen(onLoginClick = {}, onRegister = {})
 }
 
 @Composable
 fun RegisterScreen(
     onLoginClick: () -> Unit,
-    onAuthenticated: () -> Unit,
+    onRegister: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: RegisterViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val state = viewModel.state.collectAsState().value
 
-    val isAuthenticated by viewModel.isAuthenticated.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-    LaunchedEffect(key1 = isAuthenticated) {
-        if (isAuthenticated == true) {
-            onAuthenticated()
+    LaunchedEffect(state.messageResId) {
+        state.messageResId?.let { resId ->
+            Toast.makeText(context, context.getString(resId), Toast.LENGTH_SHORT).show()
         }
     }
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.color_white))
-            .verticalScroll(rememberScrollState())
-    ) {
-        Header(subtitle = stringResource(R.string.title_register))
-        RegisterForm(
-            onLoginClick,
-            onRegisterClick = { name, email, password, confirmPassword ->
-                viewModel.register(name, email, password, confirmPassword)
-            }
-        )
+    LaunchedEffect(key1 = state.isRegistered) {
+        if (state.isRegistered) {
+            onRegister()
+        }
+    }
+
+    Box {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(colorResource(id = R.color.color_white))
+                .verticalScroll(rememberScrollState())
+        ) {
+            Header(subtitle = stringResource(R.string.title_register))
+            RegisterForm(
+                onLoginClick = onLoginClick,
+                onRegisterClick = { name, email, password, confirmPassword ->
+                    viewModel.register(name, email, password, confirmPassword)
+                }
+            )
+        }
+        if (state.isLoading) {
+            FullscreenProgressBar()
+        }
     }
 }
 

@@ -10,5 +10,4 @@ val PrimaryDark = Color(0xFF242424)
 val SecondaryDark = Color(0xFFE0E0E0)
 val TertiaryDark = Color(0xFFFFFFFF)
 
-val ErrorColor = Color(0xD0B92828)
 val FieldTextColor = Color(0xFF909090)

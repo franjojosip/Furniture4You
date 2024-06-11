@@ -4,17 +4,17 @@ import androidx.lifecycle.ViewModel
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
 class CheckoutViewModel @Inject constructor() : ViewModel() {
-    private val _uiState = MutableStateFlow(MockRepository.getCheckoutViewState())
-    val uiState: StateFlow<CheckoutViewState> = _uiState
+    private val _state = MutableStateFlow(MockRepository.getCheckoutViewState())
+    val state = _state.asStateFlow()
 
     fun onDeliveryOptionSelect(optionId: String) {
-        _uiState.update {
+        _state.update {
             val selectedDelivery =
                 it.deliveryOptions.first { deliveryOption -> deliveryOption.id == optionId }
             it.copy(
@@ -28,7 +28,7 @@ class CheckoutViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onPaymentInfoChange(paymentInfo: PaymentInfo) {
-        _uiState.update {
+        _state.update {
             it.copy(
                 paymentInfo = paymentInfo
             )
@@ -36,7 +36,7 @@ class CheckoutViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onShippingInfoChange(shippingInfo: ShippingInfo) {
-        _uiState.update {
+        _state.update {
             it.copy(
                 shippingInfo = shippingInfo
             )

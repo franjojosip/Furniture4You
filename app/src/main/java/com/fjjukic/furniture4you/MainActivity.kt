@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.fjjukic.furniture4you.ui.common.prelogin.PreloginScreen
 import com.fjjukic.furniture4you.ui.common.viewmodel.MainViewModel
-import com.fjjukic.furniture4you.ui.main.PreloginScreen
 import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
@@ -47,7 +47,6 @@ class MainActivity : ComponentActivity() {
                                     furnitureNavController.navController.navigate(Graph.AUTH) {
                                         popUpTo(Screens.Prelogin.route) {
                                             inclusive = true
-                                            saveState = true
                                         }
                                     }
                                 }

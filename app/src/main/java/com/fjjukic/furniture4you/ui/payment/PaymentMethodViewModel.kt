@@ -5,26 +5,35 @@ import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.model.PaymentCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
+
+data class PaymentMethodScreenState(
+    val cards: List<PaymentCard>,
+    val mockCard: PaymentCard
+)
 
 @HiltViewModel
 class PaymentMethodViewModel @Inject constructor() : ViewModel() {
 
-    private val _cards = MutableStateFlow(MockRepository.getPaymentCards())
-    val cards: StateFlow<List<PaymentCard>> = _cards
-
-    private val _mockCard = MutableStateFlow(MockRepository.getMockCard())
-    val mockCard: StateFlow<PaymentCard> = _mockCard
+    private val _state = MutableStateFlow(
+        PaymentMethodScreenState(
+            cards = MockRepository.getPaymentCards(),
+            mockCard = MockRepository.getMockCard()
+        )
+    )
+    val state = _state.asStateFlow()
 
     fun onCheckboxCheck(id: String) {
-        _cards.update {
-            it.toMutableList().map { card ->
-                card.copy(
-                    isDefault = card.id == id
-                )
-            }
+        _state.update {
+            it.copy(
+                cards = it.cards.map { card ->
+                    card.copy(
+                        isDefault = card.id == id
+                    )
+                }
+            )
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.home
+package com.fjjukic.furniture4you.ui.main.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -68,7 +68,6 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeState = viewModel.homeState.collectAsState().value
-    val selectedCategory = viewModel.selectedCategory.collectAsState().value
 
     Scaffold(
         bottomBar = {
@@ -85,9 +84,13 @@ fun HomeScreen(
                 .background(colorResource(id = R.color.color_white))
         ) {
             HomeHeader(onSearchClick, onCartClick)
-            CategoryFilter(homeState.categories, selectedCategory, { index ->
-                viewModel.setSelectedCategory(index)
-            })
+            CategoryFilter(
+                categories = homeState.categories,
+                selectedCategory = homeState.selectedCategory,
+                onCategorySelected = { index ->
+                    viewModel.setSelectedCategory(index)
+                }
+            )
             ProductList(homeState.products, onProductClick)
         }
     }
@@ -225,7 +228,7 @@ fun CategoryFilter(
 @Composable
 fun ProductList(
     products: List<Product>,
-    onProductClicked: (String) -> Unit,
+    onProductClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -237,7 +240,7 @@ fun ProductList(
         items(products) { product ->
             ProductItem(
                 product,
-                onProductClick = onProductClicked
+                onProductClick = onProductClick
             )
         }
     }

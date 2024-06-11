@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.shipping
+package com.fjjukic.furniture4you.ui.shipping.add
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -20,12 +20,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.components.MenuItem
@@ -54,19 +53,10 @@ fun AddShippingAddressScreenPreview() {
 @Composable
 fun AddShippingAddressScreen(
     onBackClick: () -> Unit,
-    viewModel: ShippingAddressViewModel = hiltViewModel()
+    viewModel: ShippingAddressAddViewModel = hiltViewModel()
 ) {
 
-    val countries by viewModel.countries.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-    val availableCities by viewModel.cities.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-
-    val newAddress by viewModel.newShippingAddress.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
+    val state = viewModel.state.collectAsState().value
 
     Scaffold(
         topBar = {
@@ -114,7 +104,7 @@ fun AddShippingAddressScreen(
                 modifier = Modifier
                     .padding(top = 30.dp)
                     .padding(horizontal = 24.dp),
-                value = newAddress.fullName,
+                value = state.newShippingAddress.fullName,
                 label = stringResource(R.string.field_name),
                 placeholder = stringResource(R.string.placeholder_name),
                 onValueChange = viewModel::onNameChange,
@@ -131,7 +121,7 @@ fun AddShippingAddressScreen(
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .padding(horizontal = 24.dp),
-                value = newAddress.address,
+                value = state.newShippingAddress.address,
                 label = stringResource(R.string.field_shipping_address),
                 placeholder = stringResource(R.string.placeholder_address),
                 onValueChange = viewModel::onAddressChange,
@@ -148,7 +138,7 @@ fun AddShippingAddressScreen(
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .padding(horizontal = 24.dp),
-                value = newAddress.zipCode,
+                value = state.newShippingAddress.zipCode,
                 label = stringResource(R.string.field_shipping_zipcode),
                 placeholder = stringResource(R.string.placeholder_zipcode),
                 onValueChange = viewModel::onZipCodeChange,
@@ -166,26 +156,26 @@ fun AddShippingAddressScreen(
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .padding(horizontal = 24.dp),
-                selectedValue = newAddress.country?.name ?: "",
+                selectedValue = state.newShippingAddress.country?.name ?: "",
                 label = stringResource(R.string.field_country),
                 placeholder = stringResource(R.string.placeholder_country),
                 onItemSelect = {
                     viewModel.onCountrySelect(it as MenuItem.Country)
                 },
-                options = countries
+                options = state.countries
             )
 
             DynamicSelectTextField(
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .padding(horizontal = 24.dp),
-                selectedValue = newAddress.city?.name ?: "",
+                selectedValue = state.newShippingAddress.city?.name ?: "",
                 label = stringResource(R.string.field_city),
                 placeholder = stringResource(R.string.placeholder_city),
                 onItemSelect = {
                     viewModel.onCitySelect(it as MenuItem.City)
                 },
-                options = availableCities
+                options = state.cities
             )
         }
     }

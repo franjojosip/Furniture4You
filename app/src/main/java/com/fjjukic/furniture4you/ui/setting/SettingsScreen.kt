@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.main.setting
+package com.fjjukic.furniture4you.ui.setting
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -19,6 +19,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -35,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.checkout.CheckoutItemHeader
 import com.fjjukic.furniture4you.ui.common.showFeatureNotAvailable
@@ -52,31 +51,32 @@ fun SettingsScreenPreview() {
 }
 
 @Composable
-fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel = hiltViewModel()) {
+fun SettingsScreen(
+    onBackClick: () -> Unit,
+    viewModel: SettingsViewModel = hiltViewModel()
+) {
     val context = LocalContext.current
+    val state = viewModel.state.collectAsState().value
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-    var openPersonalInformationDialog by remember { mutableStateOf(false) }
     var passwordDialog by remember { mutableStateOf(false) }
+    var personalInformationDialog by remember { mutableStateOf(false) }
 
-    if (openPersonalInformationDialog) {
+    if (personalInformationDialog) {
         PersonalInformationChangeDialog(
-            uiState.personalInformation,
+            state.personalInformation,
             onContinueClick = {
-                openPersonalInformationDialog = false
+                personalInformationDialog = false
                 viewModel.onEditClick(it)
             },
             onDismissClick = {
-                openPersonalInformationDialog = false
+                personalInformationDialog = false
             }
         )
     }
 
     if (passwordDialog) {
         PasswordChangeDialog(
-            uiState.password,
+            state.password,
             onContinueClick = {
                 passwordDialog = false
                 viewModel.onPasswordChange(it)
@@ -108,7 +108,7 @@ fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel = hiltV
             CheckoutItemHeader(
                 label = stringResource(R.string.title_personal_information),
                 onEditClick = {
-                    openPersonalInformationDialog = true
+                    personalInformationDialog = true
                 },
                 modifier = Modifier
                     .padding(top = 20.dp)
@@ -116,11 +116,11 @@ fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel = hiltV
             )
             PersonalInformationCard(
                 stringResource(id = R.string.label_name),
-                uiState.personalInformation.name
+                state.personalInformation.name
             )
             PersonalInformationCard(
                 stringResource(id = R.string.label_email),
-                uiState.personalInformation.email
+                state.personalInformation.email
             )
 
             CheckoutItemHeader(
@@ -134,7 +134,7 @@ fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel = hiltV
             )
             PersonalInformationCard(
                 stringResource(id = R.string.label_password),
-                uiState.password.replace(Regex("\\S"), "*")
+                state.password.replace(Regex("\\S"), "*")
             )
 
             CheckoutItemHeader(
@@ -152,7 +152,7 @@ fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel = hiltV
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = 12.dp),
-                defaultState = uiState.salesState
+                defaultState = state.salesState
             )
             SwitchField(
                 stringResource(id = R.string.label_new_arrivals),
@@ -162,7 +162,7 @@ fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel = hiltV
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = 12.dp),
-                defaultState = uiState.newArrivalsState
+                defaultState = state.newArrivalsState
             )
             SwitchField(
                 stringResource(id = R.string.label_delivery_status_changes),
@@ -173,7 +173,7 @@ fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel = hiltV
                     .padding(horizontal = 20.dp)
                     .padding(top = 12.dp),
                 isSwitchEnabled = false,
-                defaultState = uiState.deliveryStatusChangeState
+                defaultState = state.deliveryStatusChangeState
             )
 
             CheckoutItemHeader(

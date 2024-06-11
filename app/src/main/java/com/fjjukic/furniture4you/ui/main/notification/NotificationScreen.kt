@@ -35,7 +35,6 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +43,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -56,12 +54,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.model.NotificationModel
 import com.fjjukic.furniture4you.ui.components.Toolbar
-import com.fjjukic.furniture4you.ui.home.BottomBarNavigation
+import com.fjjukic.furniture4you.ui.main.home.BottomBarNavigation
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 
@@ -80,13 +77,10 @@ fun NotificationScreen(
     viewModel: NotificationViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    val notifications by viewModel.notifications.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-    val showMessage by viewModel.showMessage.collectAsState()
+    val state = viewModel.state.collectAsState().value
 
-    LaunchedEffect(showMessage) {
-        showMessage?.toastResId?.let {
+    LaunchedEffect(state.message) {
+        state.message?.toastResId?.let {
             Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show()
             viewModel.onMessageShown()
         }
@@ -127,7 +121,7 @@ fun NotificationScreen(
                     bottom = paddingValues.calculateBottomPadding()
                 )
             ) {
-                itemsIndexed(notifications) { index, notification ->
+                itemsIndexed(state.notifications) { index, notification ->
                     key(notification.id) {
                         SwipeBox(
                             onDelete = { viewModel.removeNotification(index) },
@@ -138,7 +132,7 @@ fun NotificationScreen(
                                 notification = notification,
                                 modifier = Modifier
                             )
-                            if ((index != notifications.size - 1) && notification.tag == null) {
+                            if ((index != state.notifications.size - 1) && notification.tag == null) {
                                 HorizontalDivider(
                                     color = colorResource(id = R.color.color_tinted_white),
                                     thickness = 1.dp,

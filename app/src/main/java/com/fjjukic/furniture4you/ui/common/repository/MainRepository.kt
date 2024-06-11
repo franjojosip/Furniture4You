@@ -33,9 +33,9 @@ class MainRepositoryImpl @Inject constructor(
 ) : MainRepository {
 
     companion object {
-        private val MOCK_LOGIN_EMAIL = "test@mail.com"
-        private val MOCK_PASSWORD = "test123"
-        private val MOCK_DELAY = 1000L
+        private const val MOCK_LOGIN_EMAIL = "test@mail.com"
+        private const val MOCK_PASSWORD = "test123"
+        private const val MOCK_DELAY = 1000L
     }
 
     private val fakeAccessToken =

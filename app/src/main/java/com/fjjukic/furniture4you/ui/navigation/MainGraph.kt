@@ -8,11 +8,10 @@ import androidx.navigation.navigation
 import com.fjjukic.furniture4you.ui.cart.CartScreen
 import com.fjjukic.furniture4you.ui.checkout.CheckoutScreen
 import com.fjjukic.furniture4you.ui.common.viewmodel.MainViewModel
-import com.fjjukic.furniture4you.ui.home.HomeScreen
 import com.fjjukic.furniture4you.ui.main.favorite.FavoriteScreen
+import com.fjjukic.furniture4you.ui.main.home.HomeScreen
 import com.fjjukic.furniture4you.ui.main.notification.NotificationScreen
 import com.fjjukic.furniture4you.ui.main.profile.ProfileScreen
-import com.fjjukic.furniture4you.ui.main.setting.SettingsScreen
 import com.fjjukic.furniture4you.ui.order.MyOrderScreen
 import com.fjjukic.furniture4you.ui.order.SuccessOrderScreen
 import com.fjjukic.furniture4you.ui.payment.PaymentMethodAddScreen
@@ -22,8 +21,9 @@ import com.fjjukic.furniture4you.ui.productdetail.ProductDetailViewModel
 import com.fjjukic.furniture4you.ui.rating.RatingReviewScreen
 import com.fjjukic.furniture4you.ui.review.MyReviewScreen
 import com.fjjukic.furniture4you.ui.search.SearchScreen
-import com.fjjukic.furniture4you.ui.shipping.AddShippingAddressScreen
+import com.fjjukic.furniture4you.ui.setting.SettingsScreen
 import com.fjjukic.furniture4you.ui.shipping.ShippingAddressScreen
+import com.fjjukic.furniture4you.ui.shipping.add.AddShippingAddressScreen
 
 fun NavGraphBuilder.homeGraph(
     navHostController: NavHostController,
@@ -35,9 +35,9 @@ fun NavGraphBuilder.homeGraph(
     ) {
         composable(Screens.HomeSections.Home.route) {
             HomeScreen(
-                onProductClick = {
+                onProductClick = { productId ->
                     navHostController.navigate(
-                        Screens.ProductDetail.getRouteWithArg(it)
+                        Screens.ProductDetail.getRouteWithArg(productId)
                     )
                 },
                 onCartClick = {
@@ -51,9 +51,9 @@ fun NavGraphBuilder.homeGraph(
         }
         composable(Screens.HomeSections.Favorites.route) {
             FavoriteScreen(
-                onProductClick = {
+                onProductClick = { productId ->
                     navHostController.navigate(
-                        Screens.ProductDetail.getRouteWithArg(it)
+                        Screens.ProductDetail.getRouteWithArg(productId)
                     )
                 },
                 onSearchClick = {
@@ -111,9 +111,9 @@ fun NavGraphBuilder.homeGraph(
     }
     composable(route = Screens.Cart.route) {
         CartScreen(
-            onProductClick = {
+            onProductClick = { productId ->
                 navHostController.navigate(
-                    Screens.ProductDetail.getRouteWithArg(it)
+                    Screens.ProductDetail.getRouteWithArg(productId)
                 )
             },
             onCheckoutClick = {
@@ -151,9 +151,9 @@ fun NavGraphBuilder.homeGraph(
     }
     composable(route = Screens.Search.route) {
         SearchScreen(
-            onProductClick = {
+            onProductClick = { productId ->
                 navHostController.navigate(
-                    Screens.ProductDetail.getRouteWithArg(it)
+                    Screens.ProductDetail.getRouteWithArg(productId)
                 )
             },
             onCartClick = {

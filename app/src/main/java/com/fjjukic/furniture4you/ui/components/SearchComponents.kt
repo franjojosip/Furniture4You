@@ -57,7 +57,7 @@ import com.fjjukic.furniture4you.ui.common.model.SearchCategory
 import com.fjjukic.furniture4you.ui.common.model.SearchCategoryCollection
 import com.fjjukic.furniture4you.ui.common.model.SearchSuggestionGroup
 import com.fjjukic.furniture4you.ui.common.showFeatureNotAvailable
-import com.fjjukic.furniture4you.ui.home.CategoryFilter
+import com.fjjukic.furniture4you.ui.main.home.CategoryFilter
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily

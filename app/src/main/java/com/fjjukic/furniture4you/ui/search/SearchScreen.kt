@@ -6,15 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.model.DisplayType
 import com.fjjukic.furniture4you.ui.components.FurnitureSearchBar
@@ -35,18 +33,7 @@ fun SearchScreen(
     onCartClick: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val query by viewModel.query.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-    val focused by viewModel.focused.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-    val searching by viewModel.searching.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-    val displayType by viewModel.displayType.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
+    val state = viewModel.state.collectAsState().value
 
     Scaffold { paddingValues ->
         Column(
@@ -56,9 +43,9 @@ fun SearchScreen(
                 .background(colorResource(id = R.color.color_white))
         ) {
             FurnitureSearchBar(
-                query = query,
-                searchFocused = focused,
-                searching = searching,
+                query = state.query,
+                searchFocused = state.isFocused,
+                searching = state.isSearching,
                 onQueryChange = {
                     viewModel.onQueryChange(it)
                 },
@@ -71,14 +58,14 @@ fun SearchScreen(
                 modifier = Modifier.padding(top = 12.dp)
             )
 
-            when (val result = displayType) {
+            when (state.displayType) {
                 is DisplayType.Categories -> {
-                    SearchCategories(result.categories)
+                    SearchCategories(state.displayType.categories)
                 }
 
                 is DisplayType.Suggestions -> {
                     SearchSuggestions(
-                        result.suggestions,
+                        state.displayType.suggestions,
                         onSuggestionSelect = { suggestion ->
                             viewModel.onQueryChange(TextFieldValue(suggestion))
                         }
@@ -87,14 +74,14 @@ fun SearchScreen(
 
                 is DisplayType.Results -> {
                     SearchResults(
-                        result.results,
-                        result.filters,
+                        state.displayType.results,
+                        state.displayType.filters,
                         onProductClick,
                         onCartClick
                     )
                 }
 
-                is DisplayType.NoResults -> NoResults(result.query)
+                is DisplayType.NoResults -> NoResults(state.displayType.query)
             }
         }
     }
