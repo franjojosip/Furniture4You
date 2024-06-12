@@ -72,6 +72,7 @@
     <string name="placeholder_card_exp_date">Ex. MM/YY</string>
 
     <!--    Error field labels   -->
+    <string name="error_biometrics_activation_failed">Biometrics not enabled, please check profile settings to try again.</string>
     <string name="error_biometrics_not_available">Biometrics not available</string>
     <string name="error_invalid_card_number">Invalid card number</string>
     <string name="error_invalid_credentials">Invalid credentials!</string>
@@ -173,6 +174,7 @@
     <string name="label_faq">FAQ</string>
     <string name="label_help_center">Help Center</string>
     <string name="label_logout">Are you sure you want to logout?</string>
+    <string name="label_logged_in">Successfully logged in!</string>
     <string name="label_my_orders">My orders</string>
     <string name="label_name">Name</string>
     <string name="label_new_arrivals">New arrivals</string>

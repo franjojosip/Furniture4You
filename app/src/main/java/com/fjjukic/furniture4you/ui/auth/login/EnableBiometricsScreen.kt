@@ -2,9 +2,8 @@ package com.fjjukic.furniture4you.ui.auth.login
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.Intent
-import android.os.Build
-import android.provider.Settings
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -24,6 +23,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,10 +39,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
+import com.fjjukic.furniture4you.ui.common.biometrics.BiometricsHelper
 import com.fjjukic.furniture4you.ui.common.repository.BiometricsAvailability
+import com.fjjukic.furniture4you.ui.common.utils.findActivity
+import com.fjjukic.furniture4you.ui.common.utils.openBiometricsSettings
 import com.fjjukic.furniture4you.ui.components.DotsProgressIndicator
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 
@@ -51,10 +53,23 @@ fun EnableBiometricsScreen(
     onExitClick: () -> Unit,
     viewModel: EnableBiometricsViewModel = hiltViewModel(),
 ) {
-
+    val context = LocalContext.current
     val state = viewModel.state.collectAsState().value
 
+    LaunchedEffect(state.messageResId) {
+        if (state.messageResId != null) {
+            Toast.makeText(context, state.messageResId, Toast.LENGTH_SHORT).show()
+        }
+    }
+    LaunchedEffect(state.biometricsActivated) {
+        if (state.biometricsActivated == true) {
+            onExitClick()
+        }
+    }
+
     EnableBiometricsItem(
+        onBiometricActivationSuccess = viewModel::onBiometricActivationSuccess,
+        onBiometricActivationFailed = viewModel::onBiometricActivationFailed,
         onExitClick = onExitClick,
         biometricsPrompt = state.biometricPromptModel,
         biometricsAvailability = state.biometricsAvailability
@@ -63,6 +78,8 @@ fun EnableBiometricsScreen(
 
 @Composable
 fun EnableBiometricsItem(
+    onBiometricActivationSuccess: () -> Unit,
+    onBiometricActivationFailed: () -> Unit,
     onExitClick: () -> Unit = {},
     biometricsPrompt: BiometricsHelper.BiometricPromptModel,
     biometricsAvailability: BiometricsAvailability = BiometricsAvailability.Checking
@@ -125,7 +142,6 @@ fun EnableBiometricsItem(
 
             val activity = LocalContext.current.findActivity()
 
-
             when (biometricsAvailability) {
                 BiometricsAvailability.Checking -> {
                     DotsProgressIndicator(modifier = Modifier.padding(56.dp))
@@ -134,18 +150,13 @@ fun EnableBiometricsItem(
                 BiometricsAvailability.Available -> {
                     BottomActions(
                         onFirstActionClick = {
-                            activity?.let {
-                                BiometricsHelper.showPrompt(
-                                    activity,
-                                    onSuccess = {
-                                        // TODO do something
-                                    },
-                                    onError = {
-                                        // TODO do something
-                                    },
-                                    prompt = biometricsPrompt
-                                )
-                            }
+                            BiometricsHelper.showPrompt(
+                                activity,
+                                onSuccess = onBiometricActivationSuccess,
+                                onError = {
+                                    onBiometricActivationFailed()
+                                }
+                            )
                         },
                         onSecondActionClick = onExitClick
                     )
@@ -155,24 +166,35 @@ fun EnableBiometricsItem(
                     BottomActions(
                         onFirstActionClick = {},
                         onSecondActionClick = onExitClick,
-                        firstActionTitle = stringResource(id = R.string.label_setup_biometrics),
-                        title = stringResource(R.string.error_biometrics_not_available)
+                        firstActiontitleResId = stringResource(id = R.string.label_setup_biometrics),
+                        titleResId = stringResource(R.string.error_biometrics_not_available)
                     )
                 }
 
                 BiometricsAvailability.NotEnabled -> {
                     BottomActions(
                         onFirstActionClick = {
-                            activity?.openBiometricsSettings()
+                            activity.openBiometricsSettings()
                         },
                         onSecondActionClick = onExitClick,
-                        firstActionTitle = stringResource(id = R.string.btn_open_settings),
-                        title = stringResource(R.string.label_biometrics_enable_explanation)
+                        firstActiontitleResId = stringResource(id = R.string.btn_open_settings),
+                        titleResId = stringResource(R.string.label_biometrics_enable_explanation)
                     )
                 }
             }
         }
     }
+}
+
+fun Context.getActivity(): AppCompatActivity? {
+    var currentContext = this
+    while (currentContext is ContextWrapper) {
+        if (currentContext is AppCompatActivity) {
+            return currentContext
+        }
+        currentContext = currentContext.baseContext
+    }
+    return null
 }
 
 @Preview(showBackground = true)
@@ -181,7 +203,7 @@ fun BottomActionsPreview() {
     BottomActions(
         onFirstActionClick = {},
         onSecondActionClick = {},
-        title = stringResource(id = R.string.label_biometrics_enable_explanation)
+        titleResId = stringResource(id = R.string.label_biometrics_enable_explanation)
     )
 }
 
@@ -190,16 +212,16 @@ fun BottomActions(
     onFirstActionClick: () -> Unit,
     onSecondActionClick: () -> Unit,
     modifier: Modifier = Modifier,
-    firstActionTitle: String = stringResource(R.string.label_setup_biometrics),
-    title: String? = null
+    firstActiontitleResId: String = stringResource(R.string.label_setup_biometrics),
+    titleResId: String? = null
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (title != null) {
+        if (titleResId != null) {
             Text(
-                text = title,
+                text = titleResId,
                 style = TextStyle(
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.color_dark_gray),
@@ -218,7 +240,7 @@ fun BottomActions(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = firstActionTitle,
+                text = firstActiontitleResId,
                 style = TextStyle(
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.color_white),
@@ -249,27 +271,15 @@ fun BottomActions(
     }
 }
 
-fun Context.findActivity(): FragmentActivity? = when (this) {
-    is FragmentActivity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
-}
-
-fun Context.openBiometricsSettings() {
-    val intent = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> Intent(Settings.ACTION_BIOMETRIC_ENROLL)
-        else -> Intent(Settings.ACTION_SECURITY_SETTINGS)
-    }
-    startActivity(intent)
-}
-
 @Composable
 @Preview(showBackground = true)
 fun EnableBiometricsScreen_Preview() {
     EnableBiometricsItem(
+        onBiometricActivationSuccess = {},
+        onBiometricActivationFailed = {},
         biometricsPrompt = BiometricsHelper.BiometricPromptModel(
-            title = R.string.label_setup_biometrics,
-            cancelBtnText = R.string.btn_cancel,
+            titleResId = R.string.label_setup_biometrics,
+            cancelBtnTextResId = R.string.btn_cancel,
         ),
         biometricsAvailability = BiometricsAvailability.Available
     )
@@ -279,9 +289,11 @@ fun EnableBiometricsScreen_Preview() {
 @Preview(showBackground = true)
 fun EnableBiometricsScreen_Not_Enrolled_Preview() {
     EnableBiometricsItem(
+        onBiometricActivationSuccess = {},
+        onBiometricActivationFailed = {},
         biometricsPrompt = BiometricsHelper.BiometricPromptModel(
-            title = R.string.label_setup_biometrics,
-            cancelBtnText = R.string.btn_cancel,
+            titleResId = R.string.label_setup_biometrics,
+            cancelBtnTextResId = R.string.btn_cancel,
         ),
         biometricsAvailability = BiometricsAvailability.NotEnabled
     )
@@ -292,9 +304,11 @@ fun EnableBiometricsScreen_Not_Enrolled_Preview() {
 @Preview(showBackground = true)
 fun EnableBiometricsScreen_Not_Available_Preview() {
     EnableBiometricsItem(
+        onBiometricActivationSuccess = {},
+        onBiometricActivationFailed = {},
         biometricsPrompt = BiometricsHelper.BiometricPromptModel(
-            title = R.string.label_setup_biometrics,
-            cancelBtnText = R.string.btn_cancel,
+            titleResId = R.string.label_setup_biometrics,
+            cancelBtnTextResId = R.string.btn_cancel,
         ),
         biometricsAvailability = BiometricsAvailability.NotAvailable
     )
@@ -304,9 +318,11 @@ fun EnableBiometricsScreen_Not_Available_Preview() {
 @Preview(showBackground = true)
 fun EnableBiometricsScreen_Loading_Preview() {
     EnableBiometricsItem(
+        onBiometricActivationSuccess = {},
+        onBiometricActivationFailed = {},
         biometricsPrompt = BiometricsHelper.BiometricPromptModel(
-            title = R.string.label_setup_biometrics,
-            cancelBtnText = R.string.btn_cancel,
+            titleResId = R.string.label_setup_biometrics,
+            cancelBtnTextResId = R.string.btn_cancel,
         ),
         biometricsAvailability = BiometricsAvailability.Checking
     )

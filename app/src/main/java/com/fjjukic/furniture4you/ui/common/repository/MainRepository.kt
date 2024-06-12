@@ -5,7 +5,7 @@ import android.util.Base64
 import androidx.biometric.BiometricManager
 import androidx.core.content.edit
 import com.fjjukic.furniture4you.FurnitureApplication
-import com.fjjukic.furniture4you.ui.auth.login.BiometricsHelper
+import com.fjjukic.furniture4you.ui.common.biometrics.BiometricsHelper
 import com.fjjukic.furniture4you.ui.common.utils.Pbkdf2Factory
 import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import com.fjjukic.furniture4you.ui.common.viewmodel.User
@@ -29,6 +29,8 @@ interface MainRepository {
     fun checkBiometricsAvailable(): BiometricsAvailability
     fun setupLockWithBiometrics(isLocked: Boolean)
     fun checkIfAppLockedWithBiometrics(): Boolean
+
+    fun onBiometricAuthenticationSuccess()
 }
 
 enum class AuthenticationState {
@@ -185,6 +187,12 @@ class MainRepositoryImpl @Inject constructor(
             else -> {
                 BiometricsAvailability.NotAvailable
             }
+        }
+    }
+
+    override fun onBiometricAuthenticationSuccess() {
+        securedPreferences.edit {
+            putBoolean(StorageKey.IS_LOGGED_IN, true)
         }
     }
 }

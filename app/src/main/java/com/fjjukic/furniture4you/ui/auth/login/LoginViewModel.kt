@@ -1,9 +1,5 @@
 package com.fjjukic.furniture4you.ui.auth.login
 
-import android.content.Context
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricPrompt
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fjjukic.furniture4you.R
@@ -12,6 +8,7 @@ import com.fjjukic.furniture4you.ui.common.repository.MainRepository
 import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -27,6 +24,10 @@ class LoginViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun login(email: String, password: String) {
+        if (mainRepository.checkIfAppLockedWithBiometrics()) {
+            _state.update { it.copy(showBiometricsPrompt = true) }
+            return
+        }
         if (!ValidationUtils.isEmailValid(email) || !ValidationUtils.isPasswordValid(password)) {
             _state.update { it.copy(messageResId = R.string.error_check_fields) }
             return
@@ -45,57 +46,21 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun setupLockWithBiometrics(isLocked: Boolean) {
-        mainRepository.setupLockWithBiometrics(isLocked)
+    fun onBiometricActivationSuccess() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.update {
+                it.copy(
+                    messageResId = R.string.label_logged_in,
+                    showBiometricsPrompt = false
+                )
+            }
+            mainRepository.onBiometricAuthenticationSuccess()
+            delay(600)
+            _state.update { it.copy(isAuthenticated = true) }
+        }
     }
 
-    fun checkIfAppLockedWithBiometrics(): Boolean {
-        return mainRepository.checkIfAppLockedWithBiometrics()
-    }
-}
-
-
-object BiometricsHelper {
-
-    fun checkIfBiometricsAvailable(context: Context): Int {
-        val biometricManager = BiometricManager.from(context)
-        return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.BIOMETRIC_WEAK)
-    }
-
-    data class BiometricPromptModel(
-        val title: Int,
-        val cancelBtnText: Int
-    )
-
-    fun showPrompt(
-        activity: FragmentActivity,
-        prompt: BiometricPromptModel,
-        onSuccess: () -> Unit,
-        onError: (error: String) -> Unit,
-    ) {
-        val biometricPrompt =
-            BiometricPrompt(activity, object : BiometricPrompt.AuthenticationCallback() {
-                // Called when an unrecoverable error has been encountered and authentication has stopped.
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    onError.invoke("ERROR")
-                }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    onSuccess.invoke()
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    onError.invoke("AUTH FAILED")
-                }
-            })
-
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("title")
-            .setNegativeButtonText("cancelBtnText")
-            .build()
-        biometricPrompt.authenticate(promptInfo)
+    fun onBiometricActivationFailed() {
+        _state.update { it.copy(showBiometricsPrompt = false) }
     }
 }

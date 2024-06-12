@@ -19,20 +19,13 @@ class RegisterViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
 
-    companion object {
-        private const val ANDROID_KEY_STORE = "AndroidKeyStore"
-        private const val KEY_NAME = "biometric_key"
-    }
-//    val biometricEnableDialog = MutableStateFlow<Unit>()
-//    val biometricParams = MutableStateFlow<BiometricParams>()
-//    private val biometricManager by lazy { app.biometricManager }
-
-    val isBiometricsAvailable = mainRepository.isBiometricsAvailable()
-    val checkBiometricsAvailable = mainRepository.checkBiometricsAvailable()
-
     private val _state: MutableStateFlow<RegisterScreenState> =
         MutableStateFlow(RegisterScreenState())
     val state = _state.asStateFlow()
+
+    fun isBiometricsAvailable(): Boolean {
+        return mainRepository.isBiometricsAvailable()
+    }
 
     fun register(
         name: String,
@@ -56,11 +49,11 @@ class RegisterViewModel @Inject constructor(
             _state.update { it.copy(isLoading = false) }
 
             if (result == AuthenticationState.AUTHENTICATED) {
-                _state.update { it.copy(messageResId = R.string.label_successfully_registered) }
 
                 if (useBiometrics == true) {
                     _state.update { it.copy(shouldRequestBiometrics = true) }
                 } else {
+                    _state.update { it.copy(messageResId = R.string.label_successfully_registered) }
                     _state.update { it.copy(isRegistered = true) }
                 }
             } else {

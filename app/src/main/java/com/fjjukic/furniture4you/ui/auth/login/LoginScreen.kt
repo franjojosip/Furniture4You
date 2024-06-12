@@ -1,9 +1,6 @@
 package com.fjjukic.furniture4you.ui.auth.login
 
 import android.widget.Toast
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
-import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,7 +22,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,8 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
+import com.fjjukic.furniture4you.ui.common.biometrics.BiometricsHelper
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
+import com.fjjukic.furniture4you.ui.common.utils.findActivity
 import com.fjjukic.furniture4you.ui.components.FullscreenProgressBar
 import com.fjjukic.furniture4you.ui.components.Header
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
@@ -65,41 +63,8 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    val biometricManager = remember { BiometricManager.from(context) }
-
-    val isBiometricAvailable = remember {
-        biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
-    }
-    when (isBiometricAvailable) {
-        BiometricManager.BIOMETRIC_SUCCESS -> {
-            // Biometric is enabled in device
-        }
-
-        BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-            // No biometric in deivice
-        }
-
-        BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-            // Biometric currently unavailable
-        }
-
-        BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
-            // Biometric features available but a security vulnerability has been discovered
-        }
-
-        BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
-            // Biometric features are currently unavailable because the specified options are incompatible with the current Android version..
-        }
-
-        BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
-            // Unable to determine whether the user can authenticate using biometrics
-        }
-
-        BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-            // The user can't authenticate because no biometric or device credential is enrolled.
-        }
-    }
     val state = viewModel.state.collectAsState().value
+    val activity = LocalContext.current.findActivity()
 
     LaunchedEffect(state.messageResId) {
         state.messageResId?.let { resId ->
@@ -132,6 +97,14 @@ fun LoginScreen(
         }
         if (state.isLoading) {
             FullscreenProgressBar()
+        }
+
+        if (state.showBiometricsPrompt) {
+            BiometricsHelper.showPrompt(
+                activity,
+                onSuccess = viewModel::onBiometricActivationSuccess,
+                onError = viewModel::onBiometricActivationFailed
+            )
         }
     }
 }

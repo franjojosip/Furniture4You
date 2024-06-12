@@ -81,14 +81,18 @@ fun RegisterScreen(
                 onRegisterClick = { name, email, password, confirmPassword, useBiometrics ->
                     viewModel.register(name, email, password, confirmPassword, useBiometrics)
                 },
-                isBiometricsAvailable = viewModel.isBiometricsAvailable
+                isBiometricsAvailable = viewModel.isBiometricsAvailable()
             )
         }
         if (state.isLoading) {
             FullscreenProgressBar()
         }
-        if (state.shouldRequestBiometrics == true || state.isRegistered == false) {
-            EnableBiometricsScreen({})
+        if (true) {//state.shouldRequestBiometrics == true && true) {
+            EnableBiometricsScreen(
+                onExitClick = {
+                    onRegister()
+                }
+            )
         }
     }
 }

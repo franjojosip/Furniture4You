@@ -6,6 +6,7 @@ data class SettingsViewState(
     val salesState: Boolean,
     val newArrivalsState: Boolean,
     val deliveryStatusChangeState: Boolean,
+    val isLoggedOut: Boolean? = null
 )
 
 data class PersonalInformation(
