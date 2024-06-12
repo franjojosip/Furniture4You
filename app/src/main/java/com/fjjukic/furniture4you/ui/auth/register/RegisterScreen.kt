@@ -37,19 +37,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
+import com.fjjukic.furniture4you.ui.auth.login.EnableBiometricsScreen
 import com.fjjukic.furniture4you.ui.common.CombinedClickableText
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
 import com.fjjukic.furniture4you.ui.components.FullscreenProgressBar
 import com.fjjukic.furniture4you.ui.components.Header
+import com.fjjukic.furniture4you.ui.setting.SwitchField
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-
-@Preview
-@Composable
-fun RegisterScreenPreview() {
-    RegisterScreen(onLoginClick = {}, onRegister = {})
-}
 
 @Composable
 fun RegisterScreen(
@@ -82,27 +78,43 @@ fun RegisterScreen(
             Header(subtitle = stringResource(R.string.title_register))
             RegisterForm(
                 onLoginClick = onLoginClick,
-                onRegisterClick = { name, email, password, confirmPassword ->
-                    viewModel.register(name, email, password, confirmPassword)
-                }
+                onRegisterClick = { name, email, password, confirmPassword, useBiometrics ->
+                    viewModel.register(name, email, password, confirmPassword, useBiometrics)
+                },
+                isBiometricsAvailable = viewModel.isBiometricsAvailable
             )
         }
         if (state.isLoading) {
             FullscreenProgressBar()
         }
+        if (state.shouldRequestBiometrics == true || state.isRegistered == false) {
+            EnableBiometricsScreen({})
+        }
     }
+}
+
+@Preview
+@Composable
+fun RegisterFormPreview() {
+    RegisterForm(
+        onLoginClick = {},
+        onRegisterClick = { _, _, _, _, _ -> },
+        isBiometricsAvailable = true
+    )
 }
 
 @Composable
 fun RegisterForm(
     onLoginClick: () -> Unit,
-    onRegisterClick: (String, String, String, String) -> Unit,
+    onRegisterClick: (String, String, String, String, Boolean?) -> Unit,
+    isBiometricsAvailable: Boolean,
     modifier: Modifier = Modifier
 ) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var useBiometrics by remember { mutableStateOf<Boolean?>(null) }
 
     Card(
         colors = CardDefaults.cardColors(
@@ -153,11 +165,25 @@ fun RegisterForm(
             modifier = Modifier.padding(top = 12.dp),
         )
 
+        if (isBiometricsAvailable) {
+            SwitchField(
+                stringResource(id = R.string.label_use_biometrics),
+                onCheckedChange = {
+                    useBiometrics = it
+                },
+                modifier = Modifier
+                    .padding(start = 10.dp, end = 20.dp)
+                    .padding(top = 20.dp),
+                defaultState = false,
+                isTitle = false
+            )
+        }
+
         Button(
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
             onClick = {
-                onRegisterClick(name, email, password, confirmPassword)
+                onRegisterClick(name, email, password, confirmPassword, useBiometrics)
             },
             modifier = modifier
                 .padding(top = 40.dp)

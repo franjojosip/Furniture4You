@@ -278,16 +278,18 @@ fun SwitchField(
     label: String,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    isTitle: Boolean = true,
     isSwitchEnabled: Boolean = true,
     defaultState: Boolean = false,
 ) {
     var checked by remember { mutableStateOf(defaultState) }
+
     Surface(
         modifier = modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(4.dp),
         color = colorResource(id = R.color.color_white),
-        shadowElevation = 2.dp
+        shadowElevation = if (isTitle) 2.dp else 0.dp
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -298,7 +300,7 @@ fun SwitchField(
                     .weight(1f),
                 text = label,
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = if (isTitle) 16.sp else 14.sp,
                     fontFamily = nunitoSansFamily,
                     fontWeight = FontWeight.SemiBold,
                     color = colorResource(id = R.color.color_dark_gray)

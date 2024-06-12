@@ -8,4 +8,6 @@ object StorageKey {
     const val PIN_IS_ENABLED = "pin_is_enabled"
 
     const val IS_LOGGED_IN = "is_logged_in"
+
+    const val BIOMETRICS_FLAG = "biometrics_flag"
 }

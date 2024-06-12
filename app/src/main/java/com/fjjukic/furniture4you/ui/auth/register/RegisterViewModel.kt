@@ -18,11 +18,29 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
+
+    companion object {
+        private const val ANDROID_KEY_STORE = "AndroidKeyStore"
+        private const val KEY_NAME = "biometric_key"
+    }
+//    val biometricEnableDialog = MutableStateFlow<Unit>()
+//    val biometricParams = MutableStateFlow<BiometricParams>()
+//    private val biometricManager by lazy { app.biometricManager }
+
+    val isBiometricsAvailable = mainRepository.isBiometricsAvailable()
+    val checkBiometricsAvailable = mainRepository.checkBiometricsAvailable()
+
     private val _state: MutableStateFlow<RegisterScreenState> =
         MutableStateFlow(RegisterScreenState())
     val state = _state.asStateFlow()
 
-    fun register(name: String, email: String, password: String, confirmPassword: String) {
+    fun register(
+        name: String,
+        email: String,
+        password: String,
+        confirmPassword: String,
+        useBiometrics: Boolean?
+    ) {
         if (name.isBlank()
             || !ValidationUtils.isEmailValid(email)
             || !ValidationUtils.isPasswordValid(password)
@@ -39,7 +57,12 @@ class RegisterViewModel @Inject constructor(
 
             if (result == AuthenticationState.AUTHENTICATED) {
                 _state.update { it.copy(messageResId = R.string.label_successfully_registered) }
-                _state.update { it.copy(isRegistered = true) }
+
+                if (useBiometrics == true) {
+                    _state.update { it.copy(shouldRequestBiometrics = true) }
+                } else {
+                    _state.update { it.copy(isRegistered = true) }
+                }
             } else {
                 _state.update { it.copy(messageResId = R.string.error_invalid_credentials) }
             }

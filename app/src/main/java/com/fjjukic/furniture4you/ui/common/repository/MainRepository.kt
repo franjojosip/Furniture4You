@@ -2,8 +2,10 @@ package com.fjjukic.furniture4you.ui.common.repository
 
 import android.content.Context
 import android.util.Base64
+import androidx.biometric.BiometricManager
 import androidx.core.content.edit
 import com.fjjukic.furniture4you.FurnitureApplication
+import com.fjjukic.furniture4you.ui.auth.login.BiometricsHelper
 import com.fjjukic.furniture4you.ui.common.utils.Pbkdf2Factory
 import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import com.fjjukic.furniture4you.ui.common.viewmodel.User
@@ -22,6 +24,11 @@ interface MainRepository {
     suspend fun login(email: String, password: String): AuthenticationState
     suspend fun register(name: String, email: String, password: String): AuthenticationState
     suspend fun logout()
+
+    fun isBiometricsAvailable(): Boolean
+    fun checkBiometricsAvailable(): BiometricsAvailability
+    fun setupLockWithBiometrics(isLocked: Boolean)
+    fun checkIfAppLockedWithBiometrics(): Boolean
 }
 
 enum class AuthenticationState {
@@ -29,7 +36,7 @@ enum class AuthenticationState {
 }
 
 class MainRepositoryImpl @Inject constructor(
-    app: Context
+    private val app: Context
 ) : MainRepository {
 
     companion object {
@@ -41,7 +48,7 @@ class MainRepositoryImpl @Inject constructor(
     private val fakeAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWNyZXQiOiJXZSdyZSBoaXJpbmcgOykifQ.WZrEWG-l3VsJzJrbnjn2BIYO68gHIGyat6jrw7Iu-Rw"
 
-    private val preferences by lazy {
+    private val securedPreferences by lazy {
         (app as FurnitureApplication).encryptedStorage
     }
 
@@ -63,7 +70,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override fun isLoggedIn(): Boolean {
-        return preferences.getBoolean(StorageKey.IS_LOGGED_IN, false)
+        return securedPreferences.getBoolean(StorageKey.IS_LOGGED_IN, false)
     }
 
     private fun saveUser(name: String, email: String, password: String) {
@@ -80,7 +87,7 @@ class MainRepositoryImpl @Inject constructor(
 
         val user = gson.toJson(User(name, email, encodedSalt))
 
-        preferences.edit {
+        securedPreferences.edit {
             putString(StorageKey.USER, user)
             putString(StorageKey.TOKEN, encodedEncryptedToken)
             putBoolean(StorageKey.PIN_IS_ENABLED, true)
@@ -100,7 +107,7 @@ class MainRepositoryImpl @Inject constructor(
         delay(MOCK_DELAY)
         return when {
             email == MOCK_LOGIN_EMAIL && password == MOCK_PASSWORD -> {
-                preferences.edit {
+                securedPreferences.edit {
                     putBoolean(StorageKey.IS_LOGGED_IN, true)
                 }
                 AuthenticationState.AUTHENTICATED
@@ -112,7 +119,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     private fun checkAuthData(email: String, password: String): AuthenticationState {
-        val userJson: String = preferences.getString(StorageKey.USER, null)
+        val userJson: String = securedPreferences.getString(StorageKey.USER, null)
             ?: return AuthenticationState.INVALID_AUTHENTICATION
 
         val user: User = gson.fromJson(userJson, User::class.java)
@@ -124,7 +131,7 @@ class MainRepositoryImpl @Inject constructor(
 
         val token = try {
             val encryptedToken =
-                Base64.decode(preferences.getString(StorageKey.TOKEN, null), Base64.DEFAULT)
+                Base64.decode(securedPreferences.getString(StorageKey.TOKEN, null), Base64.DEFAULT)
 
             aead.decrypt(encryptedToken, secretKey.encoded)
         } catch (e: GeneralSecurityException) {
@@ -137,20 +144,54 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override fun getShowPrelogin(): Boolean {
-        return preferences.getBoolean(StorageKey.SHOW_PRELOGIN, true)
+        return securedPreferences.getBoolean(StorageKey.SHOW_PRELOGIN, true)
     }
 
     override fun onPreloginShown() {
-        preferences.edit {
+        securedPreferences.edit {
             putBoolean(StorageKey.SHOW_PRELOGIN, false)
         }
     }
 
     override suspend fun logout() {
         delay(MOCK_DELAY)
-        preferences.edit {
+        securedPreferences.edit {
             putBoolean(StorageKey.IS_LOGGED_IN, false)
         }
     }
 
+    override fun setupLockWithBiometrics(isLocked: Boolean) {
+        securedPreferences.edit().putBoolean(StorageKey.BIOMETRICS_FLAG, isLocked).apply()
+    }
+
+    override fun checkIfAppLockedWithBiometrics(): Boolean {
+        return securedPreferences.getBoolean(StorageKey.BIOMETRICS_FLAG, false)
+    }
+
+    override fun isBiometricsAvailable(): Boolean {
+        return checkBiometricsAvailable() == BiometricsAvailability.Available
+    }
+
+    override fun checkBiometricsAvailable(): BiometricsAvailability {
+        return when (BiometricsHelper.checkIfBiometricsAvailable(app)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                BiometricsAvailability.Available
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                BiometricsAvailability.NotEnabled
+            }
+            // All cases where not available
+            else -> {
+                BiometricsAvailability.NotAvailable
+            }
+        }
+    }
+}
+
+sealed class BiometricsAvailability {
+    object Checking : BiometricsAvailability()
+    object Available : BiometricsAvailability()
+    object NotAvailable : BiometricsAvailability()
+    object NotEnabled : BiometricsAvailability()
 }

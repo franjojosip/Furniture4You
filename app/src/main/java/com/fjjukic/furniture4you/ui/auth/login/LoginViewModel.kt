@@ -1,5 +1,9 @@
 package com.fjjukic.furniture4you.ui.auth.login
 
+import android.content.Context
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fjjukic.furniture4you.R
@@ -39,5 +43,59 @@ class LoginViewModel @Inject constructor(
                 _state.update { it.copy(messageResId = R.string.error_invalid_credentials) }
             }
         }
+    }
+
+    fun setupLockWithBiometrics(isLocked: Boolean) {
+        mainRepository.setupLockWithBiometrics(isLocked)
+    }
+
+    fun checkIfAppLockedWithBiometrics(): Boolean {
+        return mainRepository.checkIfAppLockedWithBiometrics()
+    }
+}
+
+
+object BiometricsHelper {
+
+    fun checkIfBiometricsAvailable(context: Context): Int {
+        val biometricManager = BiometricManager.from(context)
+        return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.BIOMETRIC_WEAK)
+    }
+
+    data class BiometricPromptModel(
+        val title: Int,
+        val cancelBtnText: Int
+    )
+
+    fun showPrompt(
+        activity: FragmentActivity,
+        prompt: BiometricPromptModel,
+        onSuccess: () -> Unit,
+        onError: (error: String) -> Unit,
+    ) {
+        val biometricPrompt =
+            BiometricPrompt(activity, object : BiometricPrompt.AuthenticationCallback() {
+                // Called when an unrecoverable error has been encountered and authentication has stopped.
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    onError.invoke("ERROR")
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    onSuccess.invoke()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    onError.invoke("AUTH FAILED")
+                }
+            })
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("title")
+            .setNegativeButtonText("cancelBtnText")
+            .build()
+        biometricPrompt.authenticate(promptInfo)
     }
 }
