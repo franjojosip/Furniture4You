@@ -1,9 +1,6 @@
 package com.fjjukic.furniture4you.ui.auth.login
 
-import android.content.Context
-import android.content.ContextWrapper
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -50,6 +47,8 @@ import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 
 @Composable
 fun EnableBiometricsScreen(
+    onSuccess: () -> Unit,
+    onSkipClick: () -> Unit,
     onExitClick: () -> Unit,
     viewModel: EnableBiometricsViewModel = hiltViewModel(),
 ) {
@@ -63,7 +62,7 @@ fun EnableBiometricsScreen(
     }
     LaunchedEffect(state.biometricsActivated) {
         if (state.biometricsActivated == true) {
-            onExitClick()
+            onSuccess()
         }
     }
 
@@ -71,7 +70,7 @@ fun EnableBiometricsScreen(
         onBiometricActivationSuccess = viewModel::onBiometricActivationSuccess,
         onBiometricActivationFailed = viewModel::onBiometricActivationFailed,
         onExitClick = onExitClick,
-        biometricsPrompt = state.biometricPromptModel,
+        onSkipClick = onSkipClick,
         biometricsAvailability = state.biometricsAvailability
     )
 }
@@ -81,7 +80,7 @@ fun EnableBiometricsItem(
     onBiometricActivationSuccess: () -> Unit,
     onBiometricActivationFailed: () -> Unit,
     onExitClick: () -> Unit = {},
-    biometricsPrompt: BiometricsHelper.BiometricPromptModel,
+    onSkipClick: () -> Unit = {},
     biometricsAvailability: BiometricsAvailability = BiometricsAvailability.Checking
 ) {
     BoxWithConstraints(
@@ -158,7 +157,7 @@ fun EnableBiometricsItem(
                                 }
                             )
                         },
-                        onSecondActionClick = onExitClick
+                        onSecondActionClick = onSkipClick
                     )
                 }
 
@@ -166,7 +165,7 @@ fun EnableBiometricsItem(
                     BottomActions(
                         onFirstActionClick = {},
                         onSecondActionClick = onExitClick,
-                        firstActiontitleResId = stringResource(id = R.string.label_setup_biometrics),
+                        firstActionTitleResId = stringResource(id = R.string.label_setup_biometrics),
                         titleResId = stringResource(R.string.error_biometrics_not_available)
                     )
                 }
@@ -177,24 +176,13 @@ fun EnableBiometricsItem(
                             activity.openBiometricsSettings()
                         },
                         onSecondActionClick = onExitClick,
-                        firstActiontitleResId = stringResource(id = R.string.btn_open_settings),
+                        firstActionTitleResId = stringResource(id = R.string.btn_open_settings),
                         titleResId = stringResource(R.string.label_biometrics_enable_explanation)
                     )
                 }
             }
         }
     }
-}
-
-fun Context.getActivity(): AppCompatActivity? {
-    var currentContext = this
-    while (currentContext is ContextWrapper) {
-        if (currentContext is AppCompatActivity) {
-            return currentContext
-        }
-        currentContext = currentContext.baseContext
-    }
-    return null
 }
 
 @Preview(showBackground = true)
@@ -212,7 +200,7 @@ fun BottomActions(
     onFirstActionClick: () -> Unit,
     onSecondActionClick: () -> Unit,
     modifier: Modifier = Modifier,
-    firstActiontitleResId: String = stringResource(R.string.label_setup_biometrics),
+    firstActionTitleResId: String = stringResource(R.string.label_setup_biometrics),
     titleResId: String? = null
 ) {
     Column(
@@ -240,7 +228,7 @@ fun BottomActions(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = firstActiontitleResId,
+                text = firstActionTitleResId,
                 style = TextStyle(
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.color_white),
@@ -277,10 +265,6 @@ fun EnableBiometricsScreen_Preview() {
     EnableBiometricsItem(
         onBiometricActivationSuccess = {},
         onBiometricActivationFailed = {},
-        biometricsPrompt = BiometricsHelper.BiometricPromptModel(
-            titleResId = R.string.label_setup_biometrics,
-            cancelBtnTextResId = R.string.btn_cancel,
-        ),
         biometricsAvailability = BiometricsAvailability.Available
     )
 }
@@ -291,10 +275,6 @@ fun EnableBiometricsScreen_Not_Enrolled_Preview() {
     EnableBiometricsItem(
         onBiometricActivationSuccess = {},
         onBiometricActivationFailed = {},
-        biometricsPrompt = BiometricsHelper.BiometricPromptModel(
-            titleResId = R.string.label_setup_biometrics,
-            cancelBtnTextResId = R.string.btn_cancel,
-        ),
         biometricsAvailability = BiometricsAvailability.NotEnabled
     )
 }
@@ -306,10 +286,6 @@ fun EnableBiometricsScreen_Not_Available_Preview() {
     EnableBiometricsItem(
         onBiometricActivationSuccess = {},
         onBiometricActivationFailed = {},
-        biometricsPrompt = BiometricsHelper.BiometricPromptModel(
-            titleResId = R.string.label_setup_biometrics,
-            cancelBtnTextResId = R.string.btn_cancel,
-        ),
         biometricsAvailability = BiometricsAvailability.NotAvailable
     )
 }
@@ -320,10 +296,6 @@ fun EnableBiometricsScreen_Loading_Preview() {
     EnableBiometricsItem(
         onBiometricActivationSuccess = {},
         onBiometricActivationFailed = {},
-        biometricsPrompt = BiometricsHelper.BiometricPromptModel(
-            titleResId = R.string.label_setup_biometrics,
-            cancelBtnTextResId = R.string.btn_cancel,
-        ),
         biometricsAvailability = BiometricsAvailability.Checking
     )
 }

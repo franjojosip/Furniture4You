@@ -36,8 +36,12 @@ fun NavGraphBuilder.authNavigationGraph(
                 onLoginClick = {
                     navHostController.popBackStack(Screens.AuthScreen.Login.route, false)
                 },
-                onRegister = {
-                    navHostController.popBackStack(Screens.AuthScreen.Login.route, false)
+                onRegistered = {
+                    navHostController.navigate(Graph.HOME) {
+                        popUpTo(Screens.AuthScreen.Login.route) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }

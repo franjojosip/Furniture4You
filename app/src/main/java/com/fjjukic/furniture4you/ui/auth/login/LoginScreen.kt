@@ -92,7 +92,9 @@ fun LoginScreen(
                 onRegisterClick = onRegisterClick,
                 onLoginClick = { email, password ->
                     viewModel.login(email, password)
-                }
+                },
+                showBiometricIcon = state.isBiometricAvailable,
+                onBiometricActionClick = viewModel::onBiometricActionClick
             )
         }
         if (state.isLoading) {
@@ -109,12 +111,25 @@ fun LoginScreen(
     }
 }
 
+@Preview
+@Composable
+fun LoginFormPreview() {
+    LoginForm(
+        onLoginClick = { _, _ -> },
+        onForgotPasswordClick = {},
+        onRegisterClick = {},
+        onBiometricActionClick = {}
+    )
+}
+
 @Composable
 fun LoginForm(
     onForgotPasswordClick: () -> Unit,
     onRegisterClick: () -> Unit,
     onLoginClick: (String, String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showBiometricIcon: Boolean = false,
+    onBiometricActionClick: () -> Unit = {},
 ) {
     var password by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -134,7 +149,9 @@ fun LoginForm(
         EmailInputField(
             value = email,
             onValueChange = { email = it },
-            modifier = Modifier.padding(top = 24.dp)
+            modifier = Modifier.padding(top = 24.dp),
+            showBiometricIcon = showBiometricIcon,
+            onBiometricActionClick = onBiometricActionClick
         )
 
         PasswordInputField(

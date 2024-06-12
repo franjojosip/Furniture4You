@@ -16,11 +16,6 @@ object BiometricsHelper {
         return biometricManager.canAuthenticate(BIOMETRIC_STRONG or BIOMETRIC_WEAK)
     }
 
-    data class BiometricPromptModel(
-        val titleResId: Int,
-        val cancelBtnTextResId: Int
-    )
-
     fun showPrompt(
         activity: FragmentActivity,
         onSuccess: () -> Unit,
@@ -36,12 +31,7 @@ object BiometricsHelper {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    onSuccess.invoke()
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    onError()
+                    onSuccess()
                 }
             })
 

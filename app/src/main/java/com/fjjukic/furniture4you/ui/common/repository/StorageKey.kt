@@ -10,4 +10,6 @@ object StorageKey {
     const val IS_LOGGED_IN = "is_logged_in"
 
     const val BIOMETRICS_FLAG = "biometrics_flag"
+
+    const val SECRET_KEY = "secret_key"
 }

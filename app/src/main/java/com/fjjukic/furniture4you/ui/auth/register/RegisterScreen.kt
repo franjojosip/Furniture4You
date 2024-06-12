@@ -50,7 +50,7 @@ import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 @Composable
 fun RegisterScreen(
     onLoginClick: () -> Unit,
-    onRegister: () -> Unit,
+    onRegistered: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
@@ -64,7 +64,7 @@ fun RegisterScreen(
     }
     LaunchedEffect(key1 = state.isRegistered) {
         if (state.isRegistered) {
-            onRegister()
+            onRegistered()
         }
     }
 
@@ -78,19 +78,27 @@ fun RegisterScreen(
             Header(subtitle = stringResource(R.string.title_register))
             RegisterForm(
                 onLoginClick = onLoginClick,
-                onRegisterClick = { name, email, password, confirmPassword, useBiometrics ->
-                    viewModel.register(name, email, password, confirmPassword, useBiometrics)
+                onRegisterClick = { name, email, password, confirmPassword, shouldCheckBiometrics ->
+                    viewModel.register(
+                        name,
+                        email,
+                        password,
+                        confirmPassword,
+                        shouldCheckBiometrics
+                    )
                 },
-                isBiometricsAvailable = viewModel.isBiometricsAvailable()
+                isBiometricsAvailable = state.isBiometricsAvailable
             )
         }
         if (state.isLoading) {
             FullscreenProgressBar()
         }
-        if (true) {//state.shouldRequestBiometrics == true && true) {
+        if (state.shouldRequestBiometrics) {
             EnableBiometricsScreen(
+                onSuccess = viewModel::onBiometricsSuccess,
+                onSkipClick = onRegistered,
                 onExitClick = {
-                    onRegister()
+                    onLoginClick()
                 }
             )
         }
@@ -110,7 +118,7 @@ fun RegisterFormPreview() {
 @Composable
 fun RegisterForm(
     onLoginClick: () -> Unit,
-    onRegisterClick: (String, String, String, String, Boolean?) -> Unit,
+    onRegisterClick: (String, String, String, String, Boolean) -> Unit,
     isBiometricsAvailable: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -118,7 +126,7 @@ fun RegisterForm(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    var useBiometrics by remember { mutableStateOf<Boolean?>(null) }
+    var shouldCheckBiometrics by remember { mutableStateOf(false) }
 
     Card(
         colors = CardDefaults.cardColors(
@@ -173,7 +181,7 @@ fun RegisterForm(
             SwitchField(
                 stringResource(id = R.string.label_use_biometrics),
                 onCheckedChange = {
-                    useBiometrics = it
+                    shouldCheckBiometrics = it
                 },
                 modifier = Modifier
                     .padding(start = 10.dp, end = 20.dp)
@@ -187,7 +195,7 @@ fun RegisterForm(
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.color_dark_gray)),
             onClick = {
-                onRegisterClick(name, email, password, confirmPassword, useBiometrics)
+                onRegisterClick(name, email, password, confirmPassword, shouldCheckBiometrics)
             },
             modifier = modifier
                 .padding(top = 40.dp)
