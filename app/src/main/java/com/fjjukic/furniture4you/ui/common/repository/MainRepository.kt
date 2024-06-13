@@ -62,7 +62,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     // This token is usually get from ex. Firebase when register new user
-    private val fakeAccessToken =
+    private val mockToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWNyZXQiOiJXZSdyZSBoaXJpbmcgOykifQ.WZrEWG-l3VsJzJrbnjn2BIYO68gHIGyat6jrw7Iu-Rw"
 
     private val securedPreferences by lazy {
@@ -95,7 +95,7 @@ class MainRepositoryImpl @Inject constructor(
         val secretKey = Pbkdf2Factory.createKey(password.toCharArray(), salt)
 
         val encryptedToken = aead.encrypt(
-            fakeAccessToken.toByteArray(),
+            mockToken.toByteArray(),
             secretKey.encoded
         )
 
@@ -182,7 +182,7 @@ class MainRepositoryImpl @Inject constructor(
         authResult: AuthenticationResult
     ): AuthenticationState {
         authResult.cryptoObject?.cipher?.let { cipher ->
-            val encryptedToken = cryptoManager.encrypt(fakeAccessToken, cipher)
+            val encryptedToken = cryptoManager.encrypt(mockToken, cipher)
             cryptoManager.saveToPrefs(
                 encryptedToken,
                 app,
@@ -216,14 +216,14 @@ class MainRepositoryImpl @Inject constructor(
 
     override fun getBiometricData(): BiometricData {
         return BiometricData(
-            token = fakeAccessToken,
+            token = mockToken,
             cipher = cryptoManager.initEncryptionCipher(StorageKey.SECRET_KEY)
         )
     }
 
     override fun saveBiometricsResult(authResult: AuthenticationResult) {
         authResult.cryptoObject?.cipher?.let { cipher ->
-            val encryptedToken = cryptoManager.encrypt(fakeAccessToken, cipher)
+            val encryptedToken = cryptoManager.encrypt(mockToken, cipher)
             cryptoManager.saveToPrefs(
                 encryptedToken,
                 app,
@@ -260,7 +260,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override fun getBiometricsPromptData(): BiometricData {
         return BiometricData(
-            token = fakeAccessToken,
+            token = mockToken,
             cipher = cryptoManager.initEncryptionCipher(StorageKey.SECRET_KEY)
         )
     }
