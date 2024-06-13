@@ -123,4 +123,5 @@ All the required information for the user can be found on Profile tab. All the i
 And you're app is ready to use.
 
 ## Notes
-- Registration is currently not required, just use LOGIN button without entering any information
+- For testing purposes use DEMO user (email: test@mail.com, password: test123)
+- Registration is required and user can add biometrics after successful registration.
