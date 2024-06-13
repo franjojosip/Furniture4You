@@ -3,9 +3,14 @@ package com.fjjukic.furniture4you.ui.common.repository
 import android.content.Context
 import android.util.Base64
 import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt.AuthenticationResult
 import androidx.core.content.edit
 import com.fjjukic.furniture4you.FurnitureApplication
-import com.fjjukic.furniture4you.ui.common.biometrics.BiometricsHelper
+import com.fjjukic.furniture4you.ui.auth.login.BiometricData
+import com.fjjukic.furniture4you.ui.common.crypto.BiometricsHelper
+import com.fjjukic.furniture4you.ui.common.crypto.CryptoManager
+import com.fjjukic.furniture4you.ui.common.crypto.ENCRYPTED_FILE_NAME
+import com.fjjukic.furniture4you.ui.common.crypto.PREF_BIOMETRIC
 import com.fjjukic.furniture4you.ui.common.utils.Pbkdf2Factory
 import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import com.fjjukic.furniture4you.ui.common.viewmodel.User
@@ -27,18 +32,27 @@ interface MainRepository {
 
     fun isBiometricsAvailable(): Boolean
     fun checkBiometricsAvailable(): BiometricsAvailability
-    fun setupLockWithBiometrics(isLocked: Boolean)
+    fun setupLockWithBiometrics(
+        isLocked: Boolean,
+        authResult: AuthenticationResult
+    ): AuthenticationState
+
     fun checkIfAppLockedWithBiometrics(): Boolean
 
     fun onBiometricAuthenticationSuccess()
+    fun getBiometricsPromptData(): BiometricData
+    fun hasEncryptedData(): Boolean
+    fun getBiometricData(): BiometricData
+    fun saveBiometricsResult(authResult: AuthenticationResult)
 }
 
 enum class AuthenticationState {
-    AUTHENTICATED, INVALID_AUTHENTICATION
+    AUTHENTICATED, INVALID_AUTHENTICATION, VALID_BIOMETRY, INVALID_BIOMETRY
 }
 
 class MainRepositoryImpl @Inject constructor(
-    private val app: Context
+    private val app: Context,
+    private val cryptoManager: CryptoManager
 ) : MainRepository {
 
     companion object {
@@ -47,6 +61,7 @@ class MainRepositoryImpl @Inject constructor(
         private const val MOCK_DELAY = 1000L
     }
 
+    // This token is usually get from ex. Firebase when register new user
     private val fakeAccessToken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWNyZXQiOiJXZSdyZSBoaXJpbmcgOykifQ.WZrEWG-l3VsJzJrbnjn2BIYO68gHIGyat6jrw7Iu-Rw"
 
@@ -109,9 +124,7 @@ class MainRepositoryImpl @Inject constructor(
         delay(MOCK_DELAY)
         return when {
             email == MOCK_LOGIN_EMAIL && password == MOCK_PASSWORD -> {
-                securedPreferences.edit {
-                    putBoolean(StorageKey.IS_LOGGED_IN, true)
-                }
+                securedPreferences.edit().putBoolean(StorageKey.IS_LOGGED_IN, true).apply()
                 AuthenticationState.AUTHENTICATED
             }
 
@@ -141,6 +154,8 @@ class MainRepositoryImpl @Inject constructor(
         }
 
         return if (token != null) {
+            securedPreferences.edit().putBoolean(StorageKey.IS_LOGGED_IN, true).apply()
+
             AuthenticationState.AUTHENTICATED
         } else AuthenticationState.INVALID_AUTHENTICATION
     }
@@ -156,18 +171,67 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun logout() {
-        delay(MOCK_DELAY)
+        delay(400L)
         securedPreferences.edit {
             putBoolean(StorageKey.IS_LOGGED_IN, false)
         }
     }
 
-    override fun setupLockWithBiometrics(isLocked: Boolean) {
-        securedPreferences.edit().putBoolean(StorageKey.BIOMETRICS_FLAG, isLocked).apply()
+    override fun setupLockWithBiometrics(
+        isLocked: Boolean,
+        authResult: AuthenticationResult
+    ): AuthenticationState {
+        authResult.cryptoObject?.cipher?.let { cipher ->
+            val encryptedToken = cryptoManager.encrypt(fakeAccessToken, cipher)
+            cryptoManager.saveToPrefs(
+                encryptedToken,
+                app,
+                ENCRYPTED_FILE_NAME,
+                Context.MODE_PRIVATE,
+                PREF_BIOMETRIC
+            )
+
+            securedPreferences.edit().putBoolean(StorageKey.BIOMETRICS_FLAG, isLocked).apply()
+
+            return AuthenticationState.VALID_BIOMETRY
+        } ?: return AuthenticationState.INVALID_BIOMETRY
     }
 
     override fun checkIfAppLockedWithBiometrics(): Boolean {
-        return securedPreferences.getBoolean(StorageKey.BIOMETRICS_FLAG, false)
+        return securedPreferences.getBoolean(
+            StorageKey.BIOMETRICS_FLAG,
+            false
+        ) && hasEncryptedData()
+    }
+
+    override fun hasEncryptedData(): Boolean {
+        val encryptedData = cryptoManager.getFromPrefs(
+            app,
+            ENCRYPTED_FILE_NAME,
+            Context.MODE_PRIVATE,
+            PREF_BIOMETRIC
+        )
+        return encryptedData != null
+    }
+
+    override fun getBiometricData(): BiometricData {
+        return BiometricData(
+            token = fakeAccessToken,
+            cipher = cryptoManager.initEncryptionCipher(StorageKey.SECRET_KEY)
+        )
+    }
+
+    override fun saveBiometricsResult(authResult: AuthenticationResult) {
+        authResult.cryptoObject?.cipher?.let { cipher ->
+            val encryptedToken = cryptoManager.encrypt(fakeAccessToken, cipher)
+            cryptoManager.saveToPrefs(
+                encryptedToken,
+                app,
+                ENCRYPTED_FILE_NAME,
+                Context.MODE_PRIVATE,
+                PREF_BIOMETRIC
+            )
+        }
     }
 
     override fun isBiometricsAvailable(): Boolean {
@@ -191,9 +255,14 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override fun onBiometricAuthenticationSuccess() {
-        securedPreferences.edit {
-            putBoolean(StorageKey.IS_LOGGED_IN, true)
-        }
+        securedPreferences.edit().putBoolean(StorageKey.IS_LOGGED_IN, true).apply()
+    }
+
+    override fun getBiometricsPromptData(): BiometricData {
+        return BiometricData(
+            token = fakeAccessToken,
+            cipher = cryptoManager.initEncryptionCipher(StorageKey.SECRET_KEY)
+        )
     }
 }
 

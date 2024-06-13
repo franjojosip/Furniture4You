@@ -35,9 +35,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
-import com.fjjukic.furniture4you.ui.common.biometrics.BiometricsHelper
+import com.fjjukic.furniture4you.ui.common.crypto.BiometricsHelper
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
 import com.fjjukic.furniture4you.ui.common.utils.findActivity
@@ -101,11 +102,11 @@ fun LoginScreen(
             FullscreenProgressBar()
         }
 
-        if (state.showBiometricsPrompt) {
-            BiometricsHelper.showPrompt(
-                activity,
-                onSuccess = viewModel::onBiometricActivationSuccess,
-                onError = viewModel::onBiometricActivationFailed
+        if (state.biometricsPromptData != null) {
+            BiometricsHelper.authenticateUser(
+                state.biometricsPromptData.cipher,
+                activity as FragmentActivity,
+                onSuccess = viewModel::onBiometricLoginSuccess,
             )
         }
     }

@@ -1,6 +1,7 @@
-package com.fjjukic.furniture4you.ui.auth.login
+package com.fjjukic.furniture4you.ui.auth.enable_biometrics
 
 import android.widget.Toast
+import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -38,7 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
-import com.fjjukic.furniture4you.ui.common.biometrics.BiometricsHelper
+import com.fjjukic.furniture4you.ui.auth.login.BiometricData
+import com.fjjukic.furniture4you.ui.common.crypto.BiometricsHelper
 import com.fjjukic.furniture4you.ui.common.repository.BiometricsAvailability
 import com.fjjukic.furniture4you.ui.common.utils.findActivity
 import com.fjjukic.furniture4you.ui.common.utils.openBiometricsSettings
@@ -65,10 +67,15 @@ fun EnableBiometricsScreen(
             onSuccess()
         }
     }
+    LaunchedEffect(state.biometricsFailed) {
+        if (state.biometricsFailed == true) {
+            onSkipClick()
+        }
+    }
 
     EnableBiometricsItem(
+        biometricData = state.biometricData,
         onBiometricActivationSuccess = viewModel::onBiometricActivationSuccess,
-        onBiometricActivationFailed = viewModel::onBiometricActivationFailed,
         onExitClick = onExitClick,
         onSkipClick = onSkipClick,
         biometricsAvailability = state.biometricsAvailability
@@ -77,8 +84,8 @@ fun EnableBiometricsScreen(
 
 @Composable
 fun EnableBiometricsItem(
-    onBiometricActivationSuccess: () -> Unit,
-    onBiometricActivationFailed: () -> Unit,
+    biometricData: BiometricData? = null,
+    onBiometricActivationSuccess: (authResult: BiometricPrompt.AuthenticationResult) -> Unit,
     onExitClick: () -> Unit = {},
     onSkipClick: () -> Unit = {},
     biometricsAvailability: BiometricsAvailability = BiometricsAvailability.Checking
@@ -149,13 +156,13 @@ fun EnableBiometricsItem(
                 BiometricsAvailability.Available -> {
                     BottomActions(
                         onFirstActionClick = {
-                            BiometricsHelper.showPrompt(
-                                activity,
-                                onSuccess = onBiometricActivationSuccess,
-                                onError = {
-                                    onBiometricActivationFailed()
-                                }
-                            )
+                            if (biometricData != null) {
+                                BiometricsHelper.registerUserBiometrics(
+                                    activity,
+                                    biometricData.cipher,
+                                    onSuccess = onBiometricActivationSuccess,
+                                )
+                            }
                         },
                         onSecondActionClick = onSkipClick
                     )
@@ -264,7 +271,6 @@ fun BottomActions(
 fun EnableBiometricsScreen_Preview() {
     EnableBiometricsItem(
         onBiometricActivationSuccess = {},
-        onBiometricActivationFailed = {},
         biometricsAvailability = BiometricsAvailability.Available
     )
 }
@@ -274,7 +280,6 @@ fun EnableBiometricsScreen_Preview() {
 fun EnableBiometricsScreen_Not_Enrolled_Preview() {
     EnableBiometricsItem(
         onBiometricActivationSuccess = {},
-        onBiometricActivationFailed = {},
         biometricsAvailability = BiometricsAvailability.NotEnabled
     )
 }
@@ -285,7 +290,6 @@ fun EnableBiometricsScreen_Not_Enrolled_Preview() {
 fun EnableBiometricsScreen_Not_Available_Preview() {
     EnableBiometricsItem(
         onBiometricActivationSuccess = {},
-        onBiometricActivationFailed = {},
         biometricsAvailability = BiometricsAvailability.NotAvailable
     )
 }
@@ -295,7 +299,6 @@ fun EnableBiometricsScreen_Not_Available_Preview() {
 fun EnableBiometricsScreen_Loading_Preview() {
     EnableBiometricsItem(
         onBiometricActivationSuccess = {},
-        onBiometricActivationFailed = {},
         biometricsAvailability = BiometricsAvailability.Checking
     )
 }

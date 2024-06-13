@@ -11,5 +11,5 @@ object StorageKey {
 
     const val BIOMETRICS_FLAG = "biometrics_flag"
 
-    const val SECRET_KEY = "secret_key"
+    const val SECRET_KEY = "biometric_secret_key"
 }

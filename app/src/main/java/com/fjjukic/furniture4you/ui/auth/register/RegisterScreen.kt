@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
-import com.fjjukic.furniture4you.ui.auth.login.EnableBiometricsScreen
+import com.fjjukic.furniture4you.ui.auth.enable_biometrics.EnableBiometricsScreen
 import com.fjjukic.furniture4you.ui.common.CombinedClickableText
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField

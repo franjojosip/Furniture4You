@@ -1,9 +1,10 @@
 package com.fjjukic.furniture4you.ui.common.utils
 
+import android.util.Patterns
+
 object ValidationUtils {
     fun isEmailValid(email: String): Boolean {
-        val emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$".toRegex()
-        return email.isNotBlank() && email.matches(emailRegex)
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     fun isPasswordValid(value: String): Boolean {

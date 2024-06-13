@@ -51,26 +51,25 @@ class LoginViewModel @Inject constructor(
      */
 
     fun onBiometricActionClick() {
-        if (mainRepository.checkIfAppLockedWithBiometrics()) {
-            _state.update { it.copy(showBiometricsPrompt = true) }
+        viewModelScope.launch(Dispatchers.IO) {
+            if (mainRepository.checkIfAppLockedWithBiometrics()) {
+                val biometricsPromptData = mainRepository.getBiometricsPromptData()
+                _state.update { it.copy(biometricsPromptData = biometricsPromptData) }
+            }
         }
     }
 
-    fun onBiometricActivationSuccess() {
+    fun onBiometricLoginSuccess() {
         viewModelScope.launch(Dispatchers.IO) {
+            mainRepository.onBiometricAuthenticationSuccess()
             _state.update {
                 it.copy(
                     messageResId = R.string.label_logged_in,
-                    showBiometricsPrompt = false
+                    biometricsPromptData = null
                 )
             }
-            mainRepository.onBiometricAuthenticationSuccess()
             delay(600)
             _state.update { it.copy(isAuthenticated = true) }
         }
-    }
-
-    fun onBiometricActivationFailed() {
-        _state.update { it.copy(showBiometricsPrompt = false) }
     }
 }
