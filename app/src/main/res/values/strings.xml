@@ -72,12 +72,16 @@
     <string name="placeholder_card_exp_date">Ex. MM/YY</string>
 
     <!--    Error field labels   -->
+    <string name="error_biometrics_activation_failed">Biometrics not enabled, please check profile settings to try again.</string>
+    <string name="error_biometrics_not_available">Biometrics not available</string>
     <string name="error_invalid_card_number">Invalid card number</string>
+    <string name="error_invalid_credentials">Invalid credentials!</string>
     <string name="error_invalid_field">Invalid field</string>
     <string name="error_invalid_email">Invalid email (ex. luka@mail.com)</string>
     <string name="error_invalid_password">Invalid password length [6–12]</string>
     <string name="error_invalid_zipcode">Invalid format (5 digit code)</string>
     <string name="error_promo_code_already_activated">Promo code already activated!</string>
+    <string name="error_check_fields">Please check your fields!</string>
 
     <!--    Button labels   -->
     <string name="btn_add_to_cart">Add to cart</string>
@@ -94,6 +98,7 @@
     <string name="btn_login">Log in</string>
     <string name="btn_no">No</string>
     <string name="btn_open_cart">Open cart</string>
+    <string name="btn_open_settings">Go to Settings</string>
     <string name="btn_remember_your_password">Remember your password?</string>
     <string name="btn_save_address">Save address</string>
     <string name="btn_send_email">Send email</string>
@@ -118,6 +123,7 @@
     <string name="title_checkout_order">Order:</string>
     <string name="title_checkout_total">Total:</string>
     <string name="title_delivery_method">Delivery method</string>
+    <string name="title_empty_cart">No items in cart</string>
     <string name="title_login">Hello!</string>
     <string name="title_logout">Confirm logout</string>
     <string name="title_make_home">Make home</string>
@@ -145,8 +151,11 @@
     <string name="subtitle_prelogin">Home beautiful</string>
 
     <!--    Other labels   -->
+    <string name="label_add_items_to_cart">Please explore our products</string>
     <string name="label_add_payment_method">Add payment</string>
     <string name="label_add_shipping_address">Add address</string>
+    <string name="label_biometrics_enable_explanation">You should enable Biometrics in System Settings</string>
+    <string name="label_biometrics_explanation">Logging in with biometrics is an easier way to access your account</string>
     <string name="label_card_holder_name">Card Holder Name</string>
     <string name="label_card_information">Card information</string>
     <string name="label_cart_discount">Discount(%1$s%%):</string>
@@ -159,11 +168,13 @@
     <string name="label_delivery">Delivery information</string>
     <string name="label_delivery_status_changes">Delivery status changes</string>
     <string name="label_detail">Detail</string>
+    <string name="label_enable_biometrics">Enable Biometrics</string>
     <string name="label_email">Email</string>
     <string name="label_expiry_date">Expiry Date</string>
     <string name="label_faq">FAQ</string>
     <string name="label_help_center">Help Center</string>
     <string name="label_logout">Are you sure you want to logout?</string>
+    <string name="label_logged_in">Successfully logged in!</string>
     <string name="label_my_orders">My orders</string>
     <string name="label_name">Name</string>
     <string name="label_new_arrivals">New arrivals</string>
@@ -173,6 +184,7 @@
     <string name="label_password">Password</string>
     <string name="label_prelogin_description">The best simple place where you discover most wonderful furnitures and make your home beautiful</string>
     <string name="label_promo_code_activated">Promo code activated!</string>
+    <string name="label_promo_code_removed">Promo code removed!</string>
     <string name="label_quantity">Quantity:</string>
     <string name="label_register_have_account">Already have account?</string>
     <string name="label_return">Return information</string>
@@ -180,10 +192,14 @@
     <string name="label_search">Search Furniture</string>
     <string name="label_search_count">%1d items</string>
     <string name="label_settings">Notification, Password, FAQ, Contact us</string>
+    <string name="label_setup_biometrics">Setup Biometrics</string>
     <string name="label_shipping_addresses">Shipping Addresses</string>
+    <string name="label_skip_this_step">Skip this step</string>
     <string name="label_successfully_added_to_cart">Successfully added to cart!</string>
+    <string name="label_successfully_registered">Successfully created a user!</string>
     <string name="label_total_amount">Total Amount:</string>
     <string name="label_try_different_search">Try different search keywords</string>
+    <string name="label_use_biometrics">Use biometrics for login</string>
 
     <plurals name="label_review_count">
         <item quantity="one">%1d review</item>

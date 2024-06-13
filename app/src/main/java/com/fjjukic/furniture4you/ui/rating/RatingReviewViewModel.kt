@@ -9,7 +9,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RatingReviewViewModel @Inject constructor() : ViewModel() {
-
-    private val _uiState = MutableStateFlow(MockRepository.getRatingReviewViewState())
-    val uiState: StateFlow<RatingReviewViewState> = _uiState
+    private val _state = MutableStateFlow(
+        RatingReviewViewState(
+            MockRepository.getProductDetail(),
+            MockRepository.getReviews()
+        )
+    )
+    val state: StateFlow<RatingReviewViewState> = _state
 }

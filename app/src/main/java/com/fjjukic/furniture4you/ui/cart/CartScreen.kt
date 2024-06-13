@@ -58,7 +58,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.fields.PromoCodeField
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.model.CartPrice
@@ -69,7 +69,6 @@ import com.fjjukic.furniture4you.ui.components.Toolbar
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
-import ht.ferit.fjjukic.foodlovers.R
 import kotlinx.coroutines.launch
 
 @Preview
@@ -87,22 +86,18 @@ fun CartScreen(
     viewModel: CartViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    val products by viewModel.products.collectAsStateWithLifecycle()
-    val price by viewModel.price.collectAsStateWithLifecycle()
-    val showMessage by viewModel.showMessage.collectAsState()
 
-    LaunchedEffect(showMessage) {
-        val snackbarResId = showMessage?.snackbarResId
-        val snackbarActionResId = showMessage?.snackbarActionResId
+    val state = viewModel.state.collectAsState().value
 
-        if (snackbarResId != null && snackbarActionResId != null) {
+    LaunchedEffect(state.message) {
+        if (state.message?.snackbarResId != null && state.message.snackbarActionResId != null) {
             coroutineScope.launch {
                 snackbarHostState.showSnackbar(
-                    context.getString(snackbarResId),
-                    context.getString(snackbarActionResId)
+                    message = context.getString(state.message.snackbarResId),
+                    actionLabel = context.getString(state.message.snackbarActionResId)
                 )
                 viewModel.onSnackbarShown()
             }
@@ -135,8 +130,8 @@ fun CartScreen(
                     Modifier.padding(horizontal = 20.dp)
                 )
                 TotalPriceItem(
-                    price.price,
-                    price.discount,
+                    state.price,
+                    state.discount,
                     modifier = Modifier
                         .padding(top = 20.dp, bottom = 12.dp)
                         .padding(horizontal = 20.dp)
@@ -160,17 +155,18 @@ fun CartScreen(
             }
         }
     ) { paddingValues ->
-        CartScreenContent(
-            products = products,
-            onProductClick = onProductClick,
-            onRemoveClick = viewModel::onRemoveClick,
-            onIncrementClick = viewModel::onIncrementClick,
-            onDecrementClick = viewModel::onDecrementClick,
-            modifier = Modifier
-                .background(colorResource(id = R.color.color_white))
-                .fillMaxSize()
-                .padding(paddingValues)
-        )
+        if (state.products.isNotEmpty())
+            CartScreenContent(
+                products = state.products,
+                onProductClick = onProductClick,
+                onRemoveClick = viewModel::onRemoveClick,
+                onIncrementClick = viewModel::onIncrementClick,
+                onDecrementClick = viewModel::onDecrementClick,
+                modifier = Modifier
+                    .background(colorResource(id = R.color.color_white))
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            )
     }
 }
 
@@ -289,6 +285,7 @@ fun PromoCodeField(
                     if (promoCode.isNotBlank() && promoCodeEntered) {
                         promoCode = ""
                         promoCodeEntered = false
+                        onPromoCodeEnter("")
                     } else if (promoCode.isNotBlank()) {
                         onPromoCodeEnter(promoCode)
                         promoCodeEntered = true

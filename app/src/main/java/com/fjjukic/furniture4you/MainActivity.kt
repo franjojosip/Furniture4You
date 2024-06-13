@@ -1,8 +1,8 @@
 package com.fjjukic.furniture4you
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.fjjukic.furniture4you.ui.common.prelogin.PreloginScreen
 import com.fjjukic.furniture4you.ui.common.viewmodel.MainViewModel
-import com.fjjukic.furniture4you.ui.main.PreloginScreen
 import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
@@ -21,20 +21,21 @@ import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val furnitureNavController = rememberFurnitureNavController()
-
-            val viewmodel = hiltViewModel<MainViewModel>()
-            val startDestination = viewmodel.getStartDestination()
 
             Furniture4YouTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
+                    val viewModel = hiltViewModel<MainViewModel>()
+                    val startDestination = viewModel.getStartDestination()
+
                     NavHost(
                         navController = furnitureNavController.navController,
                         route = Graph.ROOT,
@@ -43,12 +44,9 @@ class MainActivity : ComponentActivity() {
                         composable(Screens.Prelogin.route) {
                             PreloginScreen(
                                 onContinueClick = {
-                                    viewmodel.onPreloginShown().also {
-                                        furnitureNavController.navController.navigate(Graph.AUTH) {
-                                            popUpTo(Screens.Prelogin.route) {
-                                                inclusive = true
-                                                saveState = true
-                                            }
+                                    furnitureNavController.navController.navigate(Graph.AUTH) {
+                                        popUpTo(Screens.Prelogin.route) {
+                                            inclusive = true
                                         }
                                     }
                                 }

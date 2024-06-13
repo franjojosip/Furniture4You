@@ -23,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,7 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.components.Toolbar
@@ -47,7 +48,6 @@ import com.fjjukic.furniture4you.ui.dialog.PaymentInfoDialog
 import com.fjjukic.furniture4you.ui.dialog.ShippingInfoDialog
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
@@ -62,7 +62,7 @@ fun CheckoutScreen(
     modifier: Modifier = Modifier,
     viewModel: CheckoutViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsState()
 
     Scaffold(
         modifier,
@@ -105,24 +105,24 @@ fun CheckoutScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             ShippingAddress(
-                shippingInfo = uiState.shippingInfo,
+                shippingInfo = state.shippingInfo,
                 onShippingInfoChange = viewModel::onShippingInfoChange,
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .padding(horizontal = 20.dp)
             )
             Payment(
-                paymentInfo = uiState.paymentInfo,
+                paymentInfo = state.paymentInfo,
                 onEditClick = viewModel::onPaymentInfoChange,
                 modifier = Modifier.padding(top = 30.dp)
             )
             DeliveryMethod(
-                selectedOption = uiState.selectedDelivery,
-                deliveryOptions = uiState.deliveryOptions,
+                selectedOption = state.selectedDelivery,
+                deliveryOptions = state.deliveryOptions,
                 onDeliveryOptionSelect = viewModel::onDeliveryOptionSelect,
                 modifier = Modifier.padding(top = 30.dp)
             )
-            PriceOverview(uiState.priceInfo)
+            PriceOverview(state.priceInfo)
         }
     }
 }

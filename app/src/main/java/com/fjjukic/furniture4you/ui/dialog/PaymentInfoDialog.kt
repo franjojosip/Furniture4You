@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.text.isDigitsOnly
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.checkout.PaymentInfo
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
@@ -35,7 +36,6 @@ import com.fjjukic.furniture4you.ui.common.utils.CardNumberTransformation
 import com.fjjukic.furniture4you.ui.common.utils.ExpDateTransformation
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
-import ht.ferit.fjjukic.foodlovers.R
 
 @Composable
 fun PaymentInfoDialog(

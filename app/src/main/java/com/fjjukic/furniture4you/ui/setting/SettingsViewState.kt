@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.main.setting
+package com.fjjukic.furniture4you.ui.setting
 
 data class SettingsViewState(
     val password: String,
@@ -6,6 +6,7 @@ data class SettingsViewState(
     val salesState: Boolean,
     val newArrivalsState: Boolean,
     val deliveryStatusChangeState: Boolean,
+    val isLoggedOut: Boolean? = null
 )
 
 data class PersonalInformation(

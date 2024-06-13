@@ -3,8 +3,8 @@ package com.fjjukic.furniture4you.ui.common.model
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.res.stringResource
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.navigation.Screens
-import ht.ferit.fjjukic.foodlovers.R
 
 
 @Immutable

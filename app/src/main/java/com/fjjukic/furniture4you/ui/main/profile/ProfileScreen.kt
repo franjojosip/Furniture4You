@@ -14,6 +14,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,14 +32,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.components.ClickableField
 import com.fjjukic.furniture4you.ui.components.Toolbar
 import com.fjjukic.furniture4you.ui.dialog.LogoutDialog
-import com.fjjukic.furniture4you.ui.home.BottomBarNavigation
+import com.fjjukic.furniture4you.ui.main.home.BottomBarNavigation
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
@@ -56,18 +57,24 @@ fun ProfileScreen(
     onNavigateToRoute: (String) -> Unit,
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val state = viewModel.state.collectAsState().value
     var openLogoutDialog by remember { mutableStateOf(false) }
 
     if (openLogoutDialog) {
         LogoutDialog(
             onConfirmClick = {
                 openLogoutDialog = false
-                onLogoutClick()
+                viewModel.onLogoutClick()
             }, onDismissClick = {
                 openLogoutDialog = false
             }
         )
+    }
+
+    LaunchedEffect(state.isLoggedOut) {
+        if (state.isLoggedOut == true) {
+            onLogoutClick()
+        }
     }
 
     Scaffold(
@@ -121,7 +128,7 @@ fun ProfileScreen(
                 ) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = uiState.personalInformation.name,
+                        text = state.personalInformation.name,
                         fontFamily = nunitoSansFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
@@ -131,7 +138,7 @@ fun ProfileScreen(
                     )
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = uiState.personalInformation.email,
+                        text = state.personalInformation.email,
                         fontFamily = nunitoSansFamily,
                         fontSize = 14.sp,
                         maxLines = 1,

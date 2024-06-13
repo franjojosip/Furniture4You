@@ -1,5 +1,6 @@
-package com.fjjukic.furniture4you.ui.auth
+package com.fjjukic.furniture4you.ui.auth.forgot_password
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,12 +31,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.CombinedClickableText
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
-import com.fjjukic.furniture4you.ui.common.showFeatureNotAvailable
 import com.fjjukic.furniture4you.ui.components.Header
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
@@ -45,7 +48,17 @@ fun ForgotPasswordScreenPreview() {
 fun ForgotPasswordScreen(
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: ForgotPasswordViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val messageResId = viewModel.messageResId.collectAsState().value
+
+    LaunchedEffect(messageResId) {
+        messageResId?.let { resId ->
+            Toast.makeText(context, context.getString(resId), Toast.LENGTH_SHORT).show()
+        }
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -53,16 +66,21 @@ fun ForgotPasswordScreen(
             .verticalScroll(rememberScrollState())
     ) {
         Header(subtitle = stringResource(R.string.title_reset_password))
-        ForgotPasswordForm(onLoginClick = onLoginClick)
+        ForgotPasswordForm(
+            onLoginClick = onLoginClick,
+            onEmailSubmit = { _ ->
+                viewModel.resetPassword()
+            }
+        )
     }
 }
 
 @Composable
 fun ForgotPasswordForm(
     onLoginClick: () -> Unit,
+    onEmailSubmit: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
 
     Card(
@@ -90,7 +108,7 @@ fun ForgotPasswordForm(
                 .padding(top = 40.dp)
                 .width(260.dp)
                 .align(Alignment.CenterHorizontally),
-            onClick = { showFeatureNotAvailable(context) }
+            onClick = { onEmailSubmit(email) }
         ) {
             Text(
                 text = stringResource(R.string.btn_send_email),

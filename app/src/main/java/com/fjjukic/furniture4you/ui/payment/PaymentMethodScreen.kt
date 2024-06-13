@@ -33,7 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,13 +47,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.model.PaymentCard
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.components.Toolbar
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
@@ -67,7 +66,7 @@ fun PaymentMethodScreen(
     onBackClick: () -> Unit,
     viewModel: PaymentMethodViewModel = hiltViewModel(),
 ) {
-    val cards by viewModel.cards.collectAsStateWithLifecycle()
+    val state = viewModel.state.collectAsState().value
 
     Scaffold(
         topBar = {
@@ -102,7 +101,7 @@ fun PaymentMethodScreen(
                 .padding(paddingValues),
             contentPadding = PaddingValues(vertical = 20.dp, horizontal = 20.dp)
         ) {
-            items(cards) { card ->
+            items(state.cards) { card ->
                 PaymentCardItem(
                     card = card,
                     modifier = Modifier.padding(bottom = 14.dp)

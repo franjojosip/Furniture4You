@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.home
+package com.fjjukic.furniture4you.ui.main.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -39,7 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.model.BottomNavigationItem
 import com.fjjukic.furniture4you.ui.common.model.CategoryItem
 import com.fjjukic.furniture4you.ui.common.model.Product
@@ -47,7 +47,6 @@ import com.fjjukic.furniture4you.ui.components.CategoryFilterItem
 import com.fjjukic.furniture4you.ui.components.ProductItem
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
@@ -68,8 +67,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val homeState by viewModel.homeState.collectAsStateWithLifecycle()
-    val selectedCategory by viewModel.selectedCategory.collectAsStateWithLifecycle()
+    val homeState = viewModel.homeState.collectAsState().value
 
     Scaffold(
         bottomBar = {
@@ -86,9 +84,13 @@ fun HomeScreen(
                 .background(colorResource(id = R.color.color_white))
         ) {
             HomeHeader(onSearchClick, onCartClick)
-            CategoryFilter(homeState.categories, selectedCategory, { index ->
-                viewModel.setSelectedCategory(index)
-            })
+            CategoryFilter(
+                categories = homeState.categories,
+                selectedCategory = homeState.selectedCategory,
+                onCategorySelected = { index ->
+                    viewModel.setSelectedCategory(index)
+                }
+            )
             ProductList(homeState.products, onProductClick)
         }
     }
@@ -226,7 +228,7 @@ fun CategoryFilter(
 @Composable
 fun ProductList(
     products: List<Product>,
-    onProductClicked: (String) -> Unit,
+    onProductClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -238,7 +240,7 @@ fun ProductList(
         items(products) { product ->
             ProductItem(
                 product,
-                onProductClick = onProductClicked
+                onProductClick = onProductClick
             )
         }
     }

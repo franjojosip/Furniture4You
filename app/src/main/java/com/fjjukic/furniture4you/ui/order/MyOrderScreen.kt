@@ -32,6 +32,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -46,12 +47,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.model.Order
 import com.fjjukic.furniture4you.ui.common.utils.PaymentUtils
 import com.fjjukic.furniture4you.ui.components.Toolbar
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
-import ht.ferit.fjjukic.foodlovers.R
 import kotlinx.coroutines.launch
 
 @Preview
@@ -66,8 +67,10 @@ fun MyOrderScreen(
     onBackClick: () -> Unit,
     viewModel: MyOrderViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state.collectAsState().value
+
     val pagerState =
-        rememberPagerState(initialPage = 0) { viewModel.tabs.size }
+        rememberPagerState(initialPage = 0) { state.tabs.size }
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
@@ -95,7 +98,7 @@ fun MyOrderScreen(
                 },
                 divider = {}
             ) {
-                viewModel.tabs.forEachIndexed { index, tab ->
+                state.tabs.forEachIndexed { index, tab ->
                     Tab(
                         text = {
                             Text(
@@ -134,16 +137,16 @@ fun MyOrderScreen(
             }
 
             HorizontalPager(state = pagerState) { page ->
-                when (viewModel.tabs[page]) {
-                    MyOrderViewModel.OrderStatus.Delivered -> {
+                when (state.tabs[page]) {
+                    OrderStatus.Delivered -> {
                         OrderList(viewModel.deliveredOrders)
                     }
 
-                    MyOrderViewModel.OrderStatus.Processing -> {
+                    OrderStatus.Processing -> {
                         OrderList(viewModel.processedOrders)
                     }
 
-                    MyOrderViewModel.OrderStatus.Canceled -> {
+                    OrderStatus.Canceled -> {
                         OrderList(viewModel.canceledOrders)
                     }
                 }
@@ -172,9 +175,9 @@ fun OrderList(orders: List<Order>) {
 @Composable
 fun OrderCard(order: Order, modifier: Modifier = Modifier) {
     val statusColor: Color = when (order.status) {
-        MyOrderViewModel.OrderStatus.Delivered -> colorResource(id = R.color.color_status_delivered)
-        MyOrderViewModel.OrderStatus.Processing -> colorResource(id = R.color.color_status_processing)
-        MyOrderViewModel.OrderStatus.Canceled -> colorResource(id = R.color.color_status_canceled)
+        OrderStatus.Delivered -> colorResource(id = R.color.color_status_delivered)
+        OrderStatus.Processing -> colorResource(id = R.color.color_status_processing)
+        else -> colorResource(id = R.color.color_status_canceled)
     }
 
     Card(

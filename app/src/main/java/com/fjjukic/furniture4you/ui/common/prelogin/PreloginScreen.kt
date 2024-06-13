@@ -1,4 +1,4 @@
-package com.fjjukic.furniture4you.ui.main
+package com.fjjukic.furniture4you.ui.common.prelogin
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +11,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -21,8 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 
 @Preview
@@ -35,7 +38,16 @@ fun PreloginScreenPreview() {
 fun PreloginScreen(
     onContinueClick: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: PreloginViewModel = hiltViewModel()
 ) {
+    val preloginShown = viewModel.preloginShown.collectAsState().value
+
+    LaunchedEffect(preloginShown) {
+        if (preloginShown == true) {
+            onContinueClick()
+        }
+    }
+
     Box(modifier = modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.bg_prelogin),
@@ -86,7 +98,10 @@ fun PreloginScreen(
                 modifier = modifier
                     .padding(top = 160.dp)
                     .align(Alignment.CenterHorizontally),
-                onClick = { onContinueClick() }) {
+                onClick = {
+                    viewModel.onPreloginShown()
+                }
+            ) {
                 Text(
                     text = stringResource(R.string.btn_get_started),
                     fontSize = 18.sp,

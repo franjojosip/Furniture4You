@@ -1,20 +1,30 @@
 package com.fjjukic.furniture4you.ui.common.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.fjjukic.furniture4you.ui.common.SharedPreferenceManager
+import androidx.lifecycle.viewModelScope
+import com.fjjukic.furniture4you.ui.common.repository.MainRepository
 import com.fjjukic.furniture4you.ui.navigation.Graph
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+
+data class User(
+    val name: String,
+    val email: String,
+    val salt: String
+)
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val prefManager: SharedPreferenceManager
+    private val mainRepository: MainRepository
 ) : ViewModel() {
 
     fun getStartDestination(): String {
-        val isLogged = prefManager.getUser().isNotBlank()
-        val showPrelogin = prefManager.getShowPrelogin()
+        val isLogged = mainRepository.isLoggedIn()
+        val showPrelogin = mainRepository.getShowPrelogin()
         return when {
             !isLogged && showPrelogin -> Screens.Prelogin.route
             !isLogged -> Graph.AUTH
@@ -22,15 +32,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun onPreloginShown() {
-        prefManager.setShowPrelogin(false)
-    }
-
-    fun login() {
-        prefManager.setUser("test123")
-    }
-
     fun logout() {
-        prefManager.setUser("")
+        viewModelScope.launch(Dispatchers.IO) {
+            mainRepository.logout()
+        }
     }
+
 }

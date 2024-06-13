@@ -25,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,15 +42,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.components.ColorPalette
 import com.fjjukic.furniture4you.ui.components.ShoppingCounter
 import com.fjjukic.furniture4you.ui.dialog.ProductDetailCartDialog
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
-import ht.ferit.fjjukic.foodlovers.R
 
 @Preview
 @Composable
@@ -65,7 +65,7 @@ fun ProductDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: ProductDetailViewModel = hiltViewModel(),
 ) {
-    val productState by viewModel.productState.collectAsStateWithLifecycle()
+    val state = viewModel.state.collectAsState().value
 
     Scaffold(
         modifier,
@@ -85,12 +85,12 @@ fun ProductDetailScreen(
                 .padding(bottom = paddingValues.calculateBottomPadding())
         ) {
             ImageSlider(
-                imageUrl = productState.selectedProductDetail.imageUrl,
-                options = productState.selectedProductDetail.productOptions
+                imageUrl = state.selectedProductDetail.imageUrl,
+                options = state.selectedProductDetail.productOptions
             )
             ProductContent(
-                product = productState.selectedProductDetail,
-                itemCount = productState.counter,
+                product = state.selectedProductDetail,
+                itemCount = state.counter,
                 onIncrementClick = viewModel::onIncrementClick,
                 onDecrementClick = viewModel::onDecrementClick,
                 onReviewClick = onReviewClick,

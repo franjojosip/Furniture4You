@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,10 +24,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import com.fjjukic.furniture4you.ui.theme.FieldTextColor
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Composable
 fun PasswordInputField(
@@ -65,7 +66,12 @@ fun PasswordInputField(
                 onValueChange(it)
                 isError = !ValidationUtils.isPasswordValid(it)
             },
-            placeholder = { Text(stringResource(placeholderResId)) },
+            placeholder = {
+                Text(
+                    text = stringResource(placeholderResId),
+                    color = colorResource(id = R.color.color_placeholder)
+                )
+            },
             trailingIcon = {
                 IconButton(
                     onClick = {

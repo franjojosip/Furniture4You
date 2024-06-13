@@ -38,15 +38,15 @@ sealed class Screens(val route: String) {
 
     data object PaymentMethodAdd : Screens("${ProfileSections.PaymentMethod}/payment_method_add")
 
-    data object Search : Screens("search")
-    data object Cart : Screens("cart")
+    data object Search : Screens("${Graph.HOME}/search")
+    data object Cart : Screens("${Graph.HOME}/cart")
 
-    data object Checkout : Screens("checkout")
-    data object SuccessOrder : Screens("success_order")
+    data object Checkout : Screens("${Graph.HOME}/checkout")
+    data object SuccessOrder : Screens("${Graph.HOME}/success_order")
 
-    data object RatingReview : Screens("rating_review")
+    data object RatingReview : Screens("${Graph.HOME}/rating_review")
 
-    data object ProductDetail : Screens("product_detail") {
+    data object ProductDetail : Screens("${Graph.HOME}/product_detail") {
         private const val PRODUCT_DETAIL_ARG = "product_id"
 
         val routeWithArgs = "${route}/{${PRODUCT_DETAIL_ARG}}"

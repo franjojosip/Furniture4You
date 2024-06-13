@@ -26,8 +26,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
-import ht.ferit.fjjukic.foodlovers.R
 
 @Composable
 inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
