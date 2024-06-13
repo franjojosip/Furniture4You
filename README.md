@@ -61,9 +61,9 @@ All the required information for the user can be found on Profile tab. All the i
 - [X] Product Detail
 - [X] Checkout
 - [X] Success order
-- [] Test
-    - [] Unit testing
-    - [] Integration testing
+- [ ] Test
+    - [ ] Unit testing
+    - [ ] Integration testing
 
 ## App Design
 ### Prelogin and Auth screens
