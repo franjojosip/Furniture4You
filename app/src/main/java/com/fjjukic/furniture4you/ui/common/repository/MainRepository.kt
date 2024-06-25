@@ -28,7 +28,7 @@ interface MainRepository {
 
     suspend fun login(email: String, password: String): AuthenticationState
     suspend fun register(name: String, email: String, password: String): AuthenticationState
-    suspend fun logout()
+    fun logout()
 
     fun isBiometricsAvailable(): Boolean
     fun checkBiometricsAvailable(): BiometricsAvailability
@@ -170,8 +170,7 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun logout() {
-        delay(400L)
+    override fun logout() {
         securedPreferences.edit {
             putBoolean(StorageKey.IS_LOGGED_IN, false)
         }

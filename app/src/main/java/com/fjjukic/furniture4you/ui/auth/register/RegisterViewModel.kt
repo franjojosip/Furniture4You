@@ -35,7 +35,6 @@ class RegisterViewModel @Inject constructor(
         confirmPassword: String,
         shouldRequestBiometrics: Boolean = false
     ) {
-
         viewModelScope.launch(Dispatchers.IO) {
             if (name.isBlank()
                 || !ValidationUtils.isEmailValid(email)
