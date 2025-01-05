@@ -12,11 +12,11 @@ class PreloginViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
 
-    private val _preloginShown: MutableStateFlow<Boolean?> = MutableStateFlow(null)
+    private val _preloginShown: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val preloginShown = _preloginShown.asStateFlow()
 
     fun onPreloginShown() {
-            mainRepository.onPreloginShown()
-            _preloginShown.value = true
+        mainRepository.onPreloginShown()
+        _preloginShown.value = true
     }
 }
