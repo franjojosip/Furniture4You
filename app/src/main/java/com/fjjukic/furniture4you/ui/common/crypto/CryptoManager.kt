@@ -39,18 +39,10 @@ interface CryptoManager {
 }
 
 class CryptoManagerImpl @Inject constructor() : CryptoManager {
-
-    private val ENCRYPTION_TRANSFORMATION = "AES/GCM/NoPadding"
-    private val ANDROID_KEYSTORE = "AndroidKeyStore"
-    private val KEY_ALIAS = "MyKeyAlias"
-
     private val keyStore: KeyStore = KeyStore.getInstance(ANDROID_KEYSTORE)
 
     init {
         keyStore.load(null)
-        if (!keyStore.containsAlias(KEY_ALIAS)) {
-            createSecretKey()
-        }
     }
 
     override fun initEncryptionCipher(keyName: String): Cipher {
@@ -117,7 +109,19 @@ class CryptoManagerImpl @Inject constructor() : CryptoManager {
     }
 
     private fun getSecretKey(): SecretKey {
+        // Create the key if it does not exist
+        if (!keyStore.containsAlias(KEY_ALIAS)) {
+            createSecretKey() // Create secret key only when it's really needed
+        }
+
         return keyStore.getKey(KEY_ALIAS, null) as SecretKey
+    }
+
+    companion object {
+        private const val ENCRYPTION_TRANSFORMATION = "AES/GCM/NoPadding"
+        private const val ANDROID_KEYSTORE = "AndroidKeyStore"
+        private const val KEY_ALIAS = "MyKeyAlias"
+
     }
 }
 

@@ -46,6 +46,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun onMessageShown() {
+        _state.update { it.copy(messageResId = null) }
+    }
+
     /**
      * Biometry section
      */
