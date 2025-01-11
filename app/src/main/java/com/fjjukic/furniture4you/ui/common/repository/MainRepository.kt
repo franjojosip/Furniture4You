@@ -267,8 +267,8 @@ class MainRepositoryImpl @Inject constructor(
 }
 
 sealed class BiometricsAvailability {
-    object Checking : BiometricsAvailability()
-    object Available : BiometricsAvailability()
-    object NotAvailable : BiometricsAvailability()
-    object NotEnabled : BiometricsAvailability()
+    data object Checking : BiometricsAvailability()
+    data object Available : BiometricsAvailability()
+    data object NotAvailable : BiometricsAvailability()
+    data object NotEnabled : BiometricsAvailability()
 }
