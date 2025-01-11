@@ -373,7 +373,7 @@ private fun SearchCategoryItem(
         content = {
             Text(
                 text = category.name,
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 fontFamily = gelatioFamily,
                 color = colorResource(id = R.color.color_dark_gray),
                 modifier = Modifier
