@@ -159,6 +159,7 @@ fun LoginForm(
         PasswordInputField(
             value = password,
             onValueChange = { password = it },
+            onDone = { onLoginClick(email, password) },
             isLastField = true,
             modifier = Modifier.padding(top = 12.dp)
         )

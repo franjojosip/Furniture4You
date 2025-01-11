@@ -164,6 +164,7 @@ fun RegisterForm(
         PasswordInputField(
             value = password,
             onValueChange = { password = it },
+            onDone = {},
             isLastField = false,
             modifier = Modifier.padding(top = 12.dp)
         )
@@ -171,6 +172,7 @@ fun RegisterForm(
         PasswordInputField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
+            onDone = {},
             isLastField = true,
             labelResId = R.string.field_confirm_password,
             placeholderResId = R.string.placeholder_password,

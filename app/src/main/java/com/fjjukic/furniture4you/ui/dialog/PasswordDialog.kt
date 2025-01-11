@@ -89,7 +89,8 @@ fun PasswordDialog(
                 value = newPassword,
                 onValueChange = {
                     newPassword = it
-                }
+                },
+                onDone = {}
             )
 
             Row(
