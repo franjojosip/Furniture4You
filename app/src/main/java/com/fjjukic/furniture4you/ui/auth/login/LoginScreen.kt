@@ -70,7 +70,7 @@ fun LoginScreen(
     LaunchedEffect(state.messageResId) {
         state.messageResId?.let { resId ->
             Toast.makeText(context, context.getString(resId), Toast.LENGTH_SHORT).show()
-            viewModel.onMessageShown()
+            viewModel.clearMessage()
         }
     }
     LaunchedEffect(state.isAuthenticated) {

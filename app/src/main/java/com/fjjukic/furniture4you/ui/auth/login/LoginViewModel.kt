@@ -46,7 +46,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onMessageShown() {
+    fun clearMessage() {
         _state.update { it.copy(messageResId = null) }
     }
 
