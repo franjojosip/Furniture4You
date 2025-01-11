@@ -87,7 +87,7 @@ fun FurnitureSearchBar(
                 .fillMaxSize()
                 .wrapContentHeight()
         ) {
-            if (searchFocused) {
+            if (searchFocused || query.text.isNotEmpty()) {
                 IconButton(onClick = onClearQuery) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
