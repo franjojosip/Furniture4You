@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -28,8 +27,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -69,12 +66,21 @@ import com.fjjukic.furniture4you.ui.components.Toolbar
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 import com.fjjukic.furniture4you.ui.theme.NunitoSansTypography
 import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Preview
 @Composable
 fun CartPreview() {
-    CartScreen(onProductClick = {}, onCheckoutClick = {}, onBackClick = {})
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    CartScreen(
+        onProductClick = {},
+        onCheckoutClick = {},
+        onBackClick = {},
+        snackbarHostState,
+        scope
+    )
 }
 
 @Composable
@@ -82,19 +88,17 @@ fun CartScreen(
     onProductClick: (String) -> Unit,
     onCheckoutClick: () -> Unit,
     onBackClick: () -> Unit,
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope,
     modifier: Modifier = Modifier,
     viewModel: CartViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
-
-
     val state = viewModel.state.collectAsState().value
 
     LaunchedEffect(state.message) {
         if (state.message?.snackbarResId != null && state.message.snackbarActionResId != null) {
-            coroutineScope.launch {
+            scope.launch {
                 snackbarHostState.showSnackbar(
                     message = context.getString(state.message.snackbarResId),
                     actionLabel = context.getString(state.message.snackbarActionResId)
@@ -106,13 +110,6 @@ fun CartScreen(
 
     Scaffold(
         modifier,
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier.systemBarsPadding(),
-                snackbar = { snackbarData -> Snackbar(snackbarData) }
-            )
-        },
         topBar = {
             Toolbar(
                 title = stringResource(id = R.string.nav_my_cart),

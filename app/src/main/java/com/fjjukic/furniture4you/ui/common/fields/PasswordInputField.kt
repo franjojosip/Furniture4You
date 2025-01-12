@@ -28,14 +28,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fjjukic.furniture4you.R
-import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import com.fjjukic.furniture4you.ui.theme.FieldTextColor
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 
 @Composable
 fun PasswordInputField(
     value: String,
-    onValueChange: (String) -> Unit,
+    onValueChange: (String) -> Boolean,
+    isFieldValid: (String) -> Boolean,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
     isLastField: Boolean = false,
@@ -69,8 +69,10 @@ fun PasswordInputField(
                 .padding(top = 8.dp),
             value = value,
             onValueChange = {
-                onValueChange(it)
-                isError = !ValidationUtils.isPasswordValid(it)
+                val hasChanged = onValueChange(it)
+                if (hasChanged) {
+                    isError = !isFieldValid(it)
+                }
             },
             placeholder = {
                 Text(
@@ -101,6 +103,7 @@ fun PasswordInputField(
                     onDone()
                 }
             ),
+            singleLine = true,
             visualTransformation = if (passwordVisibility) VisualTransformation.None
             else PasswordVisualTransformation()
         )

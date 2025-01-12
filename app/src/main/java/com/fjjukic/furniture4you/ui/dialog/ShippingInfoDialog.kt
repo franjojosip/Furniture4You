@@ -99,6 +99,7 @@ fun ShippingInformationDialog(
                 placeholder = stringResource(R.string.placeholder_name),
                 onValueChange = {
                     fullName = it
+                    true
                 },
                 isFieldValid = {
                     it.isNotBlank()
@@ -116,6 +117,7 @@ fun ShippingInformationDialog(
                 placeholder = stringResource(R.string.placeholder_shipping_address),
                 onValueChange = {
                     address = it
+                    true
                 },
                 isFieldValid = {
                     it.isNotBlank()

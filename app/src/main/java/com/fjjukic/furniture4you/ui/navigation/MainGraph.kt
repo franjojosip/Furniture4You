@@ -1,5 +1,6 @@
 package com.fjjukic.furniture4you.ui.navigation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -21,10 +22,13 @@ import com.fjjukic.furniture4you.ui.search.SearchScreen
 import com.fjjukic.furniture4you.ui.setting.SettingsScreen
 import com.fjjukic.furniture4you.ui.shipping.ShippingAddressScreen
 import com.fjjukic.furniture4you.ui.shipping.add.AddShippingAddressScreen
+import kotlinx.coroutines.CoroutineScope
 
 fun NavGraphBuilder.homeGraph(
     navHostController: NavHostController,
-    onNavigateToBottomBarRoute: (String) -> Unit
+    onNavigateToBottomBarRoute: (String) -> Unit,
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope
 ) {
     navigation(
         route = Graph.HOME,
@@ -114,7 +118,9 @@ fun NavGraphBuilder.homeGraph(
                     Screens.Checkout.route
                 )
             },
-            onBackClick = navHostController::navigateUp
+            onBackClick = navHostController::navigateUp,
+            snackbarHostState,
+            scope
         )
     }
     composable(route = Screens.Checkout.route) {

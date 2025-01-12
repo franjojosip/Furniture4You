@@ -81,6 +81,7 @@
     <string name="error_invalid_password">Invalid password length [6–12]</string>
     <string name="error_invalid_zipcode">Invalid format (5 digit code)</string>
     <string name="error_promo_code_already_activated">Promo code already activated!</string>
+    <string name="error_password_not_match">Password and confirm password do not match!</string>
     <string name="error_check_fields">Please check your fields!</string>
 
     <!--    Button labels   -->

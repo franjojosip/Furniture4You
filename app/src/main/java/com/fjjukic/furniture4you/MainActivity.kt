@@ -3,10 +3,18 @@ package com.fjjukic.furniture4you
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -32,30 +40,43 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val snackbarHostState = remember { SnackbarHostState() }
+                    val scope = rememberCoroutineScope()
+
 
                     val viewModel = hiltViewModel<MainViewModel>()
                     val startDestination = viewModel.getStartDestination()
 
-                    NavHost(
-                        navController = furnitureNavController.navController,
-                        route = Graph.ROOT,
-                        startDestination = startDestination
-                    ) {
-                        composable(Screens.Prelogin.route) {
-                            PreloginScreen(
-                                onContinueClick = {
-                                    furnitureNavController.navController.navigate(Graph.AUTH) {
-                                        popUpTo(Screens.Prelogin.route) {
-                                            inclusive = true
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        NavHost(
+                            navController = furnitureNavController.navController,
+                            route = Graph.ROOT,
+                            startDestination = startDestination
+                        ) {
+                            composable(Screens.Prelogin.route) {
+                                PreloginScreen(
+                                    onContinueClick = {
+                                        furnitureNavController.navController.navigate(Graph.AUTH) {
+                                            popUpTo(Screens.Prelogin.route) {
+                                                inclusive = true
+                                            }
                                         }
                                     }
-                                }
+                                )
+                            }
+                            authNavigationGraph(furnitureNavController.navController)
+                            homeGraph(
+                                navHostController = furnitureNavController.navController,
+                                onNavigateToBottomBarRoute = furnitureNavController::onNavigateToBottomBarRoute,
+                                snackbarHostState,
+                                scope
                             )
                         }
-                        authNavigationGraph(furnitureNavController.navController)
-                        homeGraph(
-                            navHostController = furnitureNavController.navController,
-                            onNavigateToBottomBarRoute = furnitureNavController::onNavigateToBottomBarRoute
+                        SnackbarHost(
+                            hostState = snackbarHostState,
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .padding(16.dp)
                         )
                     }
                 }

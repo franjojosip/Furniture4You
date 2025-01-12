@@ -107,7 +107,10 @@ fun AddShippingAddressScreen(
                 value = state.newShippingAddress.fullName,
                 label = stringResource(R.string.field_name),
                 placeholder = stringResource(R.string.placeholder_name),
-                onValueChange = viewModel::onNameChange,
+                onValueChange = {
+                    viewModel.onNameChange(it)
+                    true
+                },
                 isFieldValid = {
                     it.isNotBlank()
                 },
@@ -124,7 +127,10 @@ fun AddShippingAddressScreen(
                 value = state.newShippingAddress.address,
                 label = stringResource(R.string.field_shipping_address),
                 placeholder = stringResource(R.string.placeholder_address),
-                onValueChange = viewModel::onAddressChange,
+                onValueChange = {
+                    viewModel.onAddressChange(it)
+                    true
+                },
                 isFieldValid = {
                     it.isNotEmpty()
                 },
@@ -141,7 +147,10 @@ fun AddShippingAddressScreen(
                 value = state.newShippingAddress.zipCode,
                 label = stringResource(R.string.field_shipping_zipcode),
                 placeholder = stringResource(R.string.placeholder_zipcode),
-                onValueChange = viewModel::onZipCodeChange,
+                onValueChange = {
+                    viewModel.onZipCodeChange(it)
+                    true
+                },
                 isFieldValid = {
                     Regex("\\d{5}").matches(it)
                 },

@@ -38,11 +38,20 @@ class LoginViewModel @Inject constructor(
             val result = mainRepository.login(email, password)
 
             if (result == AuthenticationState.AUTHENTICATED) {
-                _state.update { it.copy(isAuthenticated = true) }
+                _state.update {
+                    it.copy(
+                        isAuthenticated = true,
+                        isLoading = false
+                    )
+                }
             } else {
-                _state.update { it.copy(messageResId = R.string.error_invalid_credentials) }
+                _state.update {
+                    it.copy(
+                        messageResId = R.string.error_invalid_credentials,
+                        isLoading = false
+                    )
+                }
             }
-            _state.update { it.copy(isLoading = false) }
         }
     }
 
