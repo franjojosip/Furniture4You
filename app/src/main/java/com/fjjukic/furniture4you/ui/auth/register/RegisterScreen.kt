@@ -231,7 +231,7 @@ fun RegisterForm(
         }
         CombinedClickableText(
             startTextResId = R.string.label_register_have_account,
-            endTextResId = R.string.btn_sign_up,
+            endTextResId = R.string.btn_login,
             onClick = { onLoginClick() },
             modifier = Modifier
                 .padding(vertical = 30.dp)
