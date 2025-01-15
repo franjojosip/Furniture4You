@@ -17,11 +17,17 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val repository: MainRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow(MockRepository.getSettingsViewState().apply {
-        biometricsAvailable = repository.isBiometricsAvailable()
-        biometricsEnabledState = repository.checkIfAppLockedWithBiometrics()
-    })
+    private val _state = MutableStateFlow(MockRepository.getSettingsViewState())
     val state = _state.asStateFlow()
+
+    init {
+        _state.update {
+            it.copy(
+                biometricsAvailable = repository.isBiometricsAvailable(),
+                biometricsEnabledState = repository.checkIfAppLockedWithBiometrics()
+            )
+        }
+    }
 
     fun onSwitchStateChange(group: NotificationGroup) {
         _state.update {

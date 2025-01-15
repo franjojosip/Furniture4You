@@ -167,7 +167,7 @@ fun SettingsScreen(
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
                         .padding(top = 12.dp),
-                    defaultState = state.biometricsEnabledState
+                    checked = state.biometricsEnabledState
                 )
             }
 
@@ -186,7 +186,7 @@ fun SettingsScreen(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = 12.dp),
-                defaultState = state.salesState
+                checked = state.salesState
             )
             SwitchField(
                 stringResource(id = R.string.label_new_arrivals),
@@ -196,7 +196,7 @@ fun SettingsScreen(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = 12.dp),
-                defaultState = state.newArrivalsState
+                checked = state.newArrivalsState
             )
             SwitchField(
                 stringResource(id = R.string.label_delivery_status_changes),
@@ -207,7 +207,7 @@ fun SettingsScreen(
                     .padding(horizontal = 20.dp)
                     .padding(top = 12.dp),
                 isSwitchEnabled = false,
-                defaultState = state.deliveryStatusChangeState
+                checked = state.deliveryStatusChangeState
             )
 
             CheckoutItemHeader(
@@ -322,9 +322,8 @@ fun SwitchField(
     modifier: Modifier = Modifier,
     isTitle: Boolean = true,
     isSwitchEnabled: Boolean = true,
-    defaultState: Boolean = false,
+    checked: Boolean = false,
 ) {
-    var checked by remember { mutableStateOf(defaultState) }
 
     Surface(
         modifier = modifier
@@ -364,7 +363,6 @@ fun SwitchField(
                 ),
                 onCheckedChange = {
                     if (isSwitchEnabled) {
-                        checked = it
                         onCheckedChange(it)
                     }
                 }

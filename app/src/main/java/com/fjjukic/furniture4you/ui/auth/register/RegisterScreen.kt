@@ -204,7 +204,7 @@ fun RegisterForm(
                 modifier = Modifier
                     .padding(start = 10.dp, end = 20.dp)
                     .padding(top = 20.dp),
-                defaultState = false,
+                checked = shouldCheckBiometrics,
                 isTitle = false
             )
         }

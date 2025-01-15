@@ -57,10 +57,6 @@ fun EnableBiometricsScreen(
     val context = LocalContext.current
     val state = viewModel.state.collectAsState().value
 
-    LaunchedEffect(Unit) {
-        viewModel.resetState()
-    }
-
     LaunchedEffect(state.messageResId) {
         if (state.messageResId != null) {
             Toast.makeText(context, state.messageResId, Toast.LENGTH_SHORT).show()
@@ -70,11 +66,13 @@ fun EnableBiometricsScreen(
     LaunchedEffect(state.biometricsActivated) {
         if (state.biometricsActivated == true) {
             onSuccess()
+            viewModel.resetState()
         }
     }
     LaunchedEffect(state.biometricsFailed) {
         if (state.biometricsFailed == true) {
             onSkipClick()
+            viewModel.resetState()
         }
     }
 

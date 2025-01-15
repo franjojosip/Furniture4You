@@ -56,10 +56,9 @@ class EnableBiometricsViewModel @Inject constructor(
 
     fun resetState() {
         _state.update {
-            EnableBiometricsScreenState(
-                biometricsAvailability = mainRepository.checkBiometricsAvailable(),
-                biometricsActivated = mainRepository.checkIfAppLockedWithBiometrics(),
-                biometricData = mainRepository.getBiometricData()
+            it.copy(
+                biometricsActivated = null,
+                biometricsFailed = null
             )
         }
     }
