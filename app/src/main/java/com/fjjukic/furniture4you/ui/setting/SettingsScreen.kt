@@ -1,5 +1,6 @@
 package com.fjjukic.furniture4you.ui.setting
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
+import com.fjjukic.furniture4you.ui.auth.enable_biometrics.EnableBiometricsScreen
 import com.fjjukic.furniture4you.ui.checkout.CheckoutItemHeader
 import com.fjjukic.furniture4you.ui.common.showFeatureNotAvailable
 import com.fjjukic.furniture4you.ui.components.ClickableField
@@ -60,6 +63,13 @@ fun SettingsScreen(
 
     var passwordDialog by remember { mutableStateOf(false) }
     var personalInformationDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(state.messageId) {
+        state.messageId?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            viewModel.onMessageShown()
+        }
+    }
 
     if (personalInformationDialog) {
         PersonalInformationChangeDialog(
@@ -92,7 +102,11 @@ fun SettingsScreen(
             Toolbar(
                 title = stringResource(id = R.string.nav_settings),
                 startIconResId = R.drawable.ic_back,
-                onStartActionClick = onBackClick,
+                onStartActionClick = {
+                    if (state.showBiometricsPrompt) {
+                        viewModel.onBiometricsSkip()
+                    } else onBackClick()
+                },
                 onEndActionClick = {},
                 modifier = Modifier.background(colorResource(id = R.color.color_white))
             )
@@ -136,6 +150,26 @@ fun SettingsScreen(
                 stringResource(id = R.string.label_password),
                 state.password.replace(Regex("\\S"), "*")
             )
+
+            if (state.biometricsAvailable) {
+                CheckoutItemHeader(
+                    label = stringResource(R.string.label_enable_biometrics),
+                    modifier = Modifier
+                        .padding(top = 40.dp)
+                        .padding(horizontal = 20.dp)
+                )
+
+                SwitchField(
+                    stringResource(id = R.string.label_use_biometrics),
+                    onCheckedChange = {
+                        viewModel.onBiometricsClick(it)
+                    },
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 12.dp),
+                    defaultState = state.biometricsEnabledState
+                )
+            }
 
             CheckoutItemHeader(
                 label = stringResource(R.string.label_notification),
@@ -211,6 +245,14 @@ fun SettingsScreen(
                 },
                 modifier = Modifier
                     .padding(bottom = 30.dp)
+            )
+        }
+
+        if (state.showBiometricsPrompt) {
+            EnableBiometricsScreen(
+                onSuccess = viewModel::onBiometricsSuccess,
+                onSkipClick = viewModel::onBiometricsSkip,
+                onExitClick = viewModel::onBiometricsSkip
             )
         }
     }
@@ -321,8 +363,10 @@ fun SwitchField(
                     uncheckedBorderColor = colorResource(id = R.color.bg_switch_disabled),
                 ),
                 onCheckedChange = {
-                    checked = it
-                    onCheckedChange(it)
+                    if (isSwitchEnabled) {
+                        checked = it
+                        onCheckedChange(it)
+                    }
                 }
             )
         }

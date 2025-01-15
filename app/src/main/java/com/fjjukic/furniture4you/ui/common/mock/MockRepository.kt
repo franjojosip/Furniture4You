@@ -556,7 +556,9 @@ object MockRepository {
             password = "bruno12345",
             salesState = true,
             newArrivalsState = false,
-            deliveryStatusChangeState = false
+            deliveryStatusChangeState = false,
+            biometricsAvailable = true,
+            biometricsEnabledState = false
         )
     }
 

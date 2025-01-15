@@ -6,7 +6,11 @@ data class SettingsViewState(
     val salesState: Boolean,
     val newArrivalsState: Boolean,
     val deliveryStatusChangeState: Boolean,
-    val isLoggedOut: Boolean? = null
+    var biometricsAvailable: Boolean,
+    var biometricsEnabledState: Boolean,
+    val showBiometricsPrompt: Boolean = false,
+    val isLoggedOut: Boolean? = null,
+    val messageId: Int? = null
 )
 
 data class PersonalInformation(

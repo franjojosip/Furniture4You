@@ -44,6 +44,7 @@ interface MainRepository {
     fun hasEncryptedData(): Boolean
     fun getBiometricData(): BiometricData
     fun saveBiometricsResult(authResult: AuthenticationResult)
+    fun disableBiometrics(): Boolean
 }
 
 enum class AuthenticationState {
@@ -257,6 +258,23 @@ class MainRepositoryImpl @Inject constructor(
             token = mockToken,
             cipher = cryptoManager.initEncryptionCipher(StorageKey.SECRET_KEY)
         )
+    }
+
+    override fun disableBiometrics(): Boolean {
+        try {
+            cryptoManager.removeFromPrefs(
+                app,
+                ENCRYPTED_FILE_NAME,
+                Context.MODE_PRIVATE,
+                PREF_BIOMETRIC
+            )
+            encryptedPrefsManager.putBoolean(StorageKey.BIOMETRICS_FLAG, false)
+            cryptoManager.clearEncryptionKey()
+
+            return true
+        } catch (e: Exception) {
+            return false
+        }
     }
 }
 

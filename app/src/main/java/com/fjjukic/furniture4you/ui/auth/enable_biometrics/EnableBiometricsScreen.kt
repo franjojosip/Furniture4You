@@ -57,9 +57,14 @@ fun EnableBiometricsScreen(
     val context = LocalContext.current
     val state = viewModel.state.collectAsState().value
 
+    LaunchedEffect(Unit) {
+        viewModel.resetState()
+    }
+
     LaunchedEffect(state.messageResId) {
         if (state.messageResId != null) {
             Toast.makeText(context, state.messageResId, Toast.LENGTH_SHORT).show()
+            viewModel.onMessageShown()
         }
     }
     LaunchedEffect(state.biometricsActivated) {

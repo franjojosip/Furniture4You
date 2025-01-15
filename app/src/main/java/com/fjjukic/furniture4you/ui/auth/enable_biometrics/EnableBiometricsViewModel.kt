@@ -22,6 +22,7 @@ class EnableBiometricsViewModel @Inject constructor(
     private val _state: MutableStateFlow<EnableBiometricsScreenState> = MutableStateFlow(
         EnableBiometricsScreenState(
             biometricsAvailability = mainRepository.checkBiometricsAvailable(),
+            biometricsActivated = mainRepository.checkIfAppLockedWithBiometrics(),
             biometricData = mainRepository.getBiometricData()
         )
     )
@@ -42,6 +43,24 @@ class EnableBiometricsViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun onMessageShown() {
+        _state.update {
+            it.copy(
+                messageResId = null,
+            )
+        }
+    }
+
+    fun resetState() {
+        _state.update {
+            EnableBiometricsScreenState(
+                biometricsAvailability = mainRepository.checkBiometricsAvailable(),
+                biometricsActivated = mainRepository.checkIfAppLockedWithBiometrics(),
+                biometricData = mainRepository.getBiometricData()
+            )
         }
     }
 }

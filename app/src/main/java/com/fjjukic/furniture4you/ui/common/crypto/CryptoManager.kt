@@ -6,6 +6,7 @@ import android.security.keystore.KeyProperties
 import com.google.gson.Gson
 import java.nio.charset.Charset
 import java.security.KeyStore
+import java.security.KeyStoreException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -30,12 +31,21 @@ interface CryptoManager {
         prefKey: String
     )
 
+    fun removeFromPrefs(
+        context: Context,
+        filename: String,
+        mode: Int,
+        prefKey: String
+    )
+
     fun getFromPrefs(
         context: Context,
         filename: String,
         mode: Int,
         prefKey: String
     ): EncryptedData?
+
+    fun clearEncryptionKey()
 }
 
 class CryptoManagerImpl @Inject constructor() : CryptoManager {
@@ -115,6 +125,26 @@ class CryptoManagerImpl @Inject constructor() : CryptoManager {
         }
 
         return keyStore.getKey(KEY_ALIAS, null) as SecretKey
+    }
+
+    override fun removeFromPrefs(
+        context: Context,
+        filename: String,
+        mode: Int,
+        prefKey: String
+    ) {
+        val sharedPreferences = context.getSharedPreferences(filename, mode)
+        sharedPreferences.edit().remove(prefKey).apply()
+    }
+
+    override fun clearEncryptionKey() {
+        try {
+            if (keyStore.containsAlias(KEY_ALIAS)) {
+                keyStore.deleteEntry(KEY_ALIAS)
+            }
+        } catch (e: KeyStoreException) {
+            e.printStackTrace()
+        }
     }
 
     companion object {

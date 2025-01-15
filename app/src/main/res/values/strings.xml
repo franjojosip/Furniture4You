@@ -156,6 +156,9 @@
     <string name="label_add_payment_method">Add payment</string>
     <string name="label_add_shipping_address">Add address</string>
     <string name="label_biometrics_enable_explanation">You should enable Biometrics in System Settings</string>
+    <string name="label_biometrics_enabled">Successfully enabled biometrics</string>
+    <string name="label_biometrics_disabled">Successfully disabled biometrics</string>
+    <string name="label_biometrics_disabled_fail">Error while disabling biometrics</string>
     <string name="label_biometrics_explanation">Logging in with biometrics is an easier way to access your account</string>
     <string name="label_card_holder_name">Card Holder Name</string>
     <string name="label_card_information">Card information</string>
