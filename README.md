@@ -104,7 +104,7 @@ All the required information for the user can be found on Profile tab. All the i
 <img src="https://github.com/franjojosip/Furniture4You/assets/52075105/8833f7ae-9958-4554-a27b-959635d1c551" width="20%"/>
 <img src="https://github.com/franjojosip/Furniture4You/assets/52075105/92cff6cc-da13-4789-8410-5f2425516f03" width="20%"/>
 <img src="https://github.com/franjojosip/Furniture4You/assets/52075105/52c2176f-a328-4d21-ad20-874b786055b7" width="20%"/>
-<img src="https://github.com/franjojosip/Furniture4You/assets/52075105/f59228e4-4061-40bc-989f-c9fefe72d230" width="20%"/>
+<img src="https://github.com/user-attachments/assets/3106659e-fcb5-4aa0-8c4f-6a0986ea2f0b" width="20%"/>
 </p>
 
 ## Getting started
