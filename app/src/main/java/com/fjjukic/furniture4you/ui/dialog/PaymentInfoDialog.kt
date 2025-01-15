@@ -103,7 +103,10 @@ fun CardInformationDialog(
                 value = cardHolder,
                 label = stringResource(R.string.field_card_holder),
                 placeholder = stringResource(R.string.placeholder_card_holder),
-                onValueChange = { cardHolder = it },
+                onValueChange = {
+                    cardHolder = it
+                    true
+                },
                 isFieldValid = {
                     it.isNotBlank()
                 },
@@ -121,7 +124,8 @@ fun CardInformationDialog(
                 onValueChange = {
                     if (it.length <= paymentInfo.maxCardNum && it.isDigitsOnly()) {
                         cardNumber = it
-                    }
+                        true
+                    } else false
                 },
                 isFieldValid = {
                     PaymentUtils.isValidCardNumber(it)
@@ -150,7 +154,8 @@ fun CardInformationDialog(
                     onValueChange = {
                         if (it.length <= 3 && it.isDigitsOnly()) {
                             cvv = it
-                        }
+                            true
+                        } else false
                     },
                     isFieldValid = {
                         PaymentUtils.isValidCVV(it)
@@ -170,7 +175,8 @@ fun CardInformationDialog(
                     onValueChange = {
                         if (it.length <= 4 && it.isDigitsOnly()) {
                             expDate = it
-                        }
+                            true
+                        } else false
                     },
                     isFieldValid = {
                         PaymentUtils.isValidExpDate(it)

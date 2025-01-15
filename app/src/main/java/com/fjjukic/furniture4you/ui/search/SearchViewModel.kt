@@ -24,9 +24,10 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     private suspend fun search(value: String) = withContext(Dispatchers.Default) {
         _state.update { it.copy(isSearching = true) }
         delay(300L) // simulate an I/O delay
-        val results = _state.value.products.filter { it.title.contains(value, ignoreCase = true) }
 
         _state.update {
+            val results =
+                it.products.filter { product -> product.title.contains(value, ignoreCase = true) }
             it.copy(
                 searchResults = results,
                 isSearching = false,
@@ -36,7 +37,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun getDisplayType(
-        searchState: SearchScreenState,
+        searchState: SearchScreenState
     ): DisplayType {
         return when {
             !searchState.isFocused && searchState.query.text.isEmpty() -> DisplayType.Categories(
@@ -60,11 +61,24 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onSearchFocusChange(value: Boolean) {
-        _state.update { it.copy(isFocused = value, displayType = getDisplayType(it)) }
+        _state.update {
+            val updatedState = it.copy(isFocused = value)
+            updatedState.copy(displayType = getDisplayType(updatedState))
+        }
     }
 
     fun onClearQuery() {
-        _state.update { it.copy(query = TextFieldValue(""), displayType = getDisplayType(it)) }
+        if (_state.value.query.text.isNotBlank()) {
+            _state.update {
+                val updatedState = it.copy(query = TextFieldValue(""))
+                updatedState.copy(displayType = getDisplayType(updatedState))
+            }
+        } else {
+            _state.update {
+                val updatedState = it.copy(isFocused = false)
+                updatedState.copy(displayType = getDisplayType(updatedState))
+            }
+        }
     }
 
 }

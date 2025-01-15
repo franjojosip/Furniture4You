@@ -100,6 +100,7 @@ fun PersonalInformationDialog(
                 placeholder = stringResource(R.string.placeholder_name),
                 onValueChange = {
                     name = it
+                    true
                 },
                 isFieldValid = {
                     it.isNotBlank()

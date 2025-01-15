@@ -31,7 +31,7 @@ fun OutlinedInputFieldPreview() {
         label = stringResource(id = R.string.placeholder_name),
         placeholder = stringResource(id = R.string.placeholder_name),
         isFieldValid = { true },
-        onValueChange = {},
+        onValueChange = { true },
         errorMessage = stringResource(id = R.string.placeholder_name)
     )
 }
@@ -41,10 +41,10 @@ fun OutlinedInputField(
     value: String,
     label: String,
     placeholder: String,
-    onValueChange: (String) -> Unit,
+    onValueChange: (String) -> Boolean,
     isFieldValid: (String) -> Boolean,
     modifier: Modifier = Modifier,
-    errorMessage: String? = null,
+    errorMessage: String = stringResource(R.string.error_invalid_field),
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
@@ -67,8 +67,10 @@ fun OutlinedInputField(
             modifier = Modifier.fillMaxWidth(),
             value = value,
             onValueChange = {
-                onValueChange(it)
-                isError = !isFieldValid(it)
+                val hasChanged = onValueChange(it)
+                if (hasChanged) {
+                    isError = !isFieldValid(it)
+                }
             },
             placeholder = {
                 Text(text = placeholder, color = colorResource(id = R.color.color_placeholder))
@@ -79,7 +81,7 @@ fun OutlinedInputField(
         )
 
         if (isError) {
-            ErrorField(errorMessage = errorMessage ?: stringResource(R.string.error_invalid_field))
+            ErrorField(errorMessage = errorMessage)
         }
     }
 }

@@ -60,16 +60,19 @@ fun EnableBiometricsScreen(
     LaunchedEffect(state.messageResId) {
         if (state.messageResId != null) {
             Toast.makeText(context, state.messageResId, Toast.LENGTH_SHORT).show()
+            viewModel.onMessageShown()
         }
     }
     LaunchedEffect(state.biometricsActivated) {
         if (state.biometricsActivated == true) {
             onSuccess()
+            viewModel.resetState()
         }
     }
     LaunchedEffect(state.biometricsFailed) {
         if (state.biometricsFailed == true) {
             onSkipClick()
+            viewModel.resetState()
         }
     }
 

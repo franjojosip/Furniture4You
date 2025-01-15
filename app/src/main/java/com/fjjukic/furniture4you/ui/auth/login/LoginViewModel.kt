@@ -22,7 +22,7 @@ class LoginViewModel @Inject constructor(
 
     private val _state: MutableStateFlow<LoginScreenState> = MutableStateFlow(
         LoginScreenState(
-            isBiometricAvailable = mainRepository.checkIfAppLockedWithBiometrics(),
+            isBiometricAvailable = mainRepository.checkIfAppLockedWithBiometrics()
         )
     )
     val state = _state.asStateFlow()
@@ -36,14 +36,27 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _state.update { it.copy(isLoading = true) }
             val result = mainRepository.login(email, password)
-            _state.update { it.copy(isLoading = false) }
 
             if (result == AuthenticationState.AUTHENTICATED) {
-                _state.update { it.copy(isAuthenticated = true) }
+                _state.update {
+                    it.copy(
+                        isAuthenticated = true,
+                        isLoading = false
+                    )
+                }
             } else {
-                _state.update { it.copy(messageResId = R.string.error_invalid_credentials) }
+                _state.update {
+                    it.copy(
+                        messageResId = R.string.error_invalid_credentials,
+                        isLoading = false
+                    )
+                }
             }
         }
+    }
+
+    fun clearMessage() {
+        _state.update { it.copy(messageResId = null) }
     }
 
     /**
