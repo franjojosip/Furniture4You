@@ -124,5 +124,6 @@ And you're app is ready to use.
 
 ## Notes
 - For testing purposes use DEMO user (email: test@mail.com, password: test123)
+- Biometrics can also be toggled inside Settings screen
 - Registration is required and user can add biometrics after successful registration.
 - TODO - add testing (unit, integration, etc.)
