@@ -22,7 +22,7 @@ class LoginViewModel @Inject constructor(
 
     private val _state: MutableStateFlow<LoginScreenState> = MutableStateFlow(
         LoginScreenState(
-            //isBiometricAvailable = mainRepository.checkIfAppLockedWithBiometrics(), FIX IT
+            isBiometricAvailable = mainRepository.checkIfAppLockedWithBiometrics()
         )
     )
     val state = _state.asStateFlow()
