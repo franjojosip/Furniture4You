@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Search
@@ -25,8 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,6 +73,12 @@ fun FurnitureSearchBar(
     searchFocused: Boolean = false,
     searching: Boolean = false,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+    if (query.text.isEmpty() && !searchFocused) {
+        keyboardController?.hide()
+        focusManager.clearFocus()
+    }
     Box(
         modifier
             .fillMaxWidth()
@@ -76,7 +86,7 @@ fun FurnitureSearchBar(
             .padding(horizontal = 24.dp, vertical = 8.dp)
             .background(colorResource(id = R.color.color_tinted_white), RoundedCornerShape(24.dp))
     ) {
-        if (query.text.isEmpty()) {
+        if (query.text.isEmpty() && !searchFocused) {
             SearchHint()
         }
         Row(
@@ -85,7 +95,7 @@ fun FurnitureSearchBar(
                 .fillMaxSize()
                 .wrapContentHeight()
         ) {
-            if (searchFocused) {
+            if (searchFocused || query.text.isNotEmpty()) {
                 IconButton(onClick = onClearQuery) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
@@ -101,7 +111,11 @@ fun FurnitureSearchBar(
                     .weight(1f)
                     .onFocusChanged {
                         onSearchFocusChange(it.isFocused)
-                    }
+                    },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true
             )
             if (searching) {
                 CircularProgressIndicator(

@@ -6,6 +6,7 @@ import android.security.keystore.KeyProperties
 import com.google.gson.Gson
 import java.nio.charset.Charset
 import java.security.KeyStore
+import java.security.KeyStoreException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -30,27 +31,28 @@ interface CryptoManager {
         prefKey: String
     )
 
+    fun removeFromPrefs(
+        context: Context,
+        filename: String,
+        mode: Int,
+        prefKey: String
+    )
+
     fun getFromPrefs(
         context: Context,
         filename: String,
         mode: Int,
         prefKey: String
     ): EncryptedData?
+
+    fun clearEncryptionKey()
 }
 
 class CryptoManagerImpl @Inject constructor() : CryptoManager {
-
-    private val ENCRYPTION_TRANSFORMATION = "AES/GCM/NoPadding"
-    private val ANDROID_KEYSTORE = "AndroidKeyStore"
-    private val KEY_ALIAS = "MyKeyAlias"
-
     private val keyStore: KeyStore = KeyStore.getInstance(ANDROID_KEYSTORE)
 
     init {
         keyStore.load(null)
-        if (!keyStore.containsAlias(KEY_ALIAS)) {
-            createSecretKey()
-        }
     }
 
     override fun initEncryptionCipher(keyName: String): Cipher {
@@ -117,7 +119,39 @@ class CryptoManagerImpl @Inject constructor() : CryptoManager {
     }
 
     private fun getSecretKey(): SecretKey {
+        // Create the key if it does not exist
+        if (!keyStore.containsAlias(KEY_ALIAS)) {
+            createSecretKey() // Create secret key only when it's really needed
+        }
+
         return keyStore.getKey(KEY_ALIAS, null) as SecretKey
+    }
+
+    override fun removeFromPrefs(
+        context: Context,
+        filename: String,
+        mode: Int,
+        prefKey: String
+    ) {
+        val sharedPreferences = context.getSharedPreferences(filename, mode)
+        sharedPreferences.edit().remove(prefKey).apply()
+    }
+
+    override fun clearEncryptionKey() {
+        try {
+            if (keyStore.containsAlias(KEY_ALIAS)) {
+                keyStore.deleteEntry(KEY_ALIAS)
+            }
+        } catch (e: KeyStoreException) {
+            e.printStackTrace()
+        }
+    }
+
+    companion object {
+        private const val ENCRYPTION_TRANSFORMATION = "AES/GCM/NoPadding"
+        private const val ANDROID_KEYSTORE = "AndroidKeyStore"
+        private const val KEY_ALIAS = "MyKeyAlias"
+
     }
 }
 

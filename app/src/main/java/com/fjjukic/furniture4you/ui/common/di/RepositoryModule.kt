@@ -1,7 +1,9 @@
 package com.fjjukic.furniture4you.ui.common.di
 
 import android.content.Context
+import com.fjjukic.furniture4you.ui.common.crypto.AeadManager
 import com.fjjukic.furniture4you.ui.common.crypto.CryptoManagerImpl
+import com.fjjukic.furniture4you.ui.common.crypto.EncryptedPrefsManager
 import com.fjjukic.furniture4you.ui.common.repository.MainRepository
 import com.fjjukic.furniture4you.ui.common.repository.MainRepositoryImpl
 import dagger.Module
@@ -19,8 +21,10 @@ object RepositoryModule {
     @Singleton
     fun provideMainRepository(
         @ApplicationContext appContext: Context,
-        cryptoManager: CryptoManagerImpl
+        cryptoManager: CryptoManagerImpl,
+        encryptedPrefsManager: EncryptedPrefsManager,
+        aeadManager: AeadManager
     ): MainRepository {
-        return MainRepositoryImpl(appContext, cryptoManager)
+        return MainRepositoryImpl(appContext, cryptoManager, encryptedPrefsManager, aeadManager)
     }
 }

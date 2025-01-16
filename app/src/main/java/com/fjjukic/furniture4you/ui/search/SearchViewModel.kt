@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -20,25 +21,23 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     private val _state = MutableStateFlow(MockRepository.getSearchScreenState())
     val state = _state.asStateFlow()
 
-    private fun search(value: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _state.update { it.copy(isSearching = true) }
-            delay(300L) // simulate an I/O delay
-            val results =
-                _state.value.products.filter { it.title.contains(value, ignoreCase = true) }
+    private suspend fun search(value: String) = withContext(Dispatchers.Default) {
+        _state.update { it.copy(isSearching = true) }
+        delay(300L) // simulate an I/O delay
 
-            _state.update {
-                it.copy(
-                    searchResults = results,
-                    isSearching = false,
-                    displayType = getDisplayType(it)
-                )
-            }
+        _state.update {
+            val results =
+                it.products.filter { product -> product.title.contains(value, ignoreCase = true) }
+            it.copy(
+                searchResults = results,
+                isSearching = false,
+                displayType = getDisplayType(it)
+            )
         }
     }
 
     private fun getDisplayType(
-        searchState: SearchScreenState,
+        searchState: SearchScreenState
     ): DisplayType {
         return when {
             !searchState.isFocused && searchState.query.text.isEmpty() -> DisplayType.Categories(
@@ -55,16 +54,31 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onQueryChange(value: TextFieldValue) {
-        _state.update { it.copy(query = value) }
-        search(value.text)
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.update { it.copy(query = value) }
+            search(value.text)
+        }
     }
 
     fun onSearchFocusChange(value: Boolean) {
-        _state.update { it.copy(isFocused = value, displayType = getDisplayType(it)) }
+        _state.update {
+            val updatedState = it.copy(isFocused = value)
+            updatedState.copy(displayType = getDisplayType(updatedState))
+        }
     }
 
     fun onClearQuery() {
-        _state.update { it.copy(query = TextFieldValue(""), displayType = getDisplayType(it)) }
+        if (_state.value.query.text.isNotBlank()) {
+            _state.update {
+                val updatedState = it.copy(query = TextFieldValue(""))
+                updatedState.copy(displayType = getDisplayType(updatedState))
+            }
+        } else {
+            _state.update {
+                val updatedState = it.copy(isFocused = false)
+                updatedState.copy(displayType = getDisplayType(updatedState))
+            }
+        }
     }
 
 }

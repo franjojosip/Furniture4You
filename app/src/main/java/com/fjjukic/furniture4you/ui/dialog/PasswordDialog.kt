@@ -26,6 +26,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
+import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import com.fjjukic.furniture4you.ui.theme.GelatioTypography
 
 @Composable
@@ -89,7 +90,12 @@ fun PasswordDialog(
                 value = newPassword,
                 onValueChange = {
                     newPassword = it
-                }
+                    true
+                },
+                isFieldValid = {
+                    ValidationUtils.isPasswordValid(it)
+                },
+                onDone = {}
             )
 
             Row(

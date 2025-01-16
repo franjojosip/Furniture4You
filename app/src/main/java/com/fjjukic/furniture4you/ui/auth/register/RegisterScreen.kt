@@ -42,6 +42,7 @@ import com.fjjukic.furniture4you.ui.common.CombinedClickableText
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.OutlinedInputField
 import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
+import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import com.fjjukic.furniture4you.ui.components.FullscreenProgressBar
 import com.fjjukic.furniture4you.ui.components.Header
 import com.fjjukic.furniture4you.ui.setting.SwitchField
@@ -144,7 +145,10 @@ fun RegisterForm(
             value = name,
             label = stringResource(R.string.field_name),
             placeholder = stringResource(R.string.placeholder_name),
-            onValueChange = { name = it },
+            onValueChange = {
+                name = it
+                true
+            },
             isFieldValid = { it.isNotBlank() },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
@@ -163,14 +167,28 @@ fun RegisterForm(
 
         PasswordInputField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = {
+                password = it
+                true
+            },
+            isFieldValid = {
+                ValidationUtils.isPasswordValid(it)
+            },
+            onDone = {},
             isLastField = false,
             modifier = Modifier.padding(top = 12.dp)
         )
 
         PasswordInputField(
             value = confirmPassword,
-            onValueChange = { confirmPassword = it },
+            onValueChange = {
+                confirmPassword = it
+                true
+            },
+            isFieldValid = {
+                ValidationUtils.isPasswordValid(it)
+            },
+            onDone = {},
             isLastField = true,
             labelResId = R.string.field_confirm_password,
             placeholderResId = R.string.placeholder_password,
@@ -186,7 +204,7 @@ fun RegisterForm(
                 modifier = Modifier
                     .padding(start = 10.dp, end = 20.dp)
                     .padding(top = 20.dp),
-                defaultState = false,
+                checked = shouldCheckBiometrics,
                 isTitle = false
             )
         }
@@ -213,7 +231,7 @@ fun RegisterForm(
         }
         CombinedClickableText(
             startTextResId = R.string.label_register_have_account,
-            endTextResId = R.string.btn_sign_up,
+            endTextResId = R.string.btn_login,
             onClick = { onLoginClick() },
             modifier = Modifier
                 .padding(vertical = 30.dp)

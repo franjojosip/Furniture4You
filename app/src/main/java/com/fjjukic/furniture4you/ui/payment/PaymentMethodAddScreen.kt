@@ -118,6 +118,7 @@ fun PaymentMethodAddScreen(
                 placeholder = stringResource(R.string.placeholder_card_holder),
                 onValueChange = {
                     cardHolder = it
+                    true
                 },
                 isFieldValid = {
                     it.isNotBlank()
@@ -136,7 +137,8 @@ fun PaymentMethodAddScreen(
                 onValueChange = {
                     if (it.length <= 16 && it.isDigitsOnly()) {
                         cardNumber = it
-                    }
+                        true
+                    } else false
                 },
                 isFieldValid = {
                     PaymentUtils.isValidCardNumber(it)
@@ -165,7 +167,8 @@ fun PaymentMethodAddScreen(
                     onValueChange = {
                         if (it.length <= 3 && it.isDigitsOnly()) {
                             cvv = it
-                        }
+                            true
+                        } else false
                     },
                     isFieldValid = {
                         PaymentUtils.isValidCVV(it)
@@ -185,7 +188,8 @@ fun PaymentMethodAddScreen(
                     onValueChange = {
                         if (it.length <= 4 && it.isDigitsOnly()) {
                             expDate = it
-                        }
+                            true
+                        } else false
                     },
                     isFieldValid = {
                         PaymentUtils.isValidExpDate(it)

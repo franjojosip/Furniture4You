@@ -39,9 +39,12 @@ class RegisterViewModel @Inject constructor(
             if (name.isBlank()
                 || !ValidationUtils.isEmailValid(email)
                 || !ValidationUtils.isPasswordValid(password)
-                || !password.equals(confirmPassword, false)
             ) {
-                _state.update { it.copy(messageResId = R.string.error_check_fields) }
+                if (!password.equals(confirmPassword, false)) {
+                    _state.update { it.copy(messageResId = R.string.error_password_not_match) }
+                } else {
+                    _state.update { it.copy(messageResId = R.string.error_check_fields) }
+                }
                 return@launch
             }
 

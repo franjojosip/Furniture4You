@@ -41,6 +41,7 @@ import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.crypto.BiometricsHelper
 import com.fjjukic.furniture4you.ui.common.fields.EmailInputField
 import com.fjjukic.furniture4you.ui.common.fields.PasswordInputField
+import com.fjjukic.furniture4you.ui.common.utils.ValidationUtils
 import com.fjjukic.furniture4you.ui.common.utils.findActivity
 import com.fjjukic.furniture4you.ui.components.FullscreenProgressBar
 import com.fjjukic.furniture4you.ui.components.Header
@@ -70,6 +71,7 @@ fun LoginScreen(
     LaunchedEffect(state.messageResId) {
         state.messageResId?.let { resId ->
             Toast.makeText(context, context.getString(resId), Toast.LENGTH_SHORT).show()
+            viewModel.clearMessage()
         }
     }
     LaunchedEffect(state.isAuthenticated) {
@@ -157,7 +159,14 @@ fun LoginForm(
 
         PasswordInputField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = {
+                password = it
+                true
+            },
+            isFieldValid = {
+                ValidationUtils.isPasswordValid(it)
+            },
+            onDone = { onLoginClick(email, password) },
             isLastField = true,
             modifier = Modifier.padding(top = 12.dp)
         )

@@ -39,6 +39,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -82,9 +84,12 @@ fun SearchResults(
     onCartClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     var selectedCategory by remember {
         mutableIntStateOf(0)
     }
+
     Column(modifier) {
         CategoryFilter(categories, selectedCategory, { category ->
             selectedCategory = category
@@ -106,9 +111,15 @@ fun SearchResults(
                     price = product.price,
                     imageResId = product.imageResId,
                     onProductClick = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
                         onProductClick(product.id)
                     },
-                    onCartClick = onCartClick,
+                    onCartClick = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                        onCartClick()
+                    },
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)
                 )
             }
@@ -373,7 +384,7 @@ private fun SearchCategoryItem(
         content = {
             Text(
                 text = category.name,
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 fontFamily = gelatioFamily,
                 color = colorResource(id = R.color.color_dark_gray),
                 modifier = Modifier
