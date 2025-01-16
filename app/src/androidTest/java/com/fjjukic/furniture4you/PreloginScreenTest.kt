@@ -22,6 +22,8 @@ class PreloginScreenTest {
     @Test
     fun checkUiAndNavigate() {
         val activity = composeTestRule.activity
+
+        // Check UI text
         composeTestRule
             .onNodeWithText(activity.getString(R.string.title_prelogin), ignoreCase = true)
             .assertIsDisplayed()
@@ -35,6 +37,7 @@ class PreloginScreenTest {
             )
             .assertIsDisplayed()
 
+        // Check UI navigation to next screen
         composeTestRule
             .onNodeWithText(activity.getString(R.string.btn_get_started))
             .performClick()
