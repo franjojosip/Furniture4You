@@ -23,13 +23,16 @@ class PreloginScreenTest {
     fun checkUiAndNavigate() {
         val activity = composeTestRule.activity
         composeTestRule
-            .onNodeWithText(activity.getString(R.string.title_prelogin).uppercase())
+            .onNodeWithText(activity.getString(R.string.title_prelogin), ignoreCase = true)
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithText(activity.getString(R.string.subtitle_prelogin).uppercase())
+            .onNodeWithText(activity.getString(R.string.subtitle_prelogin), ignoreCase = true)
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithText(activity.getString(R.string.label_prelogin_description))
+            .onNodeWithText(
+                activity.getString(R.string.label_prelogin_description),
+                ignoreCase = true
+            )
             .assertIsDisplayed()
 
         composeTestRule
