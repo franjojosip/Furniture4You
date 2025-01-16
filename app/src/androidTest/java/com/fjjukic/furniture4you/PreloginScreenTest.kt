@@ -25,21 +25,24 @@ class PreloginScreenTest {
 
         // Check UI text
         composeTestRule
-            .onNodeWithText(activity.getString(R.string.title_prelogin), ignoreCase = true)
+            .onNodeWithText(activity.getString(R.string.title_prelogin).uppercase())
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithText(activity.getString(R.string.subtitle_prelogin), ignoreCase = true)
+            .onNodeWithText(activity.getString(R.string.subtitle_prelogin).uppercase())
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithText(
-                activity.getString(R.string.label_prelogin_description),
-                ignoreCase = true
-            )
+            .onNodeWithText(activity.getString(R.string.label_prelogin_description))
             .assertIsDisplayed()
 
-        // Check UI navigation to next screen
+        // Check UI navigation to Login screen
         composeTestRule
             .onNodeWithText(activity.getString(R.string.btn_get_started))
             .performClick()
+
+        composeTestRule.waitForIdle()
+
+        composeTestRule
+            .onNodeWithText(activity.getString(R.string.btn_login))
+            .assertIsDisplayed()
     }
 }
