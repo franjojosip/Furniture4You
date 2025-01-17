@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -51,20 +52,16 @@ import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(
-        onProductClick = {},
-        onCartClick = {},
-        onSearchClick = {},
-        onNavigateToBottomBarRoute = {})
+    HomeScreen()
 }
 
 @Composable
 fun HomeScreen(
-    onProductClick: (String) -> Unit,
-    onCartClick: () -> Unit,
-    onSearchClick: () -> Unit,
-    onNavigateToBottomBarRoute: (String) -> Unit,
     modifier: Modifier = Modifier,
+    onProductClick: ((String) -> Unit) = {},
+    onCartClick: (() -> Unit) = {},
+    onSearchClick: (() -> Unit) = {},
+    onNavigateToBottomBarRoute: ((String) -> Unit) = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeState = viewModel.homeState.collectAsState().value
@@ -164,7 +161,8 @@ fun HomeHeader(
         Text(
             modifier = Modifier
                 .padding(top = 6.dp)
-                .weight(1f),
+                .weight(1f)
+                .testTag("homeTitle"),
             textAlign = TextAlign.Center,
             text = buildAnnotatedString {
                 withStyle(

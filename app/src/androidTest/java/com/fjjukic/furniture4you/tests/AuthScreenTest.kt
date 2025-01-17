@@ -153,14 +153,11 @@ class AuthScreenTest {
         // Check buttons displayed
         composeTestRule
             .onNodeWithText(activity.getString(R.string.btn_send_email))
+
+        val rememberPasswordText = activity.getString(R.string.btn_remember_your_password)
+        val loginText = activity.getString(R.string.btn_login).uppercase()
         composeTestRule
-            .onNodeWithText(
-                "${activity.getString(R.string.btn_remember_your_password)} ${
-                    activity.getString(
-                        R.string.btn_login
-                    ).uppercase()
-                }"
-            )
+            .onNodeWithText("$rememberPasswordText $loginText")
             .assertIsDisplayed()
     }
 }
