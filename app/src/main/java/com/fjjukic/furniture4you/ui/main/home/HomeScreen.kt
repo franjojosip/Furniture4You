@@ -133,7 +133,8 @@ fun BottomBarNavigation(
                         ),
                         onClick = {
                             onNavigateToBottomBarRoute(navigationItem.route)
-                        }
+                        },
+                        modifier = Modifier.testTag(navigationItem.label)
                     )
                 }
         }
@@ -150,6 +151,7 @@ fun HomeHeader(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 4.dp, start = 16.dp, end = 16.dp)
+            .testTag("homeHeader")
     ) {
         IconButton(onClick = onSearchClick) {
             Icon(
@@ -161,8 +163,7 @@ fun HomeHeader(
         Text(
             modifier = Modifier
                 .padding(top = 6.dp)
-                .weight(1f)
-                .testTag("homeTitle"),
+                .weight(1f),
             textAlign = TextAlign.Center,
             text = buildAnnotatedString {
                 withStyle(
@@ -206,7 +207,9 @@ fun CategoryFilter(
     modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = modifier.padding(top = 20.dp, bottom = 8.dp),
+        modifier = modifier
+            .padding(top = 20.dp, bottom = 8.dp)
+            .testTag("categoryFilter"),
         state = rememberLazyListState(),
         userScrollEnabled = true,
         contentPadding = PaddingValues(start = 20.dp)
@@ -230,7 +233,9 @@ fun ProductList(
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .testTag("productList"),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(start = 24.dp, end = 24.dp, bottom = 24.dp, top = 12.dp),
         columns = GridCells.Fixed(2)

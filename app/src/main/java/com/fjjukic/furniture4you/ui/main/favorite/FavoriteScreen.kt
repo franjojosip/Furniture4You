@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,19 +60,15 @@ import com.fjjukic.furniture4you.ui.theme.gelatioFamily
 @Preview
 @Composable
 fun FavoritePreview() {
-    FavoriteScreen(
-        onProductClick = {},
-        onSearchClick = {},
-        onCartClick = {},
-        onNavigateToBottomBarRoute = {})
+    FavoriteScreen()
 }
 
 @Composable
 fun FavoriteScreen(
-    onProductClick: (String) -> Unit,
-    onSearchClick: () -> Unit,
-    onCartClick: () -> Unit,
-    onNavigateToBottomBarRoute: (String) -> Unit,
+    onProductClick: ((String) -> Unit) = {},
+    onSearchClick: (() -> Unit) = {},
+    onCartClick: (() -> Unit) = {},
+    onNavigateToBottomBarRoute: ((String) -> Unit) = {},
     modifier: Modifier = Modifier,
     viewModel: FavoriteViewModel = hiltViewModel(),
 ) {
@@ -81,7 +78,7 @@ fun FavoriteScreen(
         modifier,
         containerColor = colorResource(id = R.color.color_transparent),
         topBar = {
-            Header(
+            FavoriteHeader(
                 title = stringResource(id = R.string.nav_favorites),
                 startIconResId = R.drawable.ic_search,
                 endIconResId = R.drawable.ic_cart,
@@ -182,7 +179,7 @@ fun FavoriteScreenContent(
 @Preview(showBackground = true)
 @Composable
 fun HeaderPreview() {
-    Header(
+    FavoriteHeader(
         title = stringResource(id = R.string.placeholder_name),
         startIconResId = R.drawable.ic_search,
         endIconResId = R.drawable.ic_favorite,
@@ -191,7 +188,7 @@ fun HeaderPreview() {
 }
 
 @Composable
-fun Header(
+fun FavoriteHeader(
     title: String,
     startIconResId: Int,
     endIconResId: Int,
@@ -219,6 +216,7 @@ fun Header(
             modifier = Modifier
                 .weight(1f)
                 .align(Alignment.CenterVertically)
+                .testTag("favoriteTitle")
         )
         IconButton(onClick = onEndActionClick) {
             Icon(

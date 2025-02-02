@@ -1,7 +1,9 @@
-package com.fjjukic.furniture4you.tests
+package com.fjjukic.furniture4you.tests.main
 
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -20,7 +22,7 @@ import javax.inject.Inject
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-class LoginTest {
+class BottomBarTest {
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
@@ -48,7 +50,7 @@ class LoginTest {
     }
 
     @Test
-    fun testLoginWithMockData() {
+    fun testBottomBarScreenNavigation() {
         composeTestRule
             .onNodeWithTag("emailField")
             .performTextInput("test@mail.com")
@@ -68,5 +70,42 @@ class LoginTest {
                 .onNodeWithTag("homeHeader")
                 .isDisplayed()
         }
+
+        val homeTabTitle = composeTestRule.activity.getString(R.string.nav_home)
+        val favoritesTabTitle = composeTestRule.activity.getString(R.string.nav_favorites)
+        val notificationTabTitle = composeTestRule.activity.getString(R.string.nav_notification)
+        val profileTabTitle = composeTestRule.activity.getString(R.string.nav_profile)
+
+        // Test Favorites tab click + screen loaded
+        composeTestRule
+            .onNodeWithContentDescription(favoritesTabTitle)
+            .performClick()
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithTag("favoriteTitle")
+            .assertIsDisplayed()
+
+        // Test Notification tab click + screen loaded
+        composeTestRule
+            .onNodeWithContentDescription(notificationTabTitle)
+            .performClick()
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithTag("notificationTitle")
+            .assertIsDisplayed()
+
+        // Test Profile tab click + screen loaded
+        composeTestRule
+            .onNodeWithContentDescription(profileTabTitle)
+            .performClick()
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithTag("profileTitle")
+            .assertIsDisplayed()
+
+        // Test Home tab click + screen loaded
+        composeTestRule
+            .onNodeWithContentDescription(homeTabTitle)
+            .performClick()
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithTag("homeHeader")
+            .assertIsDisplayed()
     }
 }

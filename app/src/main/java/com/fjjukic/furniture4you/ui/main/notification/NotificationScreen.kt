@@ -43,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -71,8 +72,8 @@ fun NotificationScreenPreview() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NotificationScreen(
-    onSearchClick: () -> Unit,
-    onNavigateToBottomBarRoute: (String) -> Unit,
+    onSearchClick: (() -> Unit) = {},
+    onNavigateToBottomBarRoute: ((String) -> Unit) = {},
     modifier: Modifier = Modifier,
     viewModel: NotificationViewModel = hiltViewModel(),
 ) {
@@ -94,7 +95,9 @@ fun NotificationScreen(
                 startIconResId = R.drawable.ic_search,
                 onStartActionClick = onSearchClick,
                 onEndActionClick = {},
-                modifier = Modifier.background(colorResource(id = R.color.color_white))
+                modifier = Modifier
+                    .background(colorResource(id = R.color.color_white))
+                    .testTag("notificationTitle")
             )
         },
         bottomBar = {
@@ -116,7 +119,8 @@ fun NotificationScreen(
                     .weight(1f)
                     .fillMaxWidth()
                     .padding(top = 14.dp)
-                    .background(colorResource(id = R.color.color_white)),
+                    .background(colorResource(id = R.color.color_white))
+                    .testTag("notificationList"),
                 contentPadding = PaddingValues(
                     bottom = paddingValues.calculateBottomPadding()
                 )
