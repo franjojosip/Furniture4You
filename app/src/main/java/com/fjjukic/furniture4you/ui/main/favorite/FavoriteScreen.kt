@@ -126,8 +126,8 @@ fun FavoriteScreenContent(
                 contentPadding = PaddingValues(
                     start = 20.dp,
                     end = 20.dp,
-                    top = 6.dp,
-                    bottom = 12.dp
+                    top = 14.dp,
+                    bottom = 100.dp
                 )
             ) {
                 itemsIndexed(products) { index, product ->

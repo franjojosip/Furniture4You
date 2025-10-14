@@ -1,5 +1,6 @@
 package com.fjjukic.furniture4you.ui.main.home
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,6 +41,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.model.BottomNavigationItem
@@ -47,6 +51,7 @@ import com.fjjukic.furniture4you.ui.components.CategoryFilterItem
 import com.fjjukic.furniture4you.ui.components.ProductItem
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Preview
 @Composable
@@ -67,6 +72,12 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val window = (context as Activity).window
+    val systemUiController = rememberSystemUiController()
+    WindowCompat.setDecorFitsSystemWindows(window, true)
+    systemUiController.setSystemBarsColor(color = Color.White, darkIcons = true)
+    
     val homeState = viewModel.homeState.collectAsState().value
 
     Scaffold(

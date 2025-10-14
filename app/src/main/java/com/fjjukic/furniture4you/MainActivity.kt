@@ -66,8 +66,6 @@ class MainActivity : AppCompatActivity() {
                                 }
                                 PreloginScreen(
                                     onContinueClick = {
-                                        WindowCompat.setDecorFitsSystemWindows(window, true)
-                                        systemUiController.setSystemBarsColor(color = Color.White, darkIcons = true)
                                         furnitureNavController.navController.navigate(Graph.AUTH) {
                                             popUpTo(Screens.Prelogin.route) {
                                                 inclusive = true
