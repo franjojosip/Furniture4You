@@ -166,7 +166,6 @@ fun LoginForm(
             isFieldValid = {
                 ValidationUtils.isPasswordValid(it)
             },
-            onDone = { onLoginClick(email, password) },
             isLastField = true,
             modifier = Modifier.padding(top = 12.dp)
         )

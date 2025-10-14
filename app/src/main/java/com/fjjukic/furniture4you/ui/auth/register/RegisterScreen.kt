@@ -174,7 +174,6 @@ fun RegisterForm(
             isFieldValid = {
                 ValidationUtils.isPasswordValid(it)
             },
-            onDone = {},
             isLastField = false,
             modifier = Modifier.padding(top = 12.dp)
         )
@@ -188,7 +187,6 @@ fun RegisterForm(
             isFieldValid = {
                 ValidationUtils.isPasswordValid(it)
             },
-            onDone = {},
             isLastField = true,
             labelResId = R.string.field_confirm_password,
             placeholderResId = R.string.placeholder_password,
