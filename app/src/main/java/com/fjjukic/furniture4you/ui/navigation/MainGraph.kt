@@ -22,13 +22,15 @@ import com.fjjukic.furniture4you.ui.search.SearchScreen
 import com.fjjukic.furniture4you.ui.setting.SettingsScreen
 import com.fjjukic.furniture4you.ui.shipping.ShippingAddressScreen
 import com.fjjukic.furniture4you.ui.shipping.add.AddShippingAddressScreen
+import com.google.accompanist.systemuicontroller.SystemUiController
 import kotlinx.coroutines.CoroutineScope
 
 fun NavGraphBuilder.homeGraph(
     navHostController: NavHostController,
     onNavigateToBottomBarRoute: (String) -> Unit,
     snackbarHostState: SnackbarHostState,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    systemUiController: SystemUiController
 ) {
     navigation(
         route = Graph.HOME,
@@ -47,7 +49,8 @@ fun NavGraphBuilder.homeGraph(
                 onSearchClick = {
                     navHostController.navigate(Screens.Search.route)
                 },
-                onNavigateToBottomBarRoute = onNavigateToBottomBarRoute
+                onNavigateToBottomBarRoute = onNavigateToBottomBarRoute,
+                systemUiController
             )
         }
         composable(Screens.HomeSections.Favorites.route) {

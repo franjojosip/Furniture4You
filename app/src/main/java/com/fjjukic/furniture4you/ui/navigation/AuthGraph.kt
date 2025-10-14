@@ -7,9 +7,11 @@ import androidx.navigation.compose.navigation
 import com.fjjukic.furniture4you.ui.auth.forgot_password.ForgotPasswordScreen
 import com.fjjukic.furniture4you.ui.auth.login.LoginScreen
 import com.fjjukic.furniture4you.ui.auth.register.RegisterScreen
+import com.google.accompanist.systemuicontroller.SystemUiController
 
 fun NavGraphBuilder.authNavigationGraph(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    systemUiController: SystemUiController
 ) {
     navigation(
         route = Graph.AUTH,
@@ -28,7 +30,8 @@ fun NavGraphBuilder.authNavigationGraph(
                             inclusive = true
                         }
                     }
-                }
+                },
+                systemUiController
             )
         }
         composable(Screens.AuthScreen.Register.route) {

@@ -16,7 +16,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -53,6 +52,13 @@ class MainActivity : AppCompatActivity() {
                     val viewModel = hiltViewModel<MainViewModel>()
                     val startDestination = viewModel.getStartDestination()
 
+                    if (startDestination == Screens.Prelogin.route) {
+                        SideEffect {
+                            WindowCompat.setDecorFitsSystemWindows(window, false)
+                            systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = true)
+                        }
+                    }
+
                     Box(modifier = Modifier.fillMaxSize()) {
                         NavHost(
                             navController = furnitureNavController.navController,
@@ -60,10 +66,6 @@ class MainActivity : AppCompatActivity() {
                             startDestination = startDestination
                         ) {
                             composable(Screens.Prelogin.route) {
-                                SideEffect {
-                                    WindowCompat.setDecorFitsSystemWindows(window, false)
-                                    systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = false)
-                                }
                                 PreloginScreen(
                                     onContinueClick = {
                                         furnitureNavController.navController.navigate(Graph.AUTH) {
@@ -74,12 +76,13 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 )
                             }
-                            authNavigationGraph(furnitureNavController.navController)
+                            authNavigationGraph(furnitureNavController.navController, systemUiController)
                             homeGraph(
                                 navHostController = furnitureNavController.navController,
                                 onNavigateToBottomBarRoute = furnitureNavController::onNavigateToBottomBarRoute,
                                 snackbarHostState,
-                                scope
+                                scope,
+                                systemUiController
                             )
                         }
                         SnackbarHost(
