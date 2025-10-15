@@ -2,6 +2,7 @@ package com.fjjukic.furniture4you.ui.auth.login
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -182,7 +182,7 @@ fun LoginForm(
             modifier = Modifier.padding(top = 12.dp)
         )
 
-        ClickableText(
+        Text(
             text = AnnotatedString(stringResource(R.string.btn_forgot_password)),
             style = TextStyle(
                 fontSize = 18.sp,
@@ -190,10 +190,12 @@ fun LoginForm(
                 fontWeight = FontWeight.SemiBold,
                 color = colorResource(id = R.color.color_medium_gray),
             ),
-            onClick = { onForgotPasswordClick() },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 30.dp),
+                .padding(top = 30.dp)
+                .clickable {
+                    onForgotPasswordClick()
+                },
         )
 
         Button(
@@ -217,7 +219,7 @@ fun LoginForm(
             )
         }
 
-        ClickableText(
+        Text(
             text = AnnotatedString(stringResource(R.string.btn_sign_up).uppercase()),
             style = TextStyle(
                 fontSize = 18.sp,
@@ -225,10 +227,10 @@ fun LoginForm(
                 fontWeight = FontWeight.Medium,
                 color = colorResource(id = R.color.color_dark_gray),
             ),
-            onClick = { onRegisterClick() },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 30.dp, bottom = 40.dp)
+                .clickable { onRegisterClick() }
         )
     }
 }

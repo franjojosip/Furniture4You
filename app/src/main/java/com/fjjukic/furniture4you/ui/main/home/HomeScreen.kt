@@ -30,6 +30,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,24 +59,18 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(
-        onProductClick = {},
-        onCartClick = {},
-        onSearchClick = {},
-        onNavigateToBottomBarRoute = {},
-        rememberSystemUiController()
-    )
+    HomeScreen()
 }
 
 @Composable
 fun HomeScreen(
-    onProductClick: (String) -> Unit,
-    onCartClick: () -> Unit,
-    onSearchClick: () -> Unit,
-    onNavigateToBottomBarRoute: (String) -> Unit,
-    systemUiController: SystemUiController,
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel()
+    onProductClick: ((String) -> Unit) = {},
+    onCartClick: (() -> Unit) = {},
+    onSearchClick: (() -> Unit) = {},
+    onNavigateToBottomBarRoute: ((String) -> Unit) = {},
+    viewModel: HomeViewModel = hiltViewModel(),
+    systemUiController: SystemUiController = rememberSystemUiController(),
 ) {
     val homeState = viewModel.homeState.collectAsState().value
     val activity = LocalContext.current.findActivity()
@@ -152,7 +147,8 @@ fun BottomBarNavigation(
                         ),
                         onClick = {
                             onNavigateToBottomBarRoute(navigationItem.route)
-                        }
+                        },
+                        modifier = Modifier.testTag(navigationItem.label)
                     )
                 }
         }
@@ -169,6 +165,7 @@ fun HomeHeader(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 4.dp, start = 16.dp, end = 16.dp)
+            .testTag("homeHeader")
     ) {
         IconButton(onClick = onSearchClick) {
             Icon(
@@ -224,7 +221,9 @@ fun CategoryFilter(
     modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = modifier.padding(top = 20.dp, bottom = 8.dp),
+        modifier = modifier
+            .padding(top = 20.dp, bottom = 8.dp)
+            .testTag("categoryFilter"),
         state = rememberLazyListState(),
         userScrollEnabled = true,
         contentPadding = PaddingValues(start = 20.dp)
@@ -248,7 +247,9 @@ fun ProductList(
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .testTag("productList"),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(start = 24.dp, end = 24.dp, bottom = 24.dp, top = 12.dp),
         columns = GridCells.Fixed(2)

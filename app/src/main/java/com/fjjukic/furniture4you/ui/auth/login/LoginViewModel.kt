@@ -28,12 +28,12 @@ class LoginViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun login(email: String, password: String) {
-        if (!ValidationUtils.isEmailValid(email) || !ValidationUtils.isPasswordValid(password)) {
-            _state.update { it.copy(messageResId = R.string.error_check_fields) }
-            return
-        }
+        viewModelScope.launch {
+            if (!ValidationUtils.isEmailValid(email) || !ValidationUtils.isPasswordValid(password)) {
+                _state.update { it.copy(messageResId = R.string.error_check_fields) }
+                return@launch
+            }
 
-        viewModelScope.launch(Dispatchers.IO) {
             _state.update { it.copy(isLoading = true) }
             val result = mainRepository.login(email, password)
 
@@ -64,11 +64,9 @@ class LoginViewModel @Inject constructor(
      */
 
     fun onBiometricActionClick() {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (mainRepository.checkIfAppLockedWithBiometrics()) {
-                val biometricsPromptData = mainRepository.getBiometricsPromptData()
-                _state.update { it.copy(biometricsPromptData = biometricsPromptData) }
-            }
+        if (mainRepository.checkIfAppLockedWithBiometrics()) {
+            val biometricsPromptData = mainRepository.getBiometricsPromptData()
+            _state.update { it.copy(biometricsPromptData = biometricsPromptData) }
         }
     }
 

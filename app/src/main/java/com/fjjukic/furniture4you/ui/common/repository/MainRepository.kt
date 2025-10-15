@@ -168,7 +168,6 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun logout() {
-        delay(400L)
         encryptedPrefsManager.putBoolean(StorageKey.IS_LOGGED_IN, false)
     }
 

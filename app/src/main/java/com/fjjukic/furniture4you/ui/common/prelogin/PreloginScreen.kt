@@ -43,7 +43,7 @@ fun PreloginScreen(
     val preloginShown = viewModel.preloginShown.collectAsState().value
 
     LaunchedEffect(preloginShown) {
-        if (preloginShown == true) {
+        if (preloginShown) {
             onContinueClick()
         }
     }

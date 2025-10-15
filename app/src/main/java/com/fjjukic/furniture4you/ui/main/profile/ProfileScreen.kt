@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,18 +44,14 @@ import com.fjjukic.furniture4you.ui.theme.nunitoSansFamily
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(
-        onLogoutClick = {},
-        onNavigateToBottomBarRoute = {},
-        onNavigateToRoute = {}
-    )
+    ProfileScreen()
 }
 
 @Composable
 fun ProfileScreen(
-    onLogoutClick: () -> Unit,
-    onNavigateToBottomBarRoute: (String) -> Unit,
-    onNavigateToRoute: (String) -> Unit,
+    onLogoutClick: (() -> Unit) = {},
+    onNavigateToBottomBarRoute: ((String) -> Unit) = {},
+    onNavigateToRoute: ((String) -> Unit) = {},
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.collectAsState().value
@@ -89,7 +86,9 @@ fun ProfileScreen(
                 onEndActionClick = {
                     openLogoutDialog = true
                 },
-                modifier = Modifier.background(colorResource(id = R.color.color_white))
+                modifier = Modifier
+                    .background(colorResource(id = R.color.color_white))
+                    .testTag("profileTitle")
             )
         },
         bottomBar = {
@@ -124,7 +123,8 @@ fun ProfileScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp)
-                        .padding(top = 16.dp),
+                        .padding(top = 16.dp)
+                        .testTag("profileInformation"),
                 ) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),

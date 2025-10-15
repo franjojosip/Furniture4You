@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.fjjukic.furniture4you.ui.common.mock.MockRepository
 import com.fjjukic.furniture4you.ui.common.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -20,11 +20,13 @@ class ProfileViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun onLogoutClick() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mainRepository.logout()
+            delay(400L)
             _state.update {
                 it.copy(isLoggedOut = true)
             }
+
         }
     }
 }
