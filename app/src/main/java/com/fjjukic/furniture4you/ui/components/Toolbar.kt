@@ -1,9 +1,11 @@
 package com.fjjukic.furniture4you.ui.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -41,35 +43,44 @@ fun Toolbar(
     onStartActionClick: () -> Unit,
     onEndActionClick: (() -> Unit)? = null
 ) {
-    Row(
+    Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp, horizontal = 16.dp)
     ) {
-        IconButton(onClick = onStartActionClick) {
-            Icon(
-                painter = painterResource(id = startIconResId),
-                tint = colorResource(id = R.color.color_dark_gray),
-                contentDescription = stringResource(R.string.content_desc_action_start_icon)
-            )
-        }
-        Text(
-            text = title,
-            style = NunitoSansTypography.titleSmall,
-            color = colorResource(id = R.color.color_medium_gray),
-            textAlign = TextAlign.Center,
+        Row(
             modifier = Modifier
-                .weight(1f)
-                .align(Alignment.CenterVertically)
-        )
-        if (onEndActionClick != null && endIconResId != null) {
-            IconButton(onClick = onEndActionClick) {
+                .fillMaxWidth()
+                .padding(vertical = 4.dp, horizontal = 16.dp)
+        ) {
+            IconButton(onClick = onStartActionClick) {
                 Icon(
-                    painter = painterResource(id = endIconResId),
+                    painter = painterResource(id = startIconResId),
                     tint = colorResource(id = R.color.color_dark_gray),
-                    contentDescription = stringResource(R.string.content_desc_action_end_icon)
+                    contentDescription = stringResource(R.string.content_desc_action_start_icon)
                 )
             }
-        } else Spacer(modifier = Modifier.minimumInteractiveComponentSize())
+            Text(
+                text = title,
+                style = NunitoSansTypography.titleSmall,
+                color = colorResource(id = R.color.color_medium_gray),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .weight(1f)
+                    .align(Alignment.CenterVertically)
+            )
+            if (onEndActionClick != null && endIconResId != null) {
+                IconButton(onClick = onEndActionClick) {
+                    Icon(
+                        painter = painterResource(id = endIconResId),
+                        tint = colorResource(id = R.color.color_dark_gray),
+                        contentDescription = stringResource(R.string.content_desc_action_end_icon)
+                    )
+                }
+            } else Spacer(modifier = Modifier.minimumInteractiveComponentSize())
+        }
+        HorizontalDivider(
+            color = colorResource(id = R.color.color_tinted_white),
+            thickness = 1.dp
+        )
     }
 }

@@ -94,8 +94,7 @@ fun PasswordDialog(
                 },
                 isFieldValid = {
                     ValidationUtils.isPasswordValid(it)
-                },
-                onDone = {}
+                }
             )
 
             Row(

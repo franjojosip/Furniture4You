@@ -37,7 +37,6 @@ fun PasswordInputField(
     value: String,
     onValueChange: (String) -> Boolean,
     isFieldValid: (String) -> Boolean,
-    onDone: () -> Unit,
     modifier: Modifier = Modifier,
     isLastField: Boolean = false,
     labelResId: Int = R.string.field_password,
@@ -102,7 +101,6 @@ fun PasswordInputField(
                 onDone = {
                     keyboardController?.hide()
                     focusManager.clearFocus()
-                    onDone()
                 }
             ),
             singleLine = true,

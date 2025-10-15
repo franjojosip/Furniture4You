@@ -25,8 +25,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -39,15 +42,19 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
 import com.fjjukic.furniture4you.ui.common.model.BottomNavigationItem
 import com.fjjukic.furniture4you.ui.common.model.CategoryItem
 import com.fjjukic.furniture4you.ui.common.model.Product
+import com.fjjukic.furniture4you.ui.common.utils.findActivity
 import com.fjjukic.furniture4you.ui.components.CategoryFilterItem
 import com.fjjukic.furniture4you.ui.components.ProductItem
 import com.fjjukic.furniture4you.ui.navigation.Screens
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Preview
 @Composable
@@ -62,9 +69,16 @@ fun HomeScreen(
     onCartClick: (() -> Unit) = {},
     onSearchClick: (() -> Unit) = {},
     onNavigateToBottomBarRoute: ((String) -> Unit) = {},
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    systemUiController: SystemUiController = rememberSystemUiController(),
 ) {
     val homeState = viewModel.homeState.collectAsState().value
+    val activity = LocalContext.current.findActivity()
+
+    SideEffect {
+        WindowCompat.setDecorFitsSystemWindows(activity.window, true)
+        systemUiController.setSystemBarsColor(color = Color.White, darkIcons = true)
+    }
 
     Scaffold(
         bottomBar = {

@@ -36,8 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -123,8 +123,8 @@ fun FavoriteScreenContent(
                 contentPadding = PaddingValues(
                     start = 20.dp,
                     end = 20.dp,
-                    top = 6.dp,
-                    bottom = 12.dp
+                    top = 14.dp,
+                    bottom = 100.dp
                 )
             ) {
                 itemsIndexed(products) { index, product ->
@@ -196,6 +196,35 @@ fun FavoriteHeader(
     onEndActionClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp, horizontal = 16.dp)
+        ) {
+            IconButton(onClick = onStartActionClick) {
+                Icon(
+                    painter = painterResource(id = startIconResId),
+                    tint = colorResource(id = R.color.color_dark_gray),
+                    contentDescription = stringResource(R.string.content_desc_action_start_icon)
+                )
+            }
+            Text(
+                text = title,
+                style = NunitoSansTypography.titleSmall,
+                color = colorResource(id = R.color.color_medium_gray),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .weight(1f)
+                    .align(Alignment.CenterVertically)
+            )
+            IconButton(onClick = onEndActionClick) {
+                Icon(
+                    painter = painterResource(id = endIconResId),
+                    tint = colorResource(id = R.color.color_dark_gray),
+                    contentDescription = stringResource(R.string.content_desc_action_end_icon)
+                )
+            }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -225,6 +254,10 @@ fun FavoriteHeader(
                 contentDescription = stringResource(R.string.content_desc_action_end_icon)
             )
         }
+        HorizontalDivider(
+            color = colorResource(id = R.color.color_tinted_white),
+            thickness = 1.dp
+        )
     }
 }
 
