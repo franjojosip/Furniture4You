@@ -217,6 +217,7 @@ fun FavoriteHeader(
                 modifier = Modifier
                     .weight(1f)
                     .align(Alignment.CenterVertically)
+                    .testTag("favoriteTitle")
             )
             IconButton(onClick = onEndActionClick) {
                 Icon(
@@ -225,41 +226,11 @@ fun FavoriteHeader(
                     contentDescription = stringResource(R.string.content_desc_action_end_icon)
                 )
             }
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp, horizontal = 16.dp)
-            ) {
-                IconButton(onClick = onStartActionClick) {
-                    Icon(
-                        painter = painterResource(id = startIconResId),
-                        tint = colorResource(id = R.color.color_dark_gray),
-                        contentDescription = stringResource(R.string.content_desc_action_start_icon)
-                    )
-                }
-                Text(
-                    text = title,
-                    style = NunitoSansTypography.titleSmall,
-                    color = colorResource(id = R.color.color_medium_gray),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .weight(1f)
-                        .align(Alignment.CenterVertically)
-                        .testTag("favoriteTitle")
-                )
-                IconButton(onClick = onEndActionClick) {
-                    Icon(
-                        painter = painterResource(id = endIconResId),
-                        tint = colorResource(id = R.color.color_dark_gray),
-                        contentDescription = stringResource(R.string.content_desc_action_end_icon)
-                    )
-                }
-                HorizontalDivider(
-                    color = colorResource(id = R.color.color_tinted_white),
-                    thickness = 1.dp
-                )
-            }
         }
+        HorizontalDivider(
+            color = colorResource(id = R.color.color_tinted_white),
+            thickness = 1.dp
+        )
     }
 }
 

@@ -36,7 +36,7 @@ class FavoriteScreenTest {
 
     @Test
     fun testFavoriteScreenElementsDisplayed() {
-        composeTestRule.onNodeWithTag("headerTitle")
+        composeTestRule.onNodeWithTag("favoriteTitle")
             .assertIsDisplayed()
 
         val btnAddAllToMyCart = composeTestRule.activity.getString(R.string.btn_add_all_to_my_cart)
