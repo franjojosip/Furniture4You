@@ -36,8 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -225,166 +225,168 @@ fun FavoriteHeader(
                     contentDescription = stringResource(R.string.content_desc_action_end_icon)
                 )
             }
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp, horizontal = 16.dp)
-    ) {
-        IconButton(onClick = onStartActionClick) {
-            Icon(
-                painter = painterResource(id = startIconResId),
-                tint = colorResource(id = R.color.color_dark_gray),
-                contentDescription = stringResource(R.string.content_desc_action_start_icon)
-            )
-        }
-        Text(
-            text = title,
-            style = NunitoSansTypography.titleSmall,
-            color = colorResource(id = R.color.color_medium_gray),
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .weight(1f)
-                .align(Alignment.CenterVertically)
-                .testTag("favoriteTitle")
-        )
-        IconButton(onClick = onEndActionClick) {
-            Icon(
-                painter = painterResource(id = endIconResId),
-                tint = colorResource(id = R.color.color_dark_gray),
-                contentDescription = stringResource(R.string.content_desc_action_end_icon)
-            )
-        }
-        HorizontalDivider(
-            color = colorResource(id = R.color.color_tinted_white),
-            thickness = 1.dp
-        )
-    }
-}
-
-@Preview
-@Composable
-fun FavoriteItemPreview() {
-    val product = MockRepository.getProducts().first()
-    FavoriteItem(
-        title = product.title,
-        price = product.price,
-        imageResId = R.drawable.img_minimal_stand,
-        onProductClick = {},
-        onCartClick = {},
-        onRemoveClick = {},
-    )
-}
-
-@Composable
-fun FavoriteItem(
-    title: String,
-    price: String,
-    imageResId: Int,
-    onProductClick: () -> Unit,
-    onCartClick: () -> Unit,
-    onRemoveClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .height(100.dp)
-            .fillMaxWidth()
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
-                onClick = onProductClick
-            )
-    ) {
-        Image(
-            modifier = Modifier
-                .size(100.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            painter = painterResource(id = imageResId),
-            contentDescription = stringResource(R.string.content_desc_product),
-            contentScale = ContentScale.Crop,
-        )
-        Column(
-            modifier = Modifier
-                .padding(start = 21.dp)
-                .fillMaxHeight()
-                .weight(1f)
-        ) {
-            Text(
-                text = title,
-                color = colorResource(id = R.color.color_light_gray),
-                style = NunitoSansTypography.labelSmall,
-            )
-            Text(
-                text = stringResource(id = R.string.title_product_price, price),
-                color = colorResource(id = R.color.color_dark_gray),
-                style = NunitoSansTypography.titleSmall,
-                modifier = Modifier.padding(top = 6.dp)
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxHeight(),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            IconButton(
-                modifier = Modifier.size(24.dp),
-                onClick = onRemoveClick
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp, horizontal = 16.dp)
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_close),
-                    contentDescription = stringResource(R.string.content_desc_action_end_icon)
+                IconButton(onClick = onStartActionClick) {
+                    Icon(
+                        painter = painterResource(id = startIconResId),
+                        tint = colorResource(id = R.color.color_dark_gray),
+                        contentDescription = stringResource(R.string.content_desc_action_start_icon)
+                    )
+                }
+                Text(
+                    text = title,
+                    style = NunitoSansTypography.titleSmall,
+                    color = colorResource(id = R.color.color_medium_gray),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                        .testTag("favoriteTitle")
+                )
+                IconButton(onClick = onEndActionClick) {
+                    Icon(
+                        painter = painterResource(id = endIconResId),
+                        tint = colorResource(id = R.color.color_dark_gray),
+                        contentDescription = stringResource(R.string.content_desc_action_end_icon)
+                    )
+                }
+                HorizontalDivider(
+                    color = colorResource(id = R.color.color_tinted_white),
+                    thickness = 1.dp
                 )
             }
-            CartItem(
-                onItemSelect = onCartClick,
-                modifier = Modifier
-                    .wrapContentSize(),
-                itemColor = colorResource(id = R.color.color_medium_gray),
-                itemBackground = colorResource(id = R.color.bg_favorite_cart_item),
-                itemRadius = 12.dp
-            )
         }
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun NoFavoritesPreview() {
-    NoFavorites()
-}
-
-@Composable
-fun NoFavorites(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .fillMaxSize()
-            .wrapContentSize()
-            .padding(24.dp)
-    ) {
-        Image(
-            painterResource(R.drawable.img_no_result),
-            contentDescription = null
-        )
-        Spacer(Modifier.height(24.dp))
-        Text(
-            text = stringResource(id = R.string.title_no_favorites),
-            fontSize = 16.sp,
-            fontFamily = gelatioFamily,
-            fontWeight = FontWeight.SemiBold,
-            color = colorResource(id = R.color.color_dark_gray),
-        )
-        Spacer(Modifier.height(6.dp))
-        Text(
-            text = stringResource(id = R.string.label_check_products),
-            fontSize = 16.sp,
-            fontFamily = gelatioFamily,
-            fontWeight = FontWeight.Thin,
-            color = colorResource(id = R.color.color_gray),
+    @Preview
+    @Composable
+    fun FavoriteItemPreview() {
+        val product = MockRepository.getProducts().first()
+        FavoriteItem(
+            title = product.title,
+            price = product.price,
+            imageResId = R.drawable.img_minimal_stand,
+            onProductClick = {},
+            onCartClick = {},
+            onRemoveClick = {},
         )
     }
-}
+
+    @Composable
+    fun FavoriteItem(
+        title: String,
+        price: String,
+        imageResId: Int,
+        onProductClick: () -> Unit,
+        onCartClick: () -> Unit,
+        onRemoveClick: () -> Unit,
+        modifier: Modifier = Modifier
+    ) {
+        Row(
+            modifier = modifier
+                .height(100.dp)
+                .fillMaxWidth()
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = onProductClick
+                )
+        ) {
+            Image(
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                painter = painterResource(id = imageResId),
+                contentDescription = stringResource(R.string.content_desc_product),
+                contentScale = ContentScale.Crop,
+            )
+            Column(
+                modifier = Modifier
+                    .padding(start = 21.dp)
+                    .fillMaxHeight()
+                    .weight(1f)
+            ) {
+                Text(
+                    text = title,
+                    color = colorResource(id = R.color.color_light_gray),
+                    style = NunitoSansTypography.labelSmall,
+                )
+                Text(
+                    text = stringResource(id = R.string.title_product_price, price),
+                    color = colorResource(id = R.color.color_dark_gray),
+                    style = NunitoSansTypography.titleSmall,
+                    modifier = Modifier.padding(top = 6.dp)
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IconButton(
+                    modifier = Modifier.size(24.dp),
+                    onClick = onRemoveClick
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_close),
+                        contentDescription = stringResource(R.string.content_desc_action_end_icon)
+                    )
+                }
+                CartItem(
+                    onItemSelect = onCartClick,
+                    modifier = Modifier
+                        .wrapContentSize(),
+                    itemColor = colorResource(id = R.color.color_medium_gray),
+                    itemBackground = colorResource(id = R.color.bg_favorite_cart_item),
+                    itemRadius = 12.dp
+                )
+            }
+        }
+    }
+
+
+    @Preview(showBackground = true)
+    @Composable
+    fun NoFavoritesPreview() {
+        NoFavorites()
+    }
+
+    @Composable
+    fun NoFavorites(
+        modifier: Modifier = Modifier
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier
+                .fillMaxSize()
+                .wrapContentSize()
+                .padding(24.dp)
+        ) {
+            Image(
+                painterResource(R.drawable.img_no_result),
+                contentDescription = null
+            )
+            Spacer(Modifier.height(24.dp))
+            Text(
+                text = stringResource(id = R.string.title_no_favorites),
+                fontSize = 16.sp,
+                fontFamily = gelatioFamily,
+                fontWeight = FontWeight.SemiBold,
+                color = colorResource(id = R.color.color_dark_gray),
+            )
+            Spacer(Modifier.height(6.dp))
+            Text(
+                text = stringResource(id = R.string.label_check_products),
+                fontSize = 16.sp,
+                fontFamily = gelatioFamily,
+                fontWeight = FontWeight.Thin,
+                color = colorResource(id = R.color.color_gray),
+            )
+        }
+    }

@@ -24,11 +24,13 @@ import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
 import com.fjjukic.furniture4you.ui.navigation.homeGraph
 import com.fjjukic.furniture4you.ui.navigation.rememberFurnitureNavController
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun Furniture4YouApp() {
     Furniture4YouTheme {
         val furnitureNavController = rememberFurnitureNavController()
+        val systemUiController = rememberSystemUiController()
 
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -58,12 +60,13 @@ fun Furniture4YouApp() {
                             }
                         )
                     }
-                    authNavigationGraph(furnitureNavController.navController)
+                    authNavigationGraph(furnitureNavController.navController, systemUiController)
                     homeGraph(
                         navHostController = furnitureNavController.navController,
                         onNavigateToBottomBarRoute = furnitureNavController::onNavigateToBottomBarRoute,
                         snackbarHostState,
-                        scope
+                        scope,
+                        systemUiController
                     )
                 }
                 SnackbarHost(

@@ -50,7 +50,7 @@ fun NavGraphBuilder.homeGraph(
                     navHostController.navigate(Screens.Search.route)
                 },
                 onNavigateToBottomBarRoute = onNavigateToBottomBarRoute,
-                systemUiController
+                systemUiController = systemUiController
             )
         }
         composable(Screens.HomeSections.Favorites.route) {
