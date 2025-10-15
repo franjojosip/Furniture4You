@@ -123,7 +123,7 @@ All the required information for the user can be found on Profile tab. All the i
 And you're app is ready to use.
 
 ## Notes
-- For testing purposes use DEMO user (email: test@mail.com, password: test123)
-- Biometrics can also be toggled inside Settings screen
-- Registration is required and user can add biometrics after successful registration.
-- TODO - add testing (unit, integration, etc.)
+- For testing purposes, use DEMO user (email: test@mail.com, password: test123)
+- Biometrics can also be toggled inside the  Settings screen
+- Registration is required, and the user can add biometrics after successful registration.
+- Added unit and instrumentation tests
