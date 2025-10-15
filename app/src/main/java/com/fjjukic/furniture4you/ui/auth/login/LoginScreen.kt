@@ -19,6 +19,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -35,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fjjukic.furniture4you.R
@@ -46,6 +49,8 @@ import com.fjjukic.furniture4you.ui.common.utils.findActivity
 import com.fjjukic.furniture4you.ui.components.FullscreenProgressBar
 import com.fjjukic.furniture4you.ui.components.Header
 import com.fjjukic.furniture4you.ui.theme.gelatioFamily
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Preview
 @Composable
@@ -53,7 +58,8 @@ fun LoginScreenPreview() {
     LoginScreen(
         onForgotPasswordClick = {},
         onRegisterClick = {},
-        onAuthenticated = {}
+        onAuthenticated = {},
+        systemUiController = rememberSystemUiController()
     )
 }
 
@@ -62,11 +68,17 @@ fun LoginScreen(
     onForgotPasswordClick: () -> Unit,
     onRegisterClick: () -> Unit,
     onAuthenticated: () -> Unit,
+    systemUiController: SystemUiController,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val state = viewModel.state.collectAsState().value
     val activity = LocalContext.current.findActivity()
+
+    SideEffect {
+        WindowCompat.setDecorFitsSystemWindows(activity.window, true)
+        systemUiController.setSystemBarsColor(color = Color.White, darkIcons = true)
+    }
 
     LaunchedEffect(state.messageResId) {
         state.messageResId?.let { resId ->
@@ -166,7 +178,6 @@ fun LoginForm(
             isFieldValid = {
                 ValidationUtils.isPasswordValid(it)
             },
-            onDone = { onLoginClick(email, password) },
             isLastField = true,
             modifier = Modifier.padding(top = 12.dp)
         )

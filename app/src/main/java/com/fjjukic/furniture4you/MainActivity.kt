@@ -10,11 +10,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,6 +29,7 @@ import com.fjjukic.furniture4you.ui.navigation.authNavigationGraph
 import com.fjjukic.furniture4you.ui.navigation.homeGraph
 import com.fjjukic.furniture4you.ui.navigation.rememberFurnitureNavController
 import com.fjjukic.furniture4you.ui.theme.Furniture4YouTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val furnitureNavController = rememberFurnitureNavController()
+            val systemUiController = rememberSystemUiController()
 
             Furniture4YouTheme {
                 Surface(
@@ -46,6 +51,13 @@ class MainActivity : AppCompatActivity() {
 
                     val viewModel = hiltViewModel<MainViewModel>()
                     val startDestination = viewModel.getStartDestination()
+
+                    if (startDestination == Screens.Prelogin.route) {
+                        SideEffect {
+                            WindowCompat.setDecorFitsSystemWindows(window, false)
+                            systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = true)
+                        }
+                    }
 
                     Box(modifier = Modifier.fillMaxSize()) {
                         NavHost(
@@ -64,12 +76,13 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 )
                             }
-                            authNavigationGraph(furnitureNavController.navController)
+                            authNavigationGraph(furnitureNavController.navController, systemUiController)
                             homeGraph(
                                 navHostController = furnitureNavController.navController,
                                 onNavigateToBottomBarRoute = furnitureNavController::onNavigateToBottomBarRoute,
                                 snackbarHostState,
-                                scope
+                                scope,
+                                systemUiController
                             )
                         }
                         SnackbarHost(
