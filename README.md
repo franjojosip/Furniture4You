@@ -1,63 +1,124 @@
-# Furniture4You Compose mobile application
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9149d0f0-9d00-4793-8310-7d474117454b" alt="Furniture4You Banner" width="100%">
+</p>
 
-This project is fully implemented in Compose. It combines modern UX/UI, Navigation and Security.<br /><br />
-The goal is to create a functional furniture shopping app which allows the user to search the products, use cart, buy with valid card. User can also search furniture, filter, check details and colors, add to favorites, use notifications, etc..<br />
-All the required information for the user can be found on Profile tab. All the important information can be found here (orders, addresses, cards, reviews and other usefull settings).
+<br>
 
-## Clean architecture
-- MainActivity (start point of the app with navigation graphs)
-- Common (models, components, dialogs, fields, mock data and utils) 
-- Auth (for authentication)
-- Each screen (represented with MVVM - Screen + ViewModel and usually State class)
-    
-## Stack
-- [Jetpack Compose](https://developer.android.com/jetpack/compose)
-- [Jetpack Navigation](https://developer.android.com/jetpack/compose/navigation)
-- [Jetpack Security](https://developer.android.com/jetpack/androidx/releases/security)
-- [Biometrics](https://developer.android.com/jetpack/androidx/releases/biometric)
-- [Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack)
-- [Coil](https://coil-kt.github.io/coil/compose/)
-- [Material](https://m3.material.io/)
-- MVVM architecture
-- State and StateFlow
-- Edge To Edge Configuration
-
-## Implementation 
-- [X] App core
-- [X] Home screen
-- [X] Profile
-- [X] My orders
-- [X] Shipping Addresses
-- [X] Payment Method
-- [X] Settings
-- [X] My Cart
-- [X] Promo code
-- [X] Product Detail
-- [X] Checkout
-- [X] Success order
-- [X] Test
-
-## App Design
-<img width="1758" height="938" alt="image_original" src="https://github.com/user-attachments/assets/d9e28122-86b1-4bb2-8dbb-5c8bec51c01e" />
+# 🛋️ Furniture4You – Jetpack Compose Shopping App
+![Build](https://img.shields.io/badge/Build-Passing-brightgreen)
+![Android](https://img.shields.io/badge/Android-Compose-green)
+![Kotlin](https://img.shields.io/badge/Kotlin-1.9%2B-blueviolet)
+![Compose](https://img.shields.io/badge/Jetpack-Compose-ff69b4)
+![Security](https://img.shields.io/badge/Security-Biometrics-important)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 
-## Getting started
+A modern Android shopping app built fully with **Jetpack Compose**, showcasing secure authentication, clean architecture, state management, and a polished ecommerce flow.  
+Designed to demonstrate production‑level Android development skills valued by European tech companies.
 
-1. Download this repository extract and open the template folder on Android Studio
-2. Rename the app package in Manifest `com.fjjukic.furniture4you`
-3. Check if the manifest package was renamed along with the package
-5. On `app/build.gradle`, change the applicationId to the new app package
-6. On `app/build.gradle`, update the dependencies Android Studio suggests
-7. On `strings.xml`, set your application name
-8. On `Theme.kt` & `Color.kt` set your application style
-9. Replace the App Icons
-10. Run `./gradlew dependencyUpdates` and check for dependencies
-11. Ready to Use
+---
 
-And you're app is ready to use.
+## ✨ Features
 
-## Notes
-- For testing purposes, use DEMO user (email: test@mail.com, password: test123)
-- Biometrics can also be toggled inside the  Settings screen
-- Registration is required, and the user can add biometrics after successful registration.
-- Added unit and instrumentation tests
+🛍️ Browse, search & filter furniture products  
+🛋️ Product detail with images, colors & variations  
+🛒 Add to cart, update cart, checkout flow  
+💳 Valid card payment input (demo mode)  
+❤️ Favorite items  
+🔔 Notifications & promo codes  
+👤 Full profile: orders, addresses, cards, reviews  
+🔐 Jetpack Security + Biometrics login  
+📱 Responsive Compose UI for all screen sizes  
+🔄 Reactive UI with State & StateFlow  
+🧩 Clean, modular architecture for scalability  
+
+---
+
+## 🛠 Tech Stack & Architecture
+
+**Android SDK** – native development  
+**Kotlin** – modern & concise  
+**Jetpack Compose** – declarative UI  
+**Material 3** – modern design system  
+**Coil** – fast image loading  
+**MVVM** – separation of concerns  
+**Hilt** – dependency injection  
+**Jetpack Navigation** – screen graph & routes  
+**Jetpack Security + Biometrics** – encrypted storage  
+**Coroutines & Flow** – async + state  
+**Gradle Kotlin DSL** – modern build setup  
+
+**Modules**
+
+```
+MainActivity – navigation graphs & app entry  
+common/ – models, components, dialogs, utils  
+auth/ – authentication flow  
+home/ – product listing  
+product/ – product details  
+cart/ – cart & checkout  
+profile/ – orders, reviews, settings  
+```
+
+---
+
+## 🎨 UI & UX
+
+✔ 100% Jetpack Compose  
+✔ Material 3 components  
+✔ Animations & transitions  
+✔ Edge‑to‑Edge layout  
+✔ Accessible typography & spacing  
+✔ Coil image loading  
+
+---
+
+## 🧪 Testing (Included)
+
+✔ Unit tests  
+✔ Instrumentation tests  
+
+---
+
+## 💻 Tools Used
+
+- Android Studio 2024+  
+- Git & GitHub  
+- Emulator / Physical device  
+- Firebase tools (Crashlytics optional)  
+
+---
+
+## 🌍 Why this project matters?
+
+This project demonstrates real‑world e-commerce app development with:
+
+✅ Compose‑first UI design  
+✅ Clean Architecture + MVVM  
+✅ Secure authentication with Biometrics  
+✅ Scalable modular structure  
+✅ Reactive UI with StateFlow  
+✅ Production‑ready navigation & UI  
+✅ Realistic shopping experience  
+
+It aligns with what European engineering teams expect in modern Android development.
+
+---
+
+## 👨‍💻 About the Developer
+
+I’m **Franjo**, an Android Mobile Developer focused on:
+
+- Modern Compose UI  
+- Clean architecture  
+- Scalable Kotlin apps  
+- Secure mobile development  
+- Smooth UX and design systems  
+
+💡 Open to collaboration & Android opportunities across World.
+
+📧 Contact: **franjojosip.jukic2@gmail.com**
+
+---
+
+⭐ **Thank you for visiting! Don’t forget to star the repo!**  
